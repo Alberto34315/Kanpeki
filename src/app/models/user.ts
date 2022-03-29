@@ -5,5 +5,5 @@ export interface User {
     nickname: string,
     URLimage: string,
     birthday: Date,
-    city: string
+    city: string 
 }

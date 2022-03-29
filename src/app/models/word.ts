@@ -7,5 +7,5 @@ export interface Word {
     japanese: string,
     furigana: string,
     URLimage: string,
-    category: Category
+    category: Category 
 }

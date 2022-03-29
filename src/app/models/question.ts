@@ -6,5 +6,5 @@ export interface Question {
     statement: string,
     help: string,
     category: Category,
-    answers?: Answer[]
+    answers?: Answer[] 
 }

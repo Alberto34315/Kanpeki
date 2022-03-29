@@ -5,5 +5,5 @@ export interface Answer {
     question?: Question,
     answer: string,
     furigana: string,
-    isCorrect: boolean
+    isCorrect: boolean 
 }

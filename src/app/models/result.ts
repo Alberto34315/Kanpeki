@@ -5,5 +5,5 @@ export interface Result {
     idUser: User,
     dateResult: Date,
     result: number,
-    category: Category
+    category: Category 
 }
