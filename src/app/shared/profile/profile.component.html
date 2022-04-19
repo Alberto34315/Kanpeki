@@ -23,17 +23,77 @@
         <h4>Birthday</h4>
         <p>05-12-1986</p>
       </div>
-      <div class="col">
+      <div class="col-12">
         <h4>City</h4>
         <p>Córdoba</p>
+      </div>       
+      <div class="col">
+        <div class="dropdown">
+          <button
+            class="btn btn-magenta bg-magenta text-light dropdown-toggle"
+            type="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Idioma
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            <li>
+              <button
+                class="dropdown-item d-flex justify-content-between align-items-center"
+                type="button"
+                (click)="changeLanguage('es')"
+              >
+                Español
+                <img src="../../../assets/img/flags/es.svg" class="imgSmall" />
+              </button>
+            </li>
+            <li>
+              <button
+                class="dropdown-item d-flex justify-content-between align-items-center"
+                type="button"
+                (click)="changeLanguage('en')"
+              >
+                Inglés
+                <img src="../../../assets/img/flags/gb.svg" class="imgSmall " />
+              </button>
+            </li>
+          </ul>
+        </div>
       </div>
-      <div class="col-12">
-        <select class="form-select w-75 " >
-          <option selected>Open this select menu</option>
-          <option value="1" >Español <i class="fa-solid fa-circle-notch"></i></option>
-          <option value="2">Inglés <img src="../../../assets/img/flags/gb.svg"></option>
-        </select>
-        
+      <div class="col">
+        <div class="dropdown">
+          <button
+            class="btn btn-cyanCustom bg-cyanCustom text-light dropdown-toggle"
+            type="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Tema
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            <li>
+              <button
+                class="dropdown-item d-flex justify-content-between align-items-center"
+                type="button"
+                (click)="changeLanguage('es')"
+              >
+                Pink
+                <img src="../../../assets/img/sakuraFlower.svg" class="imgSmall" />
+              </button>
+            </li>
+            <li>
+              <button
+                class="dropdown-item d-flex justify-content-between align-items-center"
+                type="button"
+                (click)="changeLanguage('en')"
+              >
+                Dark
+                <img src="../../../assets/img/dark.svg" class="imgSmall " />
+              </button>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>

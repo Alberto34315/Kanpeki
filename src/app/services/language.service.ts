@@ -6,12 +6,16 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class LanguageService {
   private activeLang = 'es';
-  constructor(private translate: TranslateService) {     
+  constructor(private translate: TranslateService) {
+    if (localStorage.getItem("language") != null) {
+      this.activeLang = String(localStorage.getItem("language"))
+    }
     this.translate.setDefaultLang(this.activeLang);
   }
 
-  public changeLanguage(lang:string) {
+  public changeLanguage(lang: string) {
     this.activeLang = lang;
-    this.translate.use(lang);
+    localStorage.setItem("language", this.activeLang)
+    this.translate.use(this.activeLang);
   }
 }
