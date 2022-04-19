@@ -21,6 +21,10 @@ const routes: Routes = [
         component: TestsUserComponent,
       },
       {
+        path: 'profile',
+        component: TestsUserComponent,
+      },
+      {
         path: '**',
         redirectTo: 'statistics-user',
       },

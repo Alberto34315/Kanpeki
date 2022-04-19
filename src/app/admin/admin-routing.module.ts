@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ProfileComponent } from '../shared/profile/profile.component';
 import { ListCategoriesComponent } from './pages/list-categories/list-categories.component';
 import { ListQuestionsComponent } from './pages/list-questions/list-questions.component';
 import { ListUsersComponent } from './pages/list-users/list-users.component';
@@ -29,6 +30,10 @@ const routes: Routes = [
       {
         path: 'users',
         component: ListUsersComponent,
+      },      
+      {
+        path: 'profile',
+        component: ProfileComponent,
       },
       {
         path: '**',

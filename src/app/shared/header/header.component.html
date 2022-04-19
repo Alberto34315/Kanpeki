@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-5">
   <div class="container-fluid">
     <a class="navbar-brand d-flex align-items-center" href="#">
       <img
@@ -28,7 +28,7 @@
       <ul class="navbar-nav">
         <li class="nav-item">
           <a class="nav-link" routerLink="/pag1" routerLinkActive="active"
-            >Estadísticas</a
+            >{{'header.statistics' | translate }}</a
           >
         </li>
         <span class="border-end border-2"></span>
@@ -58,8 +58,8 @@
       </ul>
     </div>
     <div
-      class="d-flex justify-content-end ">
-      <img src="../../../assets/img/profileDefault.png" class="img-thumbnail imgProfile rounded-circle me-5" alt="...">
+      class="d-flex justify-content-end pointer" (click)="goProfile()">
+      <img src="../../../assets/img/profileDefault.png" class="img-thumbnail imgHeader rounded-circle me-5" alt="...">
     </div>
   </div>
 </nav>
