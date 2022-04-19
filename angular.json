@@ -40,12 +40,12 @@
               "src/styles.sass",
               {
                 "input": "src/assets/styles/journal.scss",
-                "bundleName": "journal",
+                "bundleName": "pink",
                 "inject": true
               },
               {
                 "input": "src/assets/styles/dark.scss",
-                "bundleName": "darkly",
+                "bundleName": "dark",
                 "inject": false
               }
             ],

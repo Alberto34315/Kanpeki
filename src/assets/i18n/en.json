@@ -1,5 +1,15 @@
 {
   "header": {
     "statistics": "Statistics"
+  },
+  "idiom":{
+    "language":"Language",
+    "spanish":"Spanish",
+    "english":"English"
+  },
+  "theme":{
+    "theme":"theme",
+    "pink":"pink",
+    "dark":"dark"
   }
 }

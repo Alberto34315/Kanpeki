@@ -26,7 +26,7 @@
       <div class="col-12">
         <h4>City</h4>
         <p>Córdoba</p>
-      </div>       
+      </div>
       <div class="col">
         <div class="dropdown">
           <button
@@ -35,27 +35,20 @@
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
-            Idioma
+            {{ "idiom.language" | translate }}
           </button>
           <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-            <li>
+            <li *ngFor="let idiom of languages | keyvalue">
               <button
                 class="dropdown-item d-flex justify-content-between align-items-center"
                 type="button"
-                (click)="changeLanguage('es')"
+                (click)="changeLanguage(idiom.value)"
               >
-                Español
-                <img src="../../../assets/img/flags/es.svg" class="imgSmall" />
-              </button>
-            </li>
-            <li>
-              <button
-                class="dropdown-item d-flex justify-content-between align-items-center"
-                type="button"
-                (click)="changeLanguage('en')"
-              >
-                Inglés
-                <img src="../../../assets/img/flags/gb.svg" class="imgSmall " />
+                {{ "idiom." + idiom.key | translate | titlecase }}
+                <img
+                  src="../../../assets/img/flags/{{ idiom.value }}.svg"
+                  class="imgSmall"
+                />
               </button>
             </li>
           </ul>
@@ -69,31 +62,27 @@
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
-            Tema
+            {{ "theme.theme" | translate | titlecase }}
           </button>
           <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-            <li>
+            <li *ngFor="let theme of themes | keyvalue">
               <button
                 class="dropdown-item d-flex justify-content-between align-items-center"
                 type="button"
-                (click)="changeLanguage('es')"
+                (click)="changeTheme(theme.key)"
               >
-                Pink
-                <img src="../../../assets/img/sakuraFlower.svg" class="imgSmall" />
-              </button>
-            </li>
-            <li>
-              <button
-                class="dropdown-item d-flex justify-content-between align-items-center"
-                type="button"
-                (click)="changeLanguage('en')"
-              >
-                Dark
-                <img src="../../../assets/img/dark.svg" class="imgSmall " />
+                {{ "theme." + theme.key | translate | titlecase }}
+                <img
+                  src="../../../assets/img/{{ theme.value }}.svg"
+                  class="imgSmall"
+                />
               </button>
             </li>
           </ul>
         </div>
+      </div>
+      <div class="col-12 mt-5">
+        <button class="btn btn-danger" (click)="logout()">Logout <i class="fas fa-sign-out-alt"></i></button>
       </div>
     </div>
   </div>

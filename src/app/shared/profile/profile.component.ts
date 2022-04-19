@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { LanguageService } from 'src/app/services/language.service';
+import { ThemeService } from 'src/app/services/theme.service';
 
 @Component({
   selector: 'app-profile',
@@ -9,11 +11,25 @@ import { LanguageService } from 'src/app/services/language.service';
 })
 export class ProfileComponent implements OnInit {
 
-  constructor(private languageS: LanguageService) { }
+  public themes = new Map<string, string>([
+    ["pink", "sakuraFlower"],
+    ["dark", "dark"]
+  ]);
+  public languages = new Map<string, string>([
+    ["english", "en"],
+    ["spanish", "es"]
+  ]);
+  constructor(private languageS: LanguageService, private themeS: ThemeService, private router: Router) { }
 
   ngOnInit(): void {
   }
   changeLanguage(idiom: string) {
     this.languageS.changeLanguage(idiom)
+  }
+  changeTheme(theme: string) {
+    this.themeS.current = theme;
+  }
+  logout() {
+    this.router.navigate(['/auth/login'])
   }
 }
