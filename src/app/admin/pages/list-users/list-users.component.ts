@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { map } from 'rxjs';
+import { ResponseUserDTO } from 'src/app/models/response/responseUserDTO';
+import { ConnectionService } from '../../services/connection.service';
 
 @Component({
   selector: 'app-list-users',
@@ -7,10 +10,18 @@ import { Component, OnInit } from '@angular/core';
   ]
 })
 export class ListUsersComponent implements OnInit {
-
-  constructor() { }
+  public listUsers: ResponseUserDTO[] = []
+  constructor(private connectionS: ConnectionService) { }
 
   ngOnInit(): void {
+    this.getListUsers()
+  }
+
+  getListUsers() {
+    this.connectionS.getUsers()
+      .subscribe((resp) => {
+        this.listUsers = resp;
+      })
   }
 
 }

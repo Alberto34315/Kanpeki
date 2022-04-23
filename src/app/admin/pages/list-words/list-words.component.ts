@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ResponseWordDTO } from 'src/app/models/response/responseWordDTO';
+import { ConnectionService } from '../../services/connection.service';
 
 @Component({
   selector: 'app-list-words',
@@ -7,10 +9,19 @@ import { Component, OnInit } from '@angular/core';
   ]
 })
 export class ListWordsComponent implements OnInit {
+  public listWords: ResponseWordDTO[] = []
 
-  constructor() { }
+  constructor(private connectionS: ConnectionService) { }
 
   ngOnInit(): void {
+    this.getListWords()
+  }
+
+  getListWords() {
+    this.connectionS.getWords()
+      .subscribe((resp) => {
+        this.listWords=resp
+      })
   }
 
 }

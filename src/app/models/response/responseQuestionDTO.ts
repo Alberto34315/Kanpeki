@@ -1,6 +1,6 @@
 import { AnswerDTO } from "../answerDTO";
 
-export interface responseQuestionDTO {
+export interface ResponseQuestionDTO {
     id: number,
     statement: string,
     help: string,

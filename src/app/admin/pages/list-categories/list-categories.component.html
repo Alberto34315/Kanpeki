@@ -1,1 +1,11 @@
-<p>list-categories works!</p>
+<div *ngIf="listCategories.length > 0; then thenBlock; else elseBlock"></div>
+<ng-template #thenBlock
+  ><app-table [tableData]="listCategories"></app-table
+></ng-template>
+<ng-template #elseBlock>
+    <div class="d-flex justify-content-center">
+        <div class="spinner-border" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+</ng-template>

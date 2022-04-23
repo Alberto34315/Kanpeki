@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ResponseQuestionDTO } from 'src/app/models/response/responseQuestionDTO';
+import { ConnectionService } from '../../services/connection.service';
 
 @Component({
   selector: 'app-list-questions',
@@ -7,10 +9,21 @@ import { Component, OnInit } from '@angular/core';
   ]
 })
 export class ListQuestionsComponent implements OnInit {
+  public listQuestions: ResponseQuestionDTO[] = []
 
-  constructor() { }
+  constructor(private connectionS: ConnectionService) { }
 
   ngOnInit(): void {
+    this.getListQuetions()
+  }
+
+  getListQuetions() {
+    this.connectionS.getQuestions()
+      .subscribe((resp) => {
+        console.log(resp);
+        
+        this.listQuestions = resp
+      })
   }
 
 }
