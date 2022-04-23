@@ -7,6 +7,7 @@ import { ListCategoriesComponent } from './pages/list-categories/list-categories
 import { ListQuestionsComponent } from './pages/list-questions/list-questions.component';
 import { ListUsersComponent } from './pages/list-users/list-users.component';
 import { StatisticsComponent } from './pages/statistics/statistics.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { StatisticsComponent } from './pages/statistics/statistics.component';
   ],
   imports: [
     CommonModule,
-    AdminRoutingModule
+    AdminRoutingModule,
+    SharedModule,
   ]
 })
 export class AdminModule { }

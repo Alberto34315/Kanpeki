@@ -4,17 +4,20 @@ import { RouterModule } from '@angular/router';
 import { HeaderComponent } from './header/header.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { ProfileComponent } from './profile/profile.component';
-
-
-
+import { TableComponent } from './components/table/table.component';
+import { MatSortModule } from '@angular/material/sort';
+import {CdkTableModule} from '@angular/cdk/table';
+import { MatTableModule } from '@angular/material/table'
+import {MatPaginatorModule} from '@angular/material/paginator';
 @NgModule({
   declarations: [
     HeaderComponent,
-    ProfileComponent
+    ProfileComponent,
+    TableComponent,
   ],
-  exports: [HeaderComponent],
+  exports: [HeaderComponent, TableComponent],
   imports: [
-    CommonModule, RouterModule, TranslateModule
+    CommonModule, RouterModule, TranslateModule,MatSortModule,CdkTableModule,MatTableModule,MatPaginatorModule
   ]
 })
 export class SharedModule { }
