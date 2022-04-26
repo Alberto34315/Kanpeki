@@ -3,6 +3,8 @@ import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/cor
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatDialog } from '@angular/material/dialog';
+import { FormUsersComponent } from 'src/app/admin/components/form-users/form-users.component';
 
 export interface PeriodicElement {
   name: string;
@@ -20,10 +22,10 @@ const ELEMENT_DATA: Object[] = [
 export class TableComponent implements AfterViewInit, OnInit {
   @Input() tableData!: any[];
 
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
+  displayedColumns: string[] = [];
   public dataSource!: MatTableDataSource<any>
 
-  constructor(private _liveAnnouncer: LiveAnnouncer) {
+  constructor(private _liveAnnouncer: LiveAnnouncer, public dialog: MatDialog) {
   }
 
   @ViewChild(MatSort) sort!: MatSort;
@@ -36,20 +38,29 @@ export class TableComponent implements AfterViewInit, OnInit {
   }
 
   ngOnInit(): void {
-    this.displayedColumns = Object.keys(this.tableData[0]).filter(resp => { return resp != "id" })
-    this.dataSource = new MatTableDataSource(this.tableData);  
+    this.displayedColumns = Object.keys(this.tableData[0]).filter(resp => { return resp != "id" && resp!="urlImage"})
+    this.dataSource = new MatTableDataSource(this.tableData);
   }
 
-  /** Announce the change in sort state for assistive technology. */
   announceSortChange(sortState: Sort) {
-    // This example uses English messages. If your application supports
-    // multiple language, you would internationalize these strings.
-    // Furthermore, you can customize the message to add additional
-    // details about the values being sorted.
     if (sortState.direction) {
       this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
     } else {
       this._liveAnnouncer.announce('Sorting cleared');
     }
   }
+
+  viewData(data: any) {
+    const dialogRef = this.dialog.open(FormUsersComponent, {
+      width: '450px',
+      height:'600px',
+      data: data,
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      // this.animal = result;
+    });
+  }
+
 }

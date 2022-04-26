@@ -1,6 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { RequestUserDTO } from 'src/app/models/request/requestUserDTO';
 import { ResponseCategoryDTO } from 'src/app/models/response/responseCategoryDTO';
 import { ResponseQuestionDTO } from 'src/app/models/response/responseQuestionDTO';
 import { ResponseUserDTO } from 'src/app/models/response/responseUserDTO';
@@ -22,6 +23,25 @@ export class ConnectionService {
 
   getUsers(): Observable<ResponseUserDTO[]> {
     return this.http.get<ResponseUserDTO[]>(`${this.apiUrl}${this.kanpeki}${this.users}`)
+  }
+
+  addUser(user: FormData) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT',
+        'Content-Type': 'multipart/form-data',
+        "Accept": 'application/json',
+        'Authorization': "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsib2F1dGgyLXJlc291cmNlIl0sInVzZXJfbmFtZSI6InNlbG1hLmhheW91bi5jYWJhbGxlcm9AZ21haWwuY29tIiwic2NvcGUiOlsicmVhZCJdLCJleHAiOjE2NTA5OTU4NTYsImF1dGhvcml0aWVzIjpbIlJPTEVfVVNFUiIsIlJPTEVfQURNSU4iXSwianRpIjoiOGNhNmM0ZGEtOWFjMS00ODM5LWI0OGMtYTFlYzJjNTk1MmI0IiwiY2xpZW50X2lkIjoiS29reWFrdSJ9.VmvF0B74MN5EpIgL06YnVcaVpUhIWJk48CL-onmqqec"
+      })
+    }
+    console.log(user);
+
+    this.http.post<RequestUserDTO>(`${this.apiUrl}${this.kanpeki}${this.users}/user/v2`, user).subscribe(resp => {
+      console.log(resp);
+
+    })
   }
 
   getWords(): Observable<ResponseWordDTO[]> {

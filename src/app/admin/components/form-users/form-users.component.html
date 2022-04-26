@@ -1,0 +1,77 @@
+<div  >
+  <form autocomplete="off" [formGroup]="myForm" (ngSubmit)="save()" enctype="multipart/form-data">
+    <div class="mb-3 row">
+      <label class="col-sm-3 col-form-label">Email</label>
+      <div class="col-sm-9">
+        <input
+          type="email"
+          class="form-control"
+          placeholder="example@gamil.com"
+          formControlName="email"
+        />
+      </div>
+    </div>
+    <div class="mb-3 row">
+      <label class="col-sm-3 col-form-label">Password</label>
+      <div class="col-sm-9">
+        <input type="password" class="form-control" formControlName="password" />
+      </div>
+    </div>
+
+    <div class="mb-3 row">
+      <label class="col-sm-3 col-form-label">Full Name</label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control" formControlName="fullName" />
+      </div>
+    </div>
+
+    <div class="mb-3 row">
+      <label class="col-sm-3 col-form-label">Nickname</label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control" formControlName="nickname" />
+      </div>
+    </div>
+
+    <div class="mb-3 row">
+      <label class="col-sm-3 col-form-label">Image</label>
+      <div class="col-sm-9">
+        <input type="file" class="form-control"  (change)="onFileChanged($event)" accept="image/*" formControlName="file" />
+      </div>
+    </div>
+
+    <div class="mb-3 row">
+      <label class="col-sm-3 col-form-label">Birthday</label>
+      <div class="col-sm-9">
+        <input type="date" class="form-control" formControlName="birthday" />
+      </div>
+    </div>
+
+    <div class="mb-3 row">
+      <label class="col-sm-3 col-form-label">City</label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control" formControlName="city" />
+      </div>
+    </div>
+
+    <div class="mb-3 row">
+      <label class="col-sm-3 col-form-label">Role</label>
+      <div class="col-sm-9">
+        <select class="form-select" formControlName="roles">
+          <option value="User">User</option>
+          <option value="Admin">Admin</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <!-- [disabled]="myForm.invalid" -->
+        <button class="btn btn-primary float-end" type="submit">Guardar</button>
+      </div>
+    </div>
+  </form>
+</div>
+<!-- <div mat-dialog-actions>
+     <button mat-button (click)="onNoClick()">No Thanks</button>
+    <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button> 
+  </div> -->

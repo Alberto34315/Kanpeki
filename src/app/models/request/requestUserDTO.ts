@@ -7,5 +7,5 @@ export interface RequestUserDTO {
     nickname: string;
     birthday: string;
     city: string;
-    file?: File | string;
+    urlImage: File | null
 }

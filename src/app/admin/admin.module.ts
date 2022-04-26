@@ -8,7 +8,9 @@ import { ListQuestionsComponent } from './pages/list-questions/list-questions.co
 import { ListUsersComponent } from './pages/list-users/list-users.component';
 import { StatisticsComponent } from './pages/statistics/statistics.component';
 import { SharedModule } from '../shared/shared.module';
-
+import { FormUsersComponent } from './components/form-users/form-users.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MaterialModule } from '../shared/material/material.module';
 
 @NgModule({
   declarations: [
@@ -16,12 +18,16 @@ import { SharedModule } from '../shared/shared.module';
     ListCategoriesComponent,
     ListQuestionsComponent,
     ListUsersComponent,
-    StatisticsComponent
+    StatisticsComponent,
+    FormUsersComponent
   ],
   imports: [
     CommonModule,
     AdminRoutingModule,
     SharedModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MaterialModule
   ]
 })
 export class AdminModule { }
