@@ -5,6 +5,7 @@ import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { FormUsersComponent } from 'src/app/admin/components/form-users/form-users.component';
+import { ComponentType } from '@angular/cdk/portal';
 
 export interface PeriodicElement {
   name: string;
@@ -21,6 +22,7 @@ const ELEMENT_DATA: Object[] = [
 })
 export class TableComponent implements AfterViewInit, OnInit {
   @Input() tableData!: any[];
+  @Input() nameFormComponent!:ComponentType<any>;
 
   displayedColumns: string[] = [];
   public dataSource!: MatTableDataSource<any>
@@ -51,7 +53,7 @@ export class TableComponent implements AfterViewInit, OnInit {
   }
 
   viewData(data: any) {
-    const dialogRef = this.dialog.open(FormUsersComponent, {
+    const dialogRef = this.dialog.open(this.nameFormComponent, {
       width: '450px',
       height:'600px',
       data: data,

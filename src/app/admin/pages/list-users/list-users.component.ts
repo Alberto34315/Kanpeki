@@ -1,3 +1,4 @@
+import { ComponentType } from '@angular/cdk/portal';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { map } from 'rxjs';
@@ -13,7 +14,10 @@ import { ConnectionService } from '../../services/connection.service';
 })
 export class ListUsersComponent implements OnInit {
   public listUsers: ResponseUserDTO[] = []
-  constructor(private connectionS: ConnectionService, public dialog: MatDialog) { }
+  public componentForm: ComponentType<FormUsersComponent>;
+  constructor(private connectionS: ConnectionService, public dialog: MatDialog,) {
+    this.componentForm = FormUsersComponent
+  }
 
   ngOnInit(): void {
     this.getListUsers()
@@ -25,10 +29,10 @@ export class ListUsersComponent implements OnInit {
         this.listUsers = resp;
       })
   }
-  openForm(){
+  openForm() {
     const dialogRef = this.dialog.open(FormUsersComponent, {
       width: '450px',
-      height:'600px',
+      height: '600px',
       data: {},
     });
 
