@@ -22,7 +22,7 @@ const ELEMENT_DATA: Object[] = [
 })
 export class TableComponent implements AfterViewInit, OnInit {
   @Input() tableData!: any[];
-  @Input() nameFormComponent!:ComponentType<any>;
+  @Input() nameFormComponent!:ComponentType<any>; 
 
   displayedColumns: string[] = [];
   public dataSource!: MatTableDataSource<any>

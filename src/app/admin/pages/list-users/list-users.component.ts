@@ -23,7 +23,7 @@ export class ListUsersComponent implements OnInit {
     this.getListUsers()
   }
 
-  getListUsers() {
+  getListUsers() { 
     this.connectionS.getUsers()
       .subscribe((resp) => {
         this.listUsers = resp;
