@@ -12,16 +12,7 @@ import { ConnectionService } from '../../services/connection.service';
 })
 export class FormUsersComponent implements OnInit {
   public roles: string[] = ["USER", "ADMIN"]
-  public userMock: RequestUserDTO | ResponseUserDTO = {
-    birthday: "",
-    city: "",
-    email: "",
-    fullName: "",
-    nickname: "",
-    password: "",
-    roles: ["USER"],
-    urlImage: ""
-  }
+
   myForm: FormGroup = this.fb.group({
     email: ['', [Validators.required]],
     password: ['', [Validators.required]],
@@ -32,10 +23,18 @@ export class FormUsersComponent implements OnInit {
     city: ['', [Validators.required]],
     roles: ['', [Validators.required]],
   });
+
   public imagen: any = null;
 
-  @ViewChild('fileInput', { static: true }) fileInput!: ElementRef;
+  public load: boolean = true;
 
+  private fileInput!: ElementRef;
+
+  @ViewChild('fileInput') set content(fileInput: ElementRef) {
+    if (fileInput) {
+      this.fileInput = fileInput;
+    }
+  }
   constructor(
     public dialogRef: MatDialogRef<FormUsersComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ResponseUserDTO | RequestUserDTO,
@@ -59,36 +58,25 @@ export class FormUsersComponent implements OnInit {
       this.getImage()
     }
   }
+
   getImage() {
-    let imgArr = this.data.urlImage.split('/')
-    this.connectionS.getFile(imgArr[imgArr.length - 1]).subscribe(resp => {
-      let objectURL = URL.createObjectURL(resp);
-      this.imagen = this.sanitizer.bypassSecurityTrustUrl(objectURL);
-    })
+    if (this.data.urlImage != "") {
+      let imgArr = this.data.urlImage.split('/')
+      this.connectionS.getFile(imgArr[imgArr.length - 1]).subscribe(resp => {
+        let objectURL = URL.createObjectURL(resp);
+        this.imagen = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+      })
+    }
   }
 
 
   save() {
+    this.load = false;
     let user: RequestUserDTO = this.myForm.value
-
-    let user2: RequestUserDTO = {
-      birthday: "1989-12-31",
-      city: "Kyoto",
-      email: "kanjilovers@gmail.com",
-      fullName: "John Doe",
-      nickname: "John Doe",
-      password: "C4c4hu3t3!!",
-      roles: [
-        'USER'
-      ],
-      urlImage: this.fileInput.nativeElement.files[0]
-    }
-
+    let fd = new FormData()
     if (this.data.id) {
       user.id = this.data.id
       user.urlImage = this.data.urlImage
-      console.log(user);
-      let fd = new FormData()
       fd.append('id', String(user.id))
       fd.append('birthday', user.birthday)
       fd.append('city', user.city)
@@ -97,29 +85,49 @@ export class FormUsersComponent implements OnInit {
       fd.append('nickname', user.nickname)
       fd.append('password', user.password)
       fd.append('roles[]', String(user.roles))
+      if (this.fileInput !== undefined) {
+        fd.append("file", this.fileInput.nativeElement.files[0], this.fileInput.nativeElement.files[0].name);
+        this.connectionS.updateUser(Number(user.id), fd).subscribe((res) => {
+          if (res) {
+            this.load = true;
+            this.onClose()
+          }
+        })
+      } else {
+        let imgArr = user.urlImage.split('/')
+        this.connectionS.getFile(imgArr[imgArr.length - 1]).subscribe(resp => {
+          fd.append("file", resp, 'image.png');
 
-      
-      let imgArr = user.urlImage.split('/')
-      this.connectionS.getFile(imgArr[imgArr.length - 1]).subscribe(resp => {  
-        fd.append("file",resp,'image.png');
-        this.connectionS.updateUser(Number(user.id), fd)
-      })
+          this.connectionS.updateUser(Number(user.id), fd).subscribe((res) => {
+            if (res) {
+              this.load = true;
+              this.onClose()
+            }
+          })
+
+        })
+      }
     } else {
-      let fd = new FormData()
-      fd.append('birthday', user2.birthday)
-      fd.append('city', user2.city)
-      fd.append('email', user2.email)
-      fd.append('fullName', user2.fullName)
-      fd.append('nickname', user2.nickname)
-      fd.append('password', user2.password)
-      fd.append('roles[]', user2.roles[0])
-      fd.append("file", this.fileInput.nativeElement.files[0], this.fileInput.nativeElement.files[0].name);
-      this.connectionS.addUser(fd)
+      fd.append('birthday', user.birthday)
+      fd.append('city', user.city)
+      fd.append('email', user.email)
+      fd.append('fullName', user.fullName)
+      fd.append('nickname', user.nickname)
+      fd.append('password', user.password)
+      fd.append('roles[]', String(user.roles))
+      if (this.fileInput !== undefined && this.fileInput.nativeElement.files[0]!== undefined ) {
+                fd.append("file", this.fileInput.nativeElement.files[0], this.fileInput.nativeElement.files[0].name);
+      }
+      this.connectionS.addUser(fd).subscribe((res) => {
+        if (res) {
+          this.load = true;
+          this.onClose()
+        }
+      })
     }
-
   }
 
-  onNoClick(): void {
-    this.dialogRef.close();
+  onClose(): void {
+    this.dialogRef.close()
   }
 }

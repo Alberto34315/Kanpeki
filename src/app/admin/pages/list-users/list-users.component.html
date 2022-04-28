@@ -4,7 +4,7 @@
 
 <div *ngIf="listUsers.length > 0; then thenBlock; else elseBlock"></div>
 <ng-template #thenBlock
-  ><app-table [tableData]="listUsers" [nameFormComponent]="componentForm"></app-table
+  ><app-table [tableData]="listUsers" [nameFormComponent]="componentForm" (propagateFather)="procesaPropagar()"></app-table
 ></ng-template>
 <ng-template #elseBlock>
     <div class="d-flex justify-content-center">

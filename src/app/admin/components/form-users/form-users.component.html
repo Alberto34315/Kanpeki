@@ -1,4 +1,6 @@
-<div>
+<div *ngIf="load; then thenBlock; else elseBlock"></div>
+
+<ng-template #thenBlock>  
   <form
     autocomplete="off"
     [formGroup]="myForm"
@@ -42,28 +44,16 @@
     </div>
 
     <div class="mb-3 row">
-      <ng-content
-        *ngIf="
-          this.userMock.urlImage != '' ||
-            this.userMock.urlImage != undefined ||
-            this.userMock.urlImage != null;
-          then thenBlock;
-          else elseBlock
+      <label class="col-sm-5 col-form-label">Image</label>
+      <img
+        [src]="
+          data.urlImage ? imagen : '../../../../assets/img/profileDefault.png'
         "
-      ></ng-content>
-      <ng-template #thenBlock>
-         <img [src]="imagen" class="img-thumbnail w-25" /> 
-      </ng-template>
-      <ng-template #elseBlock>
-        <img
-          src="../../../../assets/img/profileDefault.png"
-          class="img-thumbnail w-25"
-        />
-      </ng-template>
-      <label class="col-sm-3 col-form-label">Image</label>
-      <div class="col-sm-9">
-        <input 
-        #fileInput
+        class="img-thumbnail w-25 col-sm-4 p-1"
+      />
+      <div class="col-sm-12">
+        <input
+          #fileInput
           type="file"
           class="form-control"
           accept="image/*"
@@ -92,7 +82,7 @@
         <select
           class="form-select"
           formControlName="roles"
-          [(ngModel)]="this.userMock.roles[0]"
+          [(ngModel)]="(this.data.roles!==undefined)?this.data.roles[0]:roles[0]"
         >
           <option *ngFor="let rol of roles" [value]="rol">{{ rol }}</option>
         </select>
@@ -103,11 +93,15 @@
       <div class="col-sm-12">
         <!-- [disabled]="myForm.invalid" -->
         <button class="btn btn-primary float-end" type="submit">Guardar</button>
+        <a class="btn btn-secondary float-start" (click)="onClose()">Cerrar</a>
       </div>
     </div>
   </form>
-</div>
-<!-- <div mat-dialog-actions>
-     <button mat-button (click)="onNoClick()">No Thanks</button>
-    <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button> 
-  </div> -->
+</ng-template>
+<ng-template #elseBlock>
+    <div class="d-flex justify-content-center align-items-center">
+        <div class="spinner-border" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+</ng-template>

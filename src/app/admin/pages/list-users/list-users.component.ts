@@ -1,6 +1,6 @@
 import { ComponentType } from '@angular/cdk/portal';
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { map } from 'rxjs';
 import { ResponseUserDTO } from 'src/app/models/response/responseUserDTO';
 import { FormUsersComponent } from '../../components/form-users/form-users.component';
@@ -15,6 +15,7 @@ import { ConnectionService } from '../../services/connection.service';
 export class ListUsersComponent implements OnInit {
   public listUsers: ResponseUserDTO[] = []
   public componentForm: ComponentType<FormUsersComponent>;
+  public dialogRef!: MatDialogRef<FormUsersComponent, any>
   constructor(private connectionS: ConnectionService, public dialog: MatDialog,) {
     this.componentForm = FormUsersComponent
   }
@@ -22,23 +23,26 @@ export class ListUsersComponent implements OnInit {
   ngOnInit(): void {
     this.getListUsers()
   }
-
-  getListUsers() { 
+  getListUsers() {
     this.connectionS.getUsers()
       .subscribe((resp) => {
         this.listUsers = resp;
       })
   }
   openForm() {
-    const dialogRef = this.dialog.open(FormUsersComponent, {
+    this.dialogRef = this.dialog.open(FormUsersComponent, {
       width: '450px',
       height: '600px',
       data: {},
     });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      // this.animal = result;
+    this.dialogRef.afterClosed().subscribe(result => {
+      this.listUsers = []
+      this.getListUsers()
     });
+  }
+
+  procesaPropagar() {
+    this.listUsers = []
+    this.getListUsers()
   }
 }

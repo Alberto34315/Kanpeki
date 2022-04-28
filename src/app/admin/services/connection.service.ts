@@ -28,14 +28,14 @@ export class ConnectionService {
         responseType: 'blob'
       })
     }
-    return this.http.get(`${this.apiUrl}${this.kanpeki}${this.files}/${nameFile}`,{ responseType: 'blob' })
+    return this.http.get(`${this.apiUrl}${this.kanpeki}${this.files}/${nameFile}`, { responseType: 'blob' })
   }
 
   getUsers(): Observable<ResponseUserDTO[]> {
     return this.http.get<ResponseUserDTO[]>(`${this.apiUrl}${this.kanpeki}${this.users}`)
   }
 
-  addUser(user: FormData) {
+  addUser(user: FormData): Observable<RequestUserDTO> {
     // const httpOptions = {
     //   headers: new HttpHeaders({
     //     'Access-Control-Allow-Origin': '*',
@@ -46,17 +46,11 @@ export class ConnectionService {
     //     'Authorization': "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsib2F1dGgyLXJlc291cmNlIl0sInVzZXJfbmFtZSI6InNlbG1hLmhheW91bi5jYWJhbGxlcm9AZ21haWwuY29tIiwic2NvcGUiOlsicmVhZCJdLCJleHAiOjE2NTA5OTU4NTYsImF1dGhvcml0aWVzIjpbIlJPTEVfVVNFUiIsIlJPTEVfQURNSU4iXSwianRpIjoiOGNhNmM0ZGEtOWFjMS00ODM5LWI0OGMtYTFlYzJjNTk1MmI0IiwiY2xpZW50X2lkIjoiS29reWFrdSJ9.VmvF0B74MN5EpIgL06YnVcaVpUhIWJk48CL-onmqqec"
     //   })
     // }
-
-    this.http.post<RequestUserDTO>(`${this.apiUrl}${this.kanpeki}${this.users}/user/v2`, user).subscribe(res => {
-      console.log(res);
-
-    })
+    return this.http.post<RequestUserDTO>(`${this.apiUrl}${this.kanpeki}${this.users}/user/v2`, user)
   }
-  updateUser(id: number,user: FormData) {
-    this.http.put<ResponseUserDTO>(`${this.apiUrl}${this.kanpeki}${this.users}/user/v2/${id}`, user).subscribe(res => {
-      console.log(res);
 
-    })
+  updateUser(id: number, user: FormData): Observable<ResponseUserDTO> {
+    return this.http.put<ResponseUserDTO>(`${this.apiUrl}${this.kanpeki}${this.users}/user/v2/${id}`, user)
   }
 
   getWords(): Observable<ResponseWordDTO[]> {
