@@ -1,5 +1,6 @@
 
 export interface RequestUserDTO {
+    id?: number;
     roles: string[];
     email: string;
     password: string;
@@ -7,5 +8,5 @@ export interface RequestUserDTO {
     nickname: string;
     birthday: string;
     city: string;
-    urlImage: File | null
+    urlImage: string 
 }

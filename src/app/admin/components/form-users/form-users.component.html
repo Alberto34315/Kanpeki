@@ -1,5 +1,10 @@
-<div  >
-  <form autocomplete="off" [formGroup]="myForm" (ngSubmit)="save()" enctype="multipart/form-data">
+<div>
+  <form
+    autocomplete="off"
+    [formGroup]="myForm"
+    (ngSubmit)="save()"
+    enctype="multipart/form-data"
+  >
     <div class="mb-3 row">
       <label class="col-sm-3 col-form-label">Email</label>
       <div class="col-sm-9">
@@ -14,7 +19,11 @@
     <div class="mb-3 row">
       <label class="col-sm-3 col-form-label">Password</label>
       <div class="col-sm-9">
-        <input type="password" class="form-control" formControlName="password" />
+        <input
+          type="password"
+          class="form-control"
+          formControlName="password"
+        />
       </div>
     </div>
 
@@ -33,9 +42,33 @@
     </div>
 
     <div class="mb-3 row">
+      <ng-content
+        *ngIf="
+          this.userMock.urlImage != '' ||
+            this.userMock.urlImage != undefined ||
+            this.userMock.urlImage != null;
+          then thenBlock;
+          else elseBlock
+        "
+      ></ng-content>
+      <ng-template #thenBlock>
+         <img [src]="imagen" class="img-thumbnail w-25" /> 
+      </ng-template>
+      <ng-template #elseBlock>
+        <img
+          src="../../../../assets/img/profileDefault.png"
+          class="img-thumbnail w-25"
+        />
+      </ng-template>
       <label class="col-sm-3 col-form-label">Image</label>
       <div class="col-sm-9">
-        <input type="file" class="form-control"  (change)="onFileChanged($event)" accept="image/*" formControlName="file" />
+        <input 
+        #fileInput
+          type="file"
+          class="form-control"
+          accept="image/*"
+          formControlName="urlImage"
+        />
       </div>
     </div>
 
@@ -56,9 +89,12 @@
     <div class="mb-3 row">
       <label class="col-sm-3 col-form-label">Role</label>
       <div class="col-sm-9">
-        <select class="form-select" formControlName="roles">
-          <option value="User">User</option>
-          <option value="Admin">Admin</option>
+        <select
+          class="form-select"
+          formControlName="roles"
+          [(ngModel)]="this.userMock.roles[0]"
+        >
+          <option *ngFor="let rol of roles" [value]="rol">{{ rol }}</option>
         </select>
       </div>
     </div>
