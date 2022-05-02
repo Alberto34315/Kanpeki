@@ -47,10 +47,15 @@
       <label class="col-sm-5 col-form-label">Image</label>
       <img
         [src]="
-          data.urlImage ? imagen : '../../../../assets/img/profileDefault.png'
+          data.urlImage ? image : '../../../../assets/img/profileDefault.png'
         "
         class="img-thumbnail w-25 col-sm-4 p-1"
       />
+      <div class="col-sm-2 d-flex align-items-center">
+        <a class="btn btn-primary btn-sm" (click)="deleteImage()">
+          <mat-icon>delete_forever</mat-icon>
+        </a>
+      </div>
       <div class="col-sm-12">
         <input
           #fileInput
@@ -59,6 +64,7 @@
           accept="image/*"
           formControlName="urlImage"
         />
+        
       </div>
     </div>
 
@@ -93,7 +99,7 @@
       <div class="col-sm-12">
         <!-- [disabled]="myForm.invalid" -->
         <button class="btn btn-primary float-end" type="submit">Guardar</button>
-        <a class="btn btn-secondary float-start" (click)="onClose()">Cerrar</a>
+        <button class="btn btn-secondary float-start" [mat-dialog-close]="false">Cerrar</button>
       </div>
     </div>
   </form>

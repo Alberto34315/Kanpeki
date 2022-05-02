@@ -23,11 +23,6 @@ export class ConnectionService {
   constructor(private http: HttpClient) { }
 
   getFile(nameFile: string | File | null) {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        responseType: 'blob'
-      })
-    }
     return this.http.get(`${this.apiUrl}${this.kanpeki}${this.files}/${nameFile}`, { responseType: 'blob' })
   }
 
@@ -53,8 +48,17 @@ export class ConnectionService {
     return this.http.put<ResponseUserDTO>(`${this.apiUrl}${this.kanpeki}${this.users}/user/v2/${id}`, user)
   }
 
+  deleteUser(id: number): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}${this.kanpeki}${this.users}/user/${id}`)
+  }
+
+
   getWords(): Observable<ResponseWordDTO[]> {
     return this.http.get<ResponseWordDTO[]>(`${this.apiUrl}${this.kanpeki}${this.words}`)
+  }
+
+  deleteWords(id: number): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}${this.kanpeki}${this.words}/word/${id}`)
   }
 
   getCategories(): Observable<ResponseCategoryDTO[]> {
@@ -64,4 +68,5 @@ export class ConnectionService {
   getQuestions(): Observable<ResponseQuestionDTO[]> {
     return this.http.get<ResponseQuestionDTO[]>(`${this.apiUrl}${this.kanpeki}${this.questions}`)
   }
+  
 }

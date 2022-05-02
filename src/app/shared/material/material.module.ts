@@ -5,6 +5,8 @@ import { MatTableModule } from '@angular/material/table'
 import { MatPaginatorModule } from '@angular/material/paginator';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatIconModule} from '@angular/material/icon';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatFormFieldModule} from '@angular/material/form-field';
 @NgModule({
     exports: [
         MatSortModule,
@@ -12,7 +14,9 @@ import {MatIconModule} from '@angular/material/icon';
         MatTableModule,
         MatPaginatorModule,
         MatDialogModule,
-        MatIconModule
+        MatIconModule,
+        MatCheckboxModule,
+        MatFormFieldModule
     ],
   })
   export class MaterialModule {}

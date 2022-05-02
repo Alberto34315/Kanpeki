@@ -11,6 +11,9 @@ import { SharedModule } from '../shared/shared.module';
 import { FormUsersComponent } from './components/form-users/form-users.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../shared/material/material.module';
+import { FormCategoriesComponent } from './components/form-categories/form-categories.component';
+import { FormQuestionsComponent } from './components/form-questions/form-questions.component';
+import { FormWordsComponent } from './components/form-words/form-words.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +22,10 @@ import { MaterialModule } from '../shared/material/material.module';
     ListQuestionsComponent,
     ListUsersComponent,
     StatisticsComponent,
-    FormUsersComponent
+    FormUsersComponent,
+    FormCategoriesComponent,
+    FormQuestionsComponent,
+    FormWordsComponent
   ],
   imports: [
     CommonModule,

@@ -13,18 +13,18 @@ import { ConnectionService } from '../../services/connection.service';
 export class FormUsersComponent implements OnInit {
   public roles: string[] = ["USER", "ADMIN"]
 
-  myForm: FormGroup = this.fb.group({
-    email: ['', [Validators.required]],
-    password: ['', [Validators.required]],
-    fullName: ['', [Validators.required]],
-    nickname: ['', [Validators.required]],
+  public myForm: FormGroup = this.fb.group({
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.required, Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/i)]],
+    fullName: ['', [Validators.required, Validators.maxLength(40)]],
+    nickname: ['', [Validators.required, Validators.maxLength(40)]],
     urlImage: ['', [Validators.required]],
     birthday: ['', [Validators.required]],
-    city: ['', [Validators.required]],
+    city: ['', [Validators.required, Validators.maxLength(40)]],
     roles: ['', [Validators.required]],
   });
 
-  public imagen: any = null;
+  public image: any = null;
 
   public load: boolean = true;
 
@@ -45,16 +45,14 @@ export class FormUsersComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.data.id) {
-      this.myForm = this.fb.group({
-        email: [this.data.email, [Validators.required]],
-        password: [this.data.password, [Validators.required]],
-        fullName: [this.data.fullName, [Validators.required]],
-        nickname: [this.data.nickname, [Validators.required]],
-        urlImage: ['', [Validators.required]],
-        birthday: [this.data.birthday, [Validators.required]],
-        city: [this.data.city, [Validators.required]],
-        roles: [this.data.roles[0], [Validators.required]],
-      });
+      this.myForm.get('email')?.patchValue(this.data.email);
+      this.myForm.get('password')?.patchValue(this.data.password);
+      this.myForm.get('fullName')?.patchValue(this.data.fullName);
+      this.myForm.get('nickname')?.patchValue(this.data.nickname);
+      this.myForm.get('birthday')?.patchValue(this.data.birthday);
+      this.myForm.get('city')?.patchValue(this.data.city);
+      this.myForm.get('roles')?.patchValue(this.data.roles[0]);
+
       this.getImage()
     }
   }
@@ -64,7 +62,7 @@ export class FormUsersComponent implements OnInit {
       let imgArr = this.data.urlImage.split('/')
       this.connectionS.getFile(imgArr[imgArr.length - 1]).subscribe(resp => {
         let objectURL = URL.createObjectURL(resp);
-        this.imagen = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+        this.image = this.sanitizer.bypassSecurityTrustUrl(objectURL);
       })
     }
   }
@@ -85,27 +83,21 @@ export class FormUsersComponent implements OnInit {
       fd.append('nickname', user.nickname)
       fd.append('password', user.password)
       fd.append('roles[]', String(user.roles))
-      if (this.fileInput !== undefined) {
+      if (this.fileInput !== undefined && this.fileInput.nativeElement.files[0] !== undefined) {
         fd.append("file", this.fileInput.nativeElement.files[0], this.fileInput.nativeElement.files[0].name);
-        this.connectionS.updateUser(Number(user.id), fd).subscribe((res) => {
-          if (res) {
-            this.load = true;
-            this.onClose()
-          }
-        })
+        this.updateUser(Number(user.id), fd)
       } else {
-        let imgArr = user.urlImage.split('/')
-        this.connectionS.getFile(imgArr[imgArr.length - 1]).subscribe(resp => {
-          fd.append("file", resp, 'image.png');
-
-          this.connectionS.updateUser(Number(user.id), fd).subscribe((res) => {
-            if (res) {
-              this.load = true;
-              this.onClose()
-            }
+        if (user.urlImage.replace(/\s+/g, '') !== "") {
+          let imgArr = user.urlImage.split('/')
+          this.connectionS.getFile(imgArr[imgArr.length - 1]).subscribe(resp => {
+            let name = imgArr[imgArr.length - 1].split("_")
+            fd.append("file", resp, name[name.length - 1]);
+            this.updateUser(Number(user.id), fd)
           })
-
-        })
+        } else {
+          fd.append("file", new Blob(),"default.png");
+          this.updateUser(Number(user.id), fd)
+        }
       }
     } else {
       fd.append('birthday', user.birthday)
@@ -115,8 +107,10 @@ export class FormUsersComponent implements OnInit {
       fd.append('nickname', user.nickname)
       fd.append('password', user.password)
       fd.append('roles[]', String(user.roles))
-      if (this.fileInput !== undefined && this.fileInput.nativeElement.files[0]!== undefined ) {
-                fd.append("file", this.fileInput.nativeElement.files[0], this.fileInput.nativeElement.files[0].name);
+      if (this.fileInput !== undefined && this.fileInput.nativeElement.files[0] !== undefined) {
+        fd.append("file", this.fileInput.nativeElement.files[0], this.fileInput.nativeElement.files[0].name);
+      } else {
+        fd.append("file", new Blob(),"default.png");
       }
       this.connectionS.addUser(fd).subscribe((res) => {
         if (res) {
@@ -127,7 +121,22 @@ export class FormUsersComponent implements OnInit {
     }
   }
 
+  updateUser(id: number, fd: FormData) {
+    this.connectionS.updateUser(id, fd).subscribe((res) => {
+      if (res) {
+        this.load = true;
+        this.onClose()
+      }
+    })
+  }
+
+
+  deleteImage() {
+    this.data.urlImage = '';
+    this.image = '../../../../assets/img/profileDefault.png'
+  }
+
   onClose(): void {
-    this.dialogRef.close()
+    this.dialogRef.close(true)
   }
 }
