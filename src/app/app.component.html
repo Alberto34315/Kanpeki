@@ -1,4 +1,25 @@
+<!--Poner condición de que cuando exista el Token aparezca el header, sino no-->
 <app-header></app-header>
 <div class="container-fluid">
     <router-outlet></router-outlet>
+
+    <div class="contact">
+        <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+                <div class="column">
+                    <input type="text" placeholder="Name" formControlName="name" required>
+                </div>
+                <div class="column">
+                    <input id="email" type="email" placeholder="Email" formControlName="email" required>
+                   
+                </div>
+            </div>
+            <br>
+            <br>
+            <textarea type="text" class="multi-line" placeholder="Message" formControlName="message" required></textarea>
+            <br>
+            <br>
+            <button class="btn-send" type="submit" [disabled]="!contactForm.valid" [class.ready]="contactForm.valid">Send Message</button>
+        </form>
+     </div>
 </div>
