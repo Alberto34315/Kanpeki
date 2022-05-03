@@ -40,7 +40,7 @@ export class AppComponent {
           name: contact.name,
           email: contact.email,
           message: contact.message,
-        },
+        }, 
         {
           headers: this.headers,
         }
