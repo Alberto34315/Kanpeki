@@ -42,4 +42,4 @@ testem.log
 Thumbs.db
 
 # API
-/src/environments/api.ts
+#/src/environments/api.ts
