@@ -1,9 +1,10 @@
 
 export interface ResponseWordDTO {
-    id:       number;
+    id: number;
     japanese: string;
-    english:  string;
-    spanish:  string;
+    english: string;
+    spanish: string;
     furigana: string;
     urlImage: string;
+    categoryId?: number;
 }

@@ -1,6 +1,6 @@
 <div *ngIf="load; then thenBlock; else elseBlock"></div>
 
-<ng-template #thenBlock>  
+<ng-template #thenBlock>
   <form
     autocomplete="off"
     [formGroup]="myForm"
@@ -8,7 +8,9 @@
     enctype="multipart/form-data"
   >
     <div class="mb-3 row">
-      <label class="col-sm-3 col-form-label">Email</label>
+      <label class="col-sm-3 col-form-label">{{
+        "form.email" | translate
+      }}</label>
       <div class="col-sm-9">
         <input
           type="email"
@@ -16,35 +18,73 @@
           placeholder="example@gamil.com"
           formControlName="email"
         />
+        <span *ngIf="fieldIsRequired('email')" class="form-text text-danger">
+          {{ "form.fieldIsRequired" | translate }}
+        </span>
+        <span *ngIf="emailIsValid('email')" class="form-text text-danger">
+          {{ "form.emailIsValid" | translate }}
+        </span>
       </div>
     </div>
     <div class="mb-3 row">
-      <label class="col-sm-3 col-form-label">Password</label>
+      <label class="col-sm-3 col-form-label">{{
+        "form.password" | translate
+      }}</label>
       <div class="col-sm-9">
         <input
           type="password"
           class="form-control"
           formControlName="password"
         />
+        <span *ngIf="fieldIsRequired('password')" class="form-text text-danger">
+          {{ "form.fieldIsRequired" | translate }}
+        </span>
+        <span *ngIf="passwordIsValid('password')" class="form-text text-danger">
+          {{ "form.passwordIsValid" | translate }}
+        </span>
       </div>
     </div>
 
     <div class="mb-3 row">
-      <label class="col-sm-3 col-form-label">Full Name</label>
+      <label class="col-sm-3 col-form-label">
+        {{ "form.fullname" | translate }}</label
+      >
       <div class="col-sm-9">
         <input type="text" class="form-control" formControlName="fullName" />
+        <span *ngIf="fieldIsRequired('fullName')" class="form-text text-danger">
+          {{ "form.fieldIsRequired" | translate }}
+        </span>
+        <span
+          *ngIf="maxLengthdIsValid('fullName')"
+          class="form-text text-danger"
+        >
+          {{ "form.maxLengthdIsValid" | translate }}
+        </span>
       </div>
     </div>
 
     <div class="mb-3 row">
-      <label class="col-sm-3 col-form-label">Nickname</label>
+      <label class="col-sm-3 col-form-label">{{
+        "form.nickname" | translate
+      }}</label>
       <div class="col-sm-9">
         <input type="text" class="form-control" formControlName="nickname" />
+        <span *ngIf="fieldIsRequired('nickname')" class="form-text text-danger">
+          {{ "form.fieldIsRequired" | translate }}
+        </span>
+        <span
+          *ngIf="maxLengthdIsValid('nickname')"
+          class="form-text text-danger"
+        >
+          {{ "form.maxLengthdIsValid" | translate }}
+        </span>
       </div>
     </div>
 
     <div class="mb-3 row">
-      <label class="col-sm-5 col-form-label">Image</label>
+      <label class="col-sm-5 col-form-label">{{
+        "form.image" | translate
+      }}</label>
       <img
         [src]="
           data.urlImage ? image : '../../../../assets/img/profileDefault.png'
@@ -64,31 +104,47 @@
           accept="image/*"
           formControlName="urlImage"
         />
-        
       </div>
     </div>
 
     <div class="mb-3 row">
-      <label class="col-sm-3 col-form-label">Birthday</label>
+      <label class="col-sm-3 col-form-label">
+        {{ "form.birthday" | translate }}</label
+      >
       <div class="col-sm-9">
         <input type="date" class="form-control" formControlName="birthday" />
+        <span *ngIf="fieldIsRequired('birthday')" class="form-text text-danger">
+          {{ "form.fieldIsRequired" | translate }}
+        </span>
       </div>
     </div>
 
     <div class="mb-3 row">
-      <label class="col-sm-3 col-form-label">City</label>
+      <label class="col-sm-3 col-form-label">{{
+        "form.city" | translate
+      }}</label>
       <div class="col-sm-9">
         <input type="text" class="form-control" formControlName="city" />
+        <span *ngIf="fieldIsRequired('city')" class="form-text text-danger">
+          {{ "form.fieldIsRequired" | translate }}
+        </span>
+        <span *ngIf="maxLengthdIsValid('city')" class="form-text text-danger">
+          {{ "form.maxLengthdIsValid" | translate }}
+        </span>
       </div>
     </div>
 
     <div class="mb-3 row">
-      <label class="col-sm-3 col-form-label">Role</label>
+      <label class="col-sm-3 col-form-label">{{
+        "form.rol" | translate
+      }}</label>
       <div class="col-sm-9">
         <select
           class="form-select"
           formControlName="roles"
-          [(ngModel)]="(this.data.roles!==undefined)?this.data.roles[0]:roles[0]"
+          [(ngModel)]="
+            this.data.roles !== undefined ? this.data.roles[0] : roles[0]
+          "
         >
           <option *ngFor="let rol of roles" [value]="rol">{{ rol }}</option>
         </select>
@@ -97,17 +153,27 @@
 
     <div class="row">
       <div class="col-sm-12">
-        <!-- [disabled]="myForm.invalid" -->
-        <button class="btn btn-primary float-end" type="submit">Guardar</button>
-        <button class="btn btn-secondary float-start" [mat-dialog-close]="false">Cerrar</button>
+        <button
+          class="btn btn-primary float-end"
+          [disabled]="myForm.invalid"
+          type="submit"
+        >
+          {{ "form.save" | translate }}
+        </button>
+        <button
+          class="btn btn-secondary float-start"
+          [mat-dialog-close]="false"
+        >
+          {{ "form.close" | translate }}
+        </button>
       </div>
     </div>
   </form>
 </ng-template>
 <ng-template #elseBlock>
-    <div class="d-flex justify-content-center align-items-center">
-        <div class="spinner-border" role="status">
-          <span class="visually-hidden">Loading...</span>
-        </div>
-      </div>
+  <div class="d-flex justify-content-center align-items-center">
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
 </ng-template>

@@ -1,15 +1,34 @@
 {
   "header": {
-    "statistics": "Statistics"
+    "statistics": "Statistics",
+    "categories":"Categories"
   },
-  "idiom":{
-    "language":"Language",
-    "spanish":"Spanish",
-    "english":"English"
+  "idiom": {
+    "language": "Language",
+    "spanish": "Spanish",
+    "english": "English"
   },
-  "theme":{
-    "theme":"theme",
-    "pink":"pink",
-    "dark":"dark"
+  "theme": {
+    "theme": "theme",
+    "pink": "pink",
+    "dark": "dark"
+  },
+  "form": {
+    "email": "Email",
+    "password": "Password",
+    "fullname": "Full Name",
+    "rol": "Rol",
+    "image":"Image",
+    "nickname":"Nickname",
+    "birthday":"Birthday",
+    "city": "City",
+    "japanese":"Japanese",
+    "furigana":"Furigana",
+    "save":"Save",
+    "close":"Close",
+    "fieldIsRequired": "This field is required.",
+    "emailIsValid": "This field must have email format 'example@mail.com'.",
+    "passwordIsValid": "The password must be made up of some uppercase, some lowercase, some special character, and at least 8 characters.",
+    "maxLengthdIsValid":"Maximum of 40 characters."
   }
 }

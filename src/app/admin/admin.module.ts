@@ -14,6 +14,7 @@ import { MaterialModule } from '../shared/material/material.module';
 import { FormCategoriesComponent } from './components/form-categories/form-categories.component';
 import { FormQuestionsComponent } from './components/form-questions/form-questions.component';
 import { FormWordsComponent } from './components/form-words/form-words.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { FormWordsComponent } from './components/form-words/form-words.component
     AdminRoutingModule,
     SharedModule,
     FormsModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule,    
+    TranslateModule,
     MaterialModule
   ]
 })

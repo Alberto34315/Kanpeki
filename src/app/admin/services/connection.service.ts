@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { RequestUserDTO } from 'src/app/models/request/requestUserDTO';
+import { RequestWordDTO } from 'src/app/models/request/requestWordDTO';
 import { ResponseCategoryDTO } from 'src/app/models/response/responseCategoryDTO';
 import { ResponseQuestionDTO } from 'src/app/models/response/responseQuestionDTO';
 import { ResponseUserDTO } from 'src/app/models/response/responseUserDTO';
@@ -22,10 +23,13 @@ export class ConnectionService {
 
   constructor(private http: HttpClient) { }
 
+  //FILE---------------------------------------------------------------------------------------------------------------------
   getFile(nameFile: string | File | null) {
     return this.http.get(`${this.apiUrl}${this.kanpeki}${this.files}/${nameFile}`, { responseType: 'blob' })
   }
-
+  //---------------------------------------------------------------------------------------------------------------------
+  
+  //USER----------------------------------------------------------------------------------------------------------------------
   getUsers(): Observable<ResponseUserDTO[]> {
     return this.http.get<ResponseUserDTO[]>(`${this.apiUrl}${this.kanpeki}${this.users}`)
   }
@@ -51,22 +55,35 @@ export class ConnectionService {
   deleteUser(id: number): Observable<any> {
     return this.http.delete<any>(`${this.apiUrl}${this.kanpeki}${this.users}/user/${id}`)
   }
+  //-------------------------------------------------------------------------------------------------------------------
 
-
+  //WORD--------------------------------------------------------------------------------------------------------------
   getWords(): Observable<ResponseWordDTO[]> {
     return this.http.get<ResponseWordDTO[]>(`${this.apiUrl}${this.kanpeki}${this.words}`)
+  }
+
+  addWord(word: FormData): Observable<RequestWordDTO> {
+    return this.http.post<RequestWordDTO>(`${this.apiUrl}${this.kanpeki}${this.words}/word/v2`, word)
+  }
+
+  updateWord(id: number, word: FormData): Observable<RequestWordDTO> {
+    return this.http.put<RequestWordDTO>(`${this.apiUrl}${this.kanpeki}${this.words}/word/v2/${id}`, word)
   }
 
   deleteWords(id: number): Observable<any> {
     return this.http.delete<any>(`${this.apiUrl}${this.kanpeki}${this.words}/word/${id}`)
   }
+  //---------------------------------------------------------------------------------------------------------------------
 
+  //CATEGORY---------------------------------------------------------------------------------------------------------------------
   getCategories(): Observable<ResponseCategoryDTO[]> {
     return this.http.get<ResponseCategoryDTO[]>(`${this.apiUrl}${this.kanpeki}${this.categories}`)
   }
+  //---------------------------------------------------------------------------------------------------------------------
 
+  //QUESTION---------------------------------------------------------------------------------------------------------------------
   getQuestions(): Observable<ResponseQuestionDTO[]> {
     return this.http.get<ResponseQuestionDTO[]>(`${this.apiUrl}${this.kanpeki}${this.questions}`)
   }
-  
+  //---------------------------------------------------------------------------------------------------------------------
 }

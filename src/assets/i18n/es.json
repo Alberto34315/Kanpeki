@@ -1,6 +1,7 @@
 {
   "header": {
-    "statistics": "Estadísticas"
+    "statistics": "Estadísticas",
+    "categories":"Categorías"
   },
   "idiom":{
     "language":"Idioma",
@@ -11,5 +12,23 @@
     "theme":"tema",
     "pink":"rosa",
     "dark":"oscuro"
+  },
+  "form":{
+    "email":"Email",
+    "password":"Contraseña",
+    "fullname": "Nombre completo",
+    "rol": "Rol",
+    "image":"Imagen",
+    "nickname":"Apodo",
+    "birthday":"Cumpleaños",
+    "city": "Ciudad",
+    "japanese":"Japonés",
+    "furigana":"Furigana",
+    "save":"Guardar",
+    "close":"Cerrar",    
+    "fieldIsRequired":"Este campo es obligatorio.",
+    "emailIsValid":"Este campo de tener formato email 'example@mail.com'.",
+    "passwordIsValid":"La contraseña debe estar formado por alguna mayúscula, alguna minúscula, algún carácter especial, y como mínimo 8 caracteres.",
+    "maxLengthdIsValid":"Máximo de 40 caracteres."
   }
 }

@@ -4,6 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { RequestUserDTO } from 'src/app/models/request/requestUserDTO';
 import { ResponseUserDTO } from 'src/app/models/response/responseUserDTO';
+import { ValidFormService } from 'src/app/services/valid-form.service';
 import { ConnectionService } from '../../services/connection.service';
 @Component({
   selector: 'app-form-users',
@@ -18,7 +19,7 @@ export class FormUsersComponent implements OnInit {
     password: ['', [Validators.required, Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/i)]],
     fullName: ['', [Validators.required, Validators.maxLength(40)]],
     nickname: ['', [Validators.required, Validators.maxLength(40)]],
-    urlImage: ['', [Validators.required]],
+    urlImage: [''],
     birthday: ['', [Validators.required]],
     city: ['', [Validators.required, Validators.maxLength(40)]],
     roles: ['', [Validators.required]],
@@ -40,8 +41,11 @@ export class FormUsersComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: ResponseUserDTO | RequestUserDTO,
     private fb: FormBuilder,
     private connectionS: ConnectionService,
-    private sanitizer: DomSanitizer
-  ) { }
+    private sanitizer: DomSanitizer,
+    private valiFormS: ValidFormService
+  ) {
+    this.valiFormS.myForm = this.myForm
+  }
 
   ngOnInit(): void {
     if (this.data.id) {
@@ -95,7 +99,7 @@ export class FormUsersComponent implements OnInit {
             this.updateUser(Number(user.id), fd)
           })
         } else {
-          fd.append("file", new Blob(),"default.png");
+          fd.append("file", new Blob(), "default.png");
           this.updateUser(Number(user.id), fd)
         }
       }
@@ -110,7 +114,7 @@ export class FormUsersComponent implements OnInit {
       if (this.fileInput !== undefined && this.fileInput.nativeElement.files[0] !== undefined) {
         fd.append("file", this.fileInput.nativeElement.files[0], this.fileInput.nativeElement.files[0].name);
       } else {
-        fd.append("file", new Blob(),"default.png");
+        fd.append("file", new Blob(), "default.png");
       }
       this.connectionS.addUser(fd).subscribe((res) => {
         if (res) {
@@ -138,5 +142,21 @@ export class FormUsersComponent implements OnInit {
 
   onClose(): void {
     this.dialogRef.close(true)
+  }
+
+  fieldIsRequired(field: string) {
+    return this.valiFormS.fieldIsRequired(field)
+  }
+
+  emailIsValid(field: string) {
+    return this.valiFormS.emailIsValid(field)
+  }
+
+  passwordIsValid(field: string) {
+    return this.valiFormS.passwordIsValid(field)
+  }
+
+  maxLengthdIsValid(field: string) {
+    return this.valiFormS.maxLengthdIsValid(field)
   }
 }
