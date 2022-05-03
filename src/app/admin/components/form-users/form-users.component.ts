@@ -12,7 +12,7 @@ import { ConnectionService } from '../../services/connection.service';
   styleUrls: ['./form-users.component.sass']
 })
 export class FormUsersComponent implements OnInit {
-  public roles: string[] = ["USER", "ADMIN"]
+  public roles: string[] = ["USER", "ADMIN", "PENDING_APPROVAL"]
 
   public myForm: FormGroup = this.fb.group({
     email: ['', [Validators.required, Validators.email]],

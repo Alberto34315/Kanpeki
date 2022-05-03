@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { AuthService } from 'src/app/auth/services/auth.service';
 import { RequestUserDTO } from 'src/app/models/request/requestUserDTO';
 import { RequestWordDTO } from 'src/app/models/request/requestWordDTO';
 import { ResponseCategoryDTO } from 'src/app/models/response/responseCategoryDTO';
@@ -20,18 +21,23 @@ export class ConnectionService {
   private categories: string = api.category
   private questions: string = api.question
   private files: string = api.files
-
-  constructor(private http: HttpClient) { }
+  private httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer '+this.authS.getToken()
+    })
+  }
+  constructor(private http: HttpClient, private authS: AuthService) { }
 
   //FILE---------------------------------------------------------------------------------------------------------------------
   getFile(nameFile: string | File | null) {
     return this.http.get(`${this.apiUrl}${this.kanpeki}${this.files}/${nameFile}`, { responseType: 'blob' })
   }
   //---------------------------------------------------------------------------------------------------------------------
-  
+
   //USER----------------------------------------------------------------------------------------------------------------------
   getUsers(): Observable<ResponseUserDTO[]> {
-    return this.http.get<ResponseUserDTO[]>(`${this.apiUrl}${this.kanpeki}${this.users}`)
+    return this.http.get<ResponseUserDTO[]>(`${this.apiUrl}${this.kanpeki}${this.users}`,this.httpOptions)
   }
 
   addUser(user: FormData): Observable<RequestUserDTO> {

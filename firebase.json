@@ -1,0 +1,10 @@
+{
+  "hosting": {
+    "public": "dist/kanpeki",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}

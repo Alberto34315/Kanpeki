@@ -3,6 +3,7 @@ import { LanguageService } from './services/language.service';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, tap, Observable, of } from 'rxjs';
+import { ThemeService } from './services/theme.service';
 
 @Component({
   selector: 'app-root',
@@ -19,6 +20,7 @@ export class AppComponent {
   private formUrl = 'https://formspree.io/f/mwkywyrr';
   private headers = new HttpHeaders({ 'content-type': 'application/json' });
   constructor(
+    private themeS:ThemeService,
     private languageS: LanguageService,
     private fb: FormBuilder,
     private httpClient: HttpClient
