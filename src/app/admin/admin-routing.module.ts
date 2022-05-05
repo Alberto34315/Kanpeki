@@ -5,11 +5,13 @@ import { ListCategoriesComponent } from './pages/list-categories/list-categories
 import { ListQuestionsComponent } from './pages/list-questions/list-questions.component';
 import { ListUsersComponent } from './pages/list-users/list-users.component';
 import { ListWordsComponent } from './pages/list-words/list-words.component';
+import { MainComponent } from './pages/main/main.component';
 import { StatisticsComponent } from './pages/statistics/statistics.component';
 
 const routes: Routes = [
   {
     path: '',
+    component:MainComponent,
     children: [
       {
         path: 'statistics-admin',

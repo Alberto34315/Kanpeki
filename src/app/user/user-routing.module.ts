@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { MainComponent } from './pages/main/main.component';
 import { StatisticsUserComponent } from './pages/statistics-user/statistics-user.component';
 import { StudyUserComponent } from './pages/study-user/study-user.component';
 import { TestsUserComponent } from './pages/tests-user/tests-user.component';
 
 const routes: Routes = [
   {
-    path: '',
+    path: '',    
+    component:MainComponent,
     children: [
       {
         path: 'statistics-user',

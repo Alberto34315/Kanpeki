@@ -6,6 +6,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ProfileComponent } from './profile/profile.component';
 import { TableComponent } from './components/table/table.component';
 import { MaterialModule } from './material/material.module';
+import { NgChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -13,12 +14,16 @@ import { MaterialModule } from './material/material.module';
     ProfileComponent,
     TableComponent,
   ],
-  exports: [HeaderComponent, TableComponent],
+  exports: [HeaderComponent,
+    TableComponent,
+    MaterialModule,
+    NgChartsModule],
   imports: [
     CommonModule,
     RouterModule,
     TranslateModule,
     MaterialModule,
+    NgChartsModule,
   ]
 })
 export class SharedModule { }

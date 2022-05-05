@@ -7,21 +7,20 @@ import { StudyUserComponent } from './pages/study-user/study-user.component';
 import { StatisticsUserComponent } from './pages/statistics-user/statistics-user.component';
 import { SharedModule } from '../shared/shared.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { MaterialModule } from '../shared/material/material.module';
-
+import { MainComponent } from './pages/main/main.component';
 
 @NgModule({
   declarations: [
     TestsUserComponent,
     StudyUserComponent,
-    StatisticsUserComponent
+    StatisticsUserComponent,
+    MainComponent
   ],
   imports: [
     CommonModule,
     UserRoutingModule,
     SharedModule,   
     TranslateModule,
-    MaterialModule
   ]
 })
 export class UserModule { }

@@ -1,18 +1,61 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { catchError, map, Observable, of } from 'rxjs';
+import { ConnectionService } from 'src/app/admin/services/connection.service';
+import { ResponseUserDTO } from 'src/app/models/response/responseUserDTO';
+import { api } from 'src/environments/api';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor() { }
-  setToken(token: string) {
-    //localStorage.setItem("jwt", token)
-    localStorage.setItem("jwt", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsib2F1dGgyLXJlc291cmNlIl0sInVzZXJfbmFtZSI6InNlbG1hLmhheW91bi5jYWJhbGxlcm9AZ21haWwuY29tIiwic2NvcGUiOlsicmVhZCJdLCJleHAiOjE2NTE2ODE4OTksImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iLCJST0xFX1VTRVIiXSwianRpIjoiYWUzNTVmYjUtMjYxMy00MWY2LTk2ZTktZGQ4NWE5ZWM3ZDBkIiwiY2xpZW50X2lkIjoiS29reWFrdSJ9.wTNzi0US1NGvyFTqDv7SAX15edw5rjg8Vy5nPLDTFMU"
-    )
+  private apiUrl: string = api.apiUrl
+  private kanpeki: string = api.kanpeki
+  private users: string = api.user
+  private token: string = api.token
+  private httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.getToken()
+    })
+  }
+  
+  private httpOptionsAuth = {
+    headers: new HttpHeaders({
+      'Content-Type':  'application/json',
+      'Authorization': 'Basic ' + btoa('Kokyaku:34315')
+    })
+  };
+  constructor(private http: HttpClient) { }
+
+  login(email:string, pass:string):Observable<any>{
+    return this.http.post(
+      `${this.apiUrl}${this.token}?grant_type=password&username=${email}&password=${pass}`,
+      {}, 
+      this.httpOptionsAuth
+      )
   }
 
-  getToken():string {
+  setToken(token: string) {
+    localStorage.setItem("jwt", token)
+  }
+
+  getToken(): string {
     return String(localStorage.getItem("jwt"))
+  }
+
+  validarToken(): Observable<boolean> {
+    return this.http.get<ResponseUserDTO[]>(`${this.apiUrl}${this.kanpeki}${this.users}/me`, this.httpOptions).pipe(
+      map(resp => {
+        return true
+      }),
+      catchError(err => of(false))
+    )
+
+  }
+
+  logout() {
+    localStorage.clear();
   }
 }

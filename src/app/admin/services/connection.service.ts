@@ -21,23 +21,37 @@ export class ConnectionService {
   private categories: string = api.category
   private questions: string = api.question
   private files: string = api.files
-  private httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer '+this.authS.getToken()
-    })
+  private httpOptions
+  constructor(private http: HttpClient, private authS: AuthService) {
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.authS.getToken()
+      })
+    }
   }
-  constructor(private http: HttpClient, private authS: AuthService) { }
 
   //FILE---------------------------------------------------------------------------------------------------------------------
   getFile(nameFile: string | File | null) {
-    return this.http.get(`${this.apiUrl}${this.kanpeki}${this.files}/${nameFile}`, { responseType: 'blob' })
+    return this.http.get(`${this.apiUrl}${this.kanpeki}${this.files}/${nameFile}`, { responseType: 'blob', headers: { 'Authorization': 'Bearer ' + this.authS.getToken() } })
   }
   //---------------------------------------------------------------------------------------------------------------------
 
   //USER----------------------------------------------------------------------------------------------------------------------
   getUsers(): Observable<ResponseUserDTO[]> {
-    return this.http.get<ResponseUserDTO[]>(`${this.apiUrl}${this.kanpeki}${this.users}`,this.httpOptions)
+    return this.http.get<ResponseUserDTO[]>(`${this.apiUrl}${this.kanpeki}${this.users}`, this.httpOptions)
+  }
+
+  getUserMe(): Observable<ResponseUserDTO> {
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.authS.getToken()
+      })
+    }
+    console.log( this.httpOptions);
+    
+    return this.http.get<ResponseUserDTO>(`${this.apiUrl}${this.kanpeki}${this.users}/me`, this.httpOptions)
   }
 
   addUser(user: FormData): Observable<RequestUserDTO> {
@@ -51,45 +65,68 @@ export class ConnectionService {
     //     'Authorization': "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsib2F1dGgyLXJlc291cmNlIl0sInVzZXJfbmFtZSI6InNlbG1hLmhheW91bi5jYWJhbGxlcm9AZ21haWwuY29tIiwic2NvcGUiOlsicmVhZCJdLCJleHAiOjE2NTA5OTU4NTYsImF1dGhvcml0aWVzIjpbIlJPTEVfVVNFUiIsIlJPTEVfQURNSU4iXSwianRpIjoiOGNhNmM0ZGEtOWFjMS00ODM5LWI0OGMtYTFlYzJjNTk1MmI0IiwiY2xpZW50X2lkIjoiS29reWFrdSJ9.VmvF0B74MN5EpIgL06YnVcaVpUhIWJk48CL-onmqqec"
     //   })
     // }
-    return this.http.post<RequestUserDTO>(`${this.apiUrl}${this.kanpeki}${this.users}/user/v2`, user)
+    return this.http.post<RequestUserDTO>(`${this.apiUrl}${this.kanpeki}${this.users}/user/v2`, user, this.httpOptions)
   }
 
   updateUser(id: number, user: FormData): Observable<ResponseUserDTO> {
-    return this.http.put<ResponseUserDTO>(`${this.apiUrl}${this.kanpeki}${this.users}/user/v2/${id}`, user)
+    return this.http.put<ResponseUserDTO>(`${this.apiUrl}${this.kanpeki}${this.users}/user/v2/${id}`, user, this.httpOptions)
   }
 
   deleteUser(id: number): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrl}${this.kanpeki}${this.users}/user/${id}`)
+    return this.http.delete<any>(`${this.apiUrl}${this.kanpeki}${this.users}/user/${id}`, this.httpOptions)
   }
   //-------------------------------------------------------------------------------------------------------------------
 
   //WORD--------------------------------------------------------------------------------------------------------------
   getWords(): Observable<ResponseWordDTO[]> {
-    return this.http.get<ResponseWordDTO[]>(`${this.apiUrl}${this.kanpeki}${this.words}`)
+    return this.http.get<ResponseWordDTO[]>(`${this.apiUrl}${this.kanpeki}${this.words}`, this.httpOptions)
   }
 
   addWord(word: FormData): Observable<RequestWordDTO> {
-    return this.http.post<RequestWordDTO>(`${this.apiUrl}${this.kanpeki}${this.words}/word/v2`, word)
+    return this.http.post<RequestWordDTO>(`${this.apiUrl}${this.kanpeki}${this.words}/word/v2`, word, this.httpOptions)
   }
 
   updateWord(id: number, word: FormData): Observable<RequestWordDTO> {
-    return this.http.put<RequestWordDTO>(`${this.apiUrl}${this.kanpeki}${this.words}/word/v2/${id}`, word)
+    return this.http.put<RequestWordDTO>(`${this.apiUrl}${this.kanpeki}${this.words}/word/v2/${id}`, word, this.httpOptions)
   }
 
   deleteWords(id: number): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrl}${this.kanpeki}${this.words}/word/${id}`)
+    return this.http.delete<any>(`${this.apiUrl}${this.kanpeki}${this.words}/word/${id}`, this.httpOptions)
   }
   //---------------------------------------------------------------------------------------------------------------------
 
   //CATEGORY---------------------------------------------------------------------------------------------------------------------
   getCategories(): Observable<ResponseCategoryDTO[]> {
-    return this.http.get<ResponseCategoryDTO[]>(`${this.apiUrl}${this.kanpeki}${this.categories}`)
+    return this.http.get<ResponseCategoryDTO[]>(`${this.apiUrl}${this.kanpeki}${this.categories}`, this.httpOptions)
+  }
+
+  addCategory(category: FormData): Observable<ResponseCategoryDTO> {
+    return this.http.post<ResponseCategoryDTO>(`${this.apiUrl}${this.kanpeki}${this.categories}/category`, category, this.httpOptions)
+  }
+
+  updatCategory(id: number, category: FormData): Observable<ResponseCategoryDTO> {
+    return this.http.put<ResponseCategoryDTO>(`${this.apiUrl}${this.kanpeki}${this.categories}/category/${id}`, category, this.httpOptions)
+  }
+
+  deleteCategories(id: number): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}${this.kanpeki}${this.categories}/category/${id}`, this.httpOptions)
   }
   //---------------------------------------------------------------------------------------------------------------------
 
   //QUESTION---------------------------------------------------------------------------------------------------------------------
   getQuestions(): Observable<ResponseQuestionDTO[]> {
-    return this.http.get<ResponseQuestionDTO[]>(`${this.apiUrl}${this.kanpeki}${this.questions}`)
+    return this.http.get<ResponseQuestionDTO[]>(`${this.apiUrl}${this.kanpeki}${this.questions}`, this.httpOptions)
+  }
+  addQuestion(question: FormData): Observable<ResponseQuestionDTO> {
+    return this.http.post<ResponseQuestionDTO>(`${this.apiUrl}${this.kanpeki}${this.questions}/question`, question, this.httpOptions)
+  }
+
+  updatQuestion(id: number, question: FormData): Observable<ResponseQuestionDTO> {
+    return this.http.put<ResponseQuestionDTO>(`${this.apiUrl}${this.kanpeki}${this.questions}/question/${id}`, question, this.httpOptions)
+  }
+
+  deleteQuestions(id: number): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}${this.kanpeki}${this.questions}/question/${id}`, this.httpOptions)
   }
   //---------------------------------------------------------------------------------------------------------------------
 }

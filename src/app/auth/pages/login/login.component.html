@@ -15,32 +15,63 @@
                   <h4 class="mt-1 mb-5 pb-1">We are The Kanpeki Team</h4>
                 </div>
 
-                <form>
+                <form
+                  autocomplete="off"
+                  [formGroup]="myForm"
+                  (ngSubmit)="login()"
+                >
                   <div class="form-outline mb-4">
-                    <label class="form-label"
-                      >Username</label
-                    >
+                    <label class="form-label">{{
+                      "form.email" | translate
+                    }}</label>
                     <input
                       type="email"
-                      id="form2Example11"
                       class="form-control"
-                      placeholder="example@gamil.com"
+                      placeholder="example@gmail.com"
+                      formControlName="email"
                     />
+                    <span
+                      *ngIf="fieldIsRequired('email')"
+                      class="form-text text-danger"
+                    >
+                      {{ "form.fieldIsRequired" | translate }}
+                    </span>
+                    <span
+                      *ngIf="emailIsValid('email')"
+                      class="form-text text-danger"
+                    >
+                      {{ "form.emailIsValid" | translate }}
+                    </span>
                   </div>
 
                   <div class="form-outline mb-4">
-                    <label class="form-label"
-                      >Password</label>
+                    <label class="form-label">{{
+                      "form.password" | translate
+                    }}</label>
                     <input
                       type="password"
                       class="form-control"
+                      formControlName="password"
                     />
+                    <span
+                      *ngIf="fieldIsRequired('password')"
+                      class="form-text text-danger"
+                    >
+                      {{ "form.fieldIsRequired" | translate }}
+                    </span>
+                    <span
+                      *ngIf="passwordIsValid('password')"
+                      class="form-text text-danger"
+                    >
+                      {{ "form.passwordIsValid" | translate }}
+                    </span>
                   </div>
 
                   <div class="text-center pt-1 mb-5 pb-1">
                     <button
                       class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3"
                       type="button"
+                      type="submit"
                     >
                       Log in
                     </button>
@@ -50,7 +81,11 @@
                     class="d-flex align-items-center justify-content-center pb-4"
                   >
                     <p class="mb-0 me-2">Don't have an account?</p>
-                    <button type="button" class="btn btn-outline-danger">
+                    <button
+                      routerLink="/auth/register"
+                      type="button"
+                      class="btn btn-outline-danger"
+                    >
                       Create new
                     </button>
                   </div>

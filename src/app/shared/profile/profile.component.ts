@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/auth/services/auth.service';
 import { LanguageService } from 'src/app/services/language.service';
 import { ThemeService } from 'src/app/services/theme.service';
 
@@ -19,7 +20,7 @@ export class ProfileComponent implements OnInit {
     ["english", "en"],
     ["spanish", "es"]
   ]);
-  constructor(private languageS: LanguageService, private themeS: ThemeService, private router: Router) { }
+  constructor(private languageS: LanguageService, private themeS: ThemeService, private router: Router, private authS: AuthService) { }
 
   ngOnInit(): void {
   }
@@ -30,6 +31,7 @@ export class ProfileComponent implements OnInit {
     this.themeS.current = theme;
   }
   logout() {
+    this.authS.logout();
     this.router.navigate(['/auth/login'])
   }
 }

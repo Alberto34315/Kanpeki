@@ -10,11 +10,11 @@ import { StatisticsComponent } from './pages/statistics/statistics.component';
 import { SharedModule } from '../shared/shared.module';
 import { FormUsersComponent } from './components/form-users/form-users.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MaterialModule } from '../shared/material/material.module';
 import { FormCategoriesComponent } from './components/form-categories/form-categories.component';
 import { FormQuestionsComponent } from './components/form-questions/form-questions.component';
 import { FormWordsComponent } from './components/form-words/form-words.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { MainComponent } from './pages/main/main.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +26,8 @@ import { TranslateModule } from '@ngx-translate/core';
     FormUsersComponent,
     FormCategoriesComponent,
     FormQuestionsComponent,
-    FormWordsComponent
+    FormWordsComponent,
+    MainComponent
   ],
   imports: [
     CommonModule,
@@ -35,7 +36,7 @@ import { TranslateModule } from '@ngx-translate/core';
     FormsModule,
     ReactiveFormsModule,    
     TranslateModule,
-    MaterialModule
+    
   ]
 })
 export class AdminModule { }
