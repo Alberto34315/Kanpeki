@@ -49,26 +49,26 @@ export class ConnectionService {
         'Authorization': 'Bearer ' + this.authS.getToken()
       })
     }
-    console.log( this.httpOptions);
-    
     return this.http.get<ResponseUserDTO>(`${this.apiUrl}${this.kanpeki}${this.users}/me`, this.httpOptions)
   }
 
   addUser(user: FormData): Observable<RequestUserDTO> {
-    // const httpOptions = {
-    //   headers: new HttpHeaders({
-    //     'Access-Control-Allow-Origin': '*',
-    //     'Access-Control-Allow-Headers': 'Content-Type',
-    //     'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT',
-    //     'Content-Type': 'multipart/form-data',
-    //     "Accept": 'application/json',
-    //     'Authorization': "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsib2F1dGgyLXJlc291cmNlIl0sInVzZXJfbmFtZSI6InNlbG1hLmhheW91bi5jYWJhbGxlcm9AZ21haWwuY29tIiwic2NvcGUiOlsicmVhZCJdLCJleHAiOjE2NTA5OTU4NTYsImF1dGhvcml0aWVzIjpbIlJPTEVfVVNFUiIsIlJPTEVfQURNSU4iXSwianRpIjoiOGNhNmM0ZGEtOWFjMS00ODM5LWI0OGMtYTFlYzJjNTk1MmI0IiwiY2xpZW50X2lkIjoiS29reWFrdSJ9.VmvF0B74MN5EpIgL06YnVcaVpUhIWJk48CL-onmqqec"
-    //   })
-    // }
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ' + this.authS.getToken()
+      })
+    }
     return this.http.post<RequestUserDTO>(`${this.apiUrl}${this.kanpeki}${this.users}/user/v2`, user, this.httpOptions)
   }
 
-  updateUser(id: number, user: FormData): Observable<ResponseUserDTO> {
+  updateUser(id: number, user: FormData): Observable<ResponseUserDTO> {    
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ' + this.authS.getToken()
+      })
+    }
     return this.http.put<ResponseUserDTO>(`${this.apiUrl}${this.kanpeki}${this.users}/user/v2/${id}`, user, this.httpOptions)
   }
 
@@ -83,10 +83,22 @@ export class ConnectionService {
   }
 
   addWord(word: FormData): Observable<RequestWordDTO> {
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ' + this.authS.getToken()
+      })
+    }
     return this.http.post<RequestWordDTO>(`${this.apiUrl}${this.kanpeki}${this.words}/word/v2`, word, this.httpOptions)
   }
 
   updateWord(id: number, word: FormData): Observable<RequestWordDTO> {
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ' + this.authS.getToken()
+      })
+    }
     return this.http.put<RequestWordDTO>(`${this.apiUrl}${this.kanpeki}${this.words}/word/v2/${id}`, word, this.httpOptions)
   }
 

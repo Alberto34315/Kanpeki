@@ -6,5 +6,6 @@ export interface ResponseWordDTO {
     spanish: string;
     furigana: string;
     urlImage: string;
+    category?: number;
     categoryId?: number;
 }

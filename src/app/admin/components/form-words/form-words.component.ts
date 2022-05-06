@@ -1,4 +1,4 @@
-import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -52,15 +52,17 @@ export class FormWordsComponent implements OnInit {
       this.listCategories = res
     })
     if (this.data.id) {
+      this.getImage()
       this.myForm.get('spanish')?.patchValue(this.data.spanish);
       this.myForm.get('english')?.patchValue(this.data.english);
       this.myForm.get('japanese')?.patchValue(this.data.japanese);
       this.myForm.get('furigana')?.patchValue(this.data.furigana);
       this.myForm.get('category')?.patchValue(this.data.categoryId);
-
-      this.getImage()
     }
   }
+
+
+
 
   getImage() {
     if (this.data.urlImage != "") {
@@ -75,6 +77,8 @@ export class FormWordsComponent implements OnInit {
   save() {
     this.load = false;
     let word: RequestWordDTO = this.myForm.value
+    console.log(word);
+
     let fd = new FormData()
     if (this.data.id) {
       word.id = this.data.id
@@ -84,7 +88,7 @@ export class FormWordsComponent implements OnInit {
       fd.append('english', word.english)
       fd.append('japanese', word.japanese)
       fd.append('furigana', word.furigana)
-      fd.append('category', String(word.categoryId))
+      fd.append('categoryId', String(word.category))
       if (this.fileInput !== undefined && this.fileInput.nativeElement.files[0] !== undefined) {
         fd.append("file", this.fileInput.nativeElement.files[0], this.fileInput.nativeElement.files[0].name);
         this.updateWord(Number(word.id), fd)
@@ -106,7 +110,7 @@ export class FormWordsComponent implements OnInit {
       fd.append('english', word.english)
       fd.append('japanese', word.japanese)
       fd.append('furigana', word.furigana)
-      fd.append('category', String(word.categoryId))
+      fd.append('categoryId', String(word.category))
       if (this.fileInput !== undefined && this.fileInput.nativeElement.files[0] !== undefined) {
         fd.append("file", this.fileInput.nativeElement.files[0], this.fileInput.nativeElement.files[0].name);
       } else {

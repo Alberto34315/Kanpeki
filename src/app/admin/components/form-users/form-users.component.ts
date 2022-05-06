@@ -116,6 +116,7 @@ export class FormUsersComponent implements OnInit {
       } else {
         fd.append("file", new Blob(), "default.png");
       }
+      
       this.connectionS.addUser(fd).subscribe((res) => {
         if (res) {
           this.load = true;

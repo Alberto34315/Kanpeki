@@ -1,6 +1,9 @@
 {
   "header": {
     "statistics": "Estadísticas",
+    "users": "Usuarios",
+    "questions": "Palabras",
+    "words": "Preguntas",
     "categories":"Categorías"
   },
   "idiom":{

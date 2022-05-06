@@ -1,6 +1,9 @@
 {
   "header": {
     "statistics": "Statistics",
+    "users": "Users",
+    "questions": "Questions",
+    "words": "Words",
     "categories":"Categories"
   },
   "idiom": {

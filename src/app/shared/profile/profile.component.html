@@ -1,7 +1,7 @@
-<div class="row row-cols-2">
+<div class="row row-cols-2" *ngIf="user!==undefined">
   <div class="col">
-    <img
-      src="../../../assets/img/profileDefault.png"
+    <img 
+    [src]="image!=null ? image : '../../../assets/img/profileDefault.png'"
       class="img-thumbnail imgProfile float-end me-5"
     />
   </div>
@@ -9,23 +9,23 @@
     <div class="row row-cols-2">
       <div class="col">
         <h4>Nickname</h4>
-        <p>Pacolo</p>
+        <p>{{user.nickname}}</p>
       </div>
       <div class="col">
         <h4>FullName</h4>
-        <p>Paco Sánchez Escobar</p>
+        <p>{{user.fullName}}</p>
       </div>
       <div class="col">
         <h4>Email</h4>
-        <p>example@gmail.com</p>
+        <p>{{user.email}}</p>
       </div>
       <div class="col">
         <h4>Birthday</h4>
-        <p>05-12-1986</p>
+        <p>{{user.birthday}}</p>
       </div>
       <div class="col-12">
         <h4>City</h4>
-        <p>Córdoba</p>
+        <p>{{user.city}}</p>
       </div>
       <div class="col">
         <div class="dropdown">

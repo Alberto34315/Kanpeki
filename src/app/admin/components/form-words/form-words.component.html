@@ -103,8 +103,7 @@
         />
       </div>
     </div>
-
-    <div class="mb-3 row">
+    <div class="mb-3 row"   *ngIf="listCategories.length>0">
       <label class="col-sm-3 col-form-label">{{
         "header.categories" | translate
       }}</label>
@@ -130,9 +129,10 @@
 
     <div class="row">
       <div class="col-sm-12">
+        <!-- [disabled]="myForm.invalid" -->
         <button
           class="btn btn-primary float-end"
-          [disabled]="myForm.invalid"
+          
           type="submit"
         >
           {{ "form.save" | translate }}

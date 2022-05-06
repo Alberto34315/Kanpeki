@@ -46,6 +46,12 @@ export class AuthService {
   }
 
   validarToken(): Observable<boolean> {
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.getToken()
+      })
+    }
     return this.http.get<ResponseUserDTO[]>(`${this.apiUrl}${this.kanpeki}${this.users}/me`, this.httpOptions).pipe(
       map(resp => {
         return true

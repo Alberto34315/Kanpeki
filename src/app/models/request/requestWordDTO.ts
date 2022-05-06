@@ -1,6 +1,7 @@
 export interface RequestWordDTO {
     id?: number;
-    categoryId: number;
+    category: number;
+    categoryId?: number;
     japanese: string;
     english: string;
     spanish: string;
