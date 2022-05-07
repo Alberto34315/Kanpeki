@@ -2,36 +2,53 @@
   "header": {
     "statistics": "Estadísticas",
     "users": "Usuarios",
-    "questions": "Palabras",
-    "words": "Preguntas",
-    "categories":"Categorías"
+    "questions": "Preguntas",
+    "words": "Palabras",
+    "categories": "Categorías"
   },
-  "idiom":{
-    "language":"Idioma",
-    "spanish":"Español",
-    "english":"Inglés"
+  "idiom": {
+    "language": "Idioma",
+    "spanish": "Español",
+    "english": "Inglés"
   },
-  "theme":{
-    "theme":"tema",
-    "pink":"rosa",
-    "dark":"oscuro"
+  "theme": {
+    "theme": "tema",
+    "pink": "rosa",
+    "dark": "oscuro"
   },
-  "form":{
-    "email":"Email",
-    "password":"Contraseña",
+  "form": {
+    "email": "Email",
+    "password": "Contraseña",
     "fullname": "Nombre completo",
     "rol": "Rol",
-    "image":"Imagen",
-    "nickname":"Apodo",
-    "birthday":"Cumpleaños",
+    "image": "Imagen",
+    "nickname": "Apodo",
+    "birthday": "Cumpleaños",
     "city": "Ciudad",
-    "japanese":"Japonés",
-    "furigana":"Furigana",
-    "save":"Guardar",
-    "close":"Cerrar",    
-    "fieldIsRequired":"Este campo es obligatorio.",
-    "emailIsValid":"Este campo de tener formato email 'example@mail.com'.",
-    "passwordIsValid":"La contraseña debe estar formado por alguna mayúscula, alguna minúscula, algún carácter especial, y como mínimo 8 caracteres.",
-    "maxLengthdIsValid":"Máximo de 40 caracteres."
+    "japanese": "Japonés",
+    "furigana": "Furigana",
+    "save": "Guardar",
+    "close": "Cerrar",
+    "fieldIsRequired": "Este campo es obligatorio.",
+    "emailIsValid": "Este campo de tener formato email 'example@mail.com'.",
+    "passwordIsValid": "La contraseña debe estar formado por alguna mayúscula, alguna minúscula, algún carácter especial, y como mínimo 8 caracteres.",
+    "maxLengthdIsValid": "Máximo de 40 caracteres."
+  },
+  "answer": {
+    "answer": "Respuesta",
+    "answer1": "Respuesta 1",
+    "answer2": "Respuesta 2",
+    "answer3": "Respuesta 3",
+    "answer4": "Respuesta 4",
+    "response": "Respuesta",
+    "isCorrect": "Es Correcto"
+  },
+  "boolean": {
+    "true": "Verdadero",
+    "false": "Falso"
+  },
+  "question":{
+    "statement":"Enunciado",
+    "help":"Ayuda"
   }
 }

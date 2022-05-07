@@ -1,7 +1,7 @@
 <div *ngIf="load; then thenBlock; else elseBlock"></div>
 
-<ng-template #thenBlock>
-  <form
+<ng-template #thenBlock >
+  <form 
     autocomplete="off"
     [formGroup]="myForm"
     (ngSubmit)="save()"
@@ -121,7 +121,7 @@
             {{ rol.unitName }} - {{ rol.categoryName }}
           </option>
         </select>
-        <span *ngIf="fieldIsRequired('furigana')" class="form-text text-danger">
+        <span *ngIf="fieldIsRequired('category')" class="form-text text-danger">
           {{ "form.fieldIsRequired" | translate }}
         </span>
       </div>
@@ -129,10 +129,9 @@
 
     <div class="row">
       <div class="col-sm-12">
-        <!-- [disabled]="myForm.invalid" -->
         <button
           class="btn btn-primary float-end"
-          
+          [disabled]="myForm.invalid" 
           type="submit"
         >
           {{ "form.save" | translate }}

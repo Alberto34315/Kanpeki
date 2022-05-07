@@ -36,10 +36,11 @@ export class ListUsersComponent implements OnInit {
 
   openForm() {
     this.dialogRef = this.dialog.open(FormUsersComponent, {
-      width: '450px',
+      width: '550px',
       height: '600px',
       data: {},
-      disableClose: true
+      disableClose: true,
+      panelClass:'custom-dialog-container'
     });
     this.dialogRef.afterClosed().subscribe(result => {
       if (result) {

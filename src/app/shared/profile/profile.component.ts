@@ -35,10 +35,10 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     this.connectionSAdmin.getUserMe().subscribe(res=>{
       this.user=res
-      console.log(this.user);
       this.getImage()
     })
   }
+
   getImage() {
     if (this.user.urlImage != "") {
       let imgArr = this.user.urlImage.split('/')
@@ -49,6 +49,7 @@ export class ProfileComponent implements OnInit {
     }
     
   }
+  
   changeLanguage(idiom: string) {
     this.languageS.changeLanguage(idiom)
   }

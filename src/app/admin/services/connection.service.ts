@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/auth/services/auth.service';
+import { RequestQuestionDTO } from 'src/app/models/request/requestQuestionDTO';
 import { RequestUserDTO } from 'src/app/models/request/requestUserDTO';
 import { RequestWordDTO } from 'src/app/models/request/requestWordDTO';
 import { ResponseCategoryDTO } from 'src/app/models/response/responseCategoryDTO';
@@ -113,10 +114,22 @@ export class ConnectionService {
   }
 
   addCategory(category: FormData): Observable<ResponseCategoryDTO> {
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ' + this.authS.getToken()
+      })
+    }
     return this.http.post<ResponseCategoryDTO>(`${this.apiUrl}${this.kanpeki}${this.categories}/category`, category, this.httpOptions)
   }
 
   updatCategory(id: number, category: FormData): Observable<ResponseCategoryDTO> {
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ' + this.authS.getToken()
+      })
+    }
     return this.http.put<ResponseCategoryDTO>(`${this.apiUrl}${this.kanpeki}${this.categories}/category/${id}`, category, this.httpOptions)
   }
 
@@ -129,11 +142,24 @@ export class ConnectionService {
   getQuestions(): Observable<ResponseQuestionDTO[]> {
     return this.http.get<ResponseQuestionDTO[]>(`${this.apiUrl}${this.kanpeki}${this.questions}`, this.httpOptions)
   }
-  addQuestion(question: FormData): Observable<ResponseQuestionDTO> {
+
+  addQuestion(question: RequestQuestionDTO): Observable<ResponseQuestionDTO> {
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ' + this.authS.getToken()
+      })
+    }
     return this.http.post<ResponseQuestionDTO>(`${this.apiUrl}${this.kanpeki}${this.questions}/question`, question, this.httpOptions)
   }
 
-  updatQuestion(id: number, question: FormData): Observable<ResponseQuestionDTO> {
+  updatQuestion(id: number, question: RequestQuestionDTO): Observable<ResponseQuestionDTO> {
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ' + this.authS.getToken()
+      })
+    }
     return this.http.put<ResponseQuestionDTO>(`${this.apiUrl}${this.kanpeki}${this.questions}/question/${id}`, question, this.httpOptions)
   }
 

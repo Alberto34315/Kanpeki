@@ -38,7 +38,8 @@ export class ListWordsComponent implements OnInit {
       width: '450px',
       height: '600px',
       data: {},
-      disableClose: true
+      disableClose: true,
+      panelClass:'custom-dialog-container'
     });
     this.dialogRef.afterClosed().subscribe(result => {
       if (result) {

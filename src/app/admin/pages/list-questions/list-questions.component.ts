@@ -28,18 +28,17 @@ export class ListQuestionsComponent implements OnInit {
   getListQuetions() {
     this.connectionS.getQuestions()
       .subscribe((resp) => {
-        console.log(resp);
-
         this.listQuestions = resp
       })
   }
 
   openForm() {
     this.dialogRef = this.dialog.open(FormQuestionsComponent, {
-      width: '450px',
+      width: '550px',
       height: '600px',
       data: {},
-      disableClose: true
+      disableClose: true,
+      panelClass:'custom-dialog-container'
     });
     this.dialogRef.afterClosed().subscribe(result => {
       if (result) {

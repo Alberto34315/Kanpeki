@@ -85,7 +85,13 @@ export class FormUsersComponent implements OnInit {
       fd.append('email', user.email)
       fd.append('fullName', user.fullName)
       fd.append('nickname', user.nickname)
-      fd.append('password', user.password)
+      console.log(user.password);
+
+      if (user.password !== undefined) {
+        fd.append('password', user.password)
+      } else {
+        fd.append('password', '')
+      }
       fd.append('roles[]', String(user.roles))
       if (this.fileInput !== undefined && this.fileInput.nativeElement.files[0] !== undefined) {
         fd.append("file", this.fileInput.nativeElement.files[0], this.fileInput.nativeElement.files[0].name);
@@ -109,14 +115,18 @@ export class FormUsersComponent implements OnInit {
       fd.append('email', user.email)
       fd.append('fullName', user.fullName)
       fd.append('nickname', user.nickname)
-      fd.append('password', user.password)
+      if (user.password !== undefined) {
+        fd.append('password', user.password)
+      } else {
+        fd.append('password', '')
+      }
       fd.append('roles[]', String(user.roles))
       if (this.fileInput !== undefined && this.fileInput.nativeElement.files[0] !== undefined) {
         fd.append("file", this.fileInput.nativeElement.files[0], this.fileInput.nativeElement.files[0].name);
       } else {
         fd.append("file", new Blob(), "default.png");
       }
-      
+
       this.connectionS.addUser(fd).subscribe((res) => {
         if (res) {
           this.load = true;

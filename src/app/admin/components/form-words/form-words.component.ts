@@ -2,6 +2,7 @@ import { AfterViewInit, Component, ElementRef, Inject, OnInit, ViewChild } from 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DomSanitizer } from '@angular/platform-browser';
+import { map } from 'rxjs';
 import { RequestWordDTO } from 'src/app/models/request/requestWordDTO';
 import { ResponseCategoryDTO } from 'src/app/models/response/responseCategoryDTO';
 import { ResponseWordDTO } from 'src/app/models/response/responseWordDTO';
@@ -48,7 +49,10 @@ export class FormWordsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.connectionS.getCategories().subscribe(res => {
+    this.connectionS.getCategories().pipe(map((res)=>{   
+      return res.filter(res=>res.isQuestion==false);
+    }))
+    .subscribe(res => {
       this.listCategories = res
     })
     if (this.data.id) {
@@ -77,8 +81,6 @@ export class FormWordsComponent implements OnInit {
   save() {
     this.load = false;
     let word: RequestWordDTO = this.myForm.value
-    console.log(word);
-
     let fd = new FormData()
     if (this.data.id) {
       word.id = this.data.id

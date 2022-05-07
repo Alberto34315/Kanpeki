@@ -1,31 +1,34 @@
-<div class="d-flex justify-content-between">
-  <button class="btn btn-primary mb-4 d-flex" (click)="deleteWord()">
-    <mat-icon>remove</mat-icon>Eliminar
-  </button>
-  <button class="btn btn-primary mb-4 d-flex" (click)="openForm()">
-    <mat-icon>add</mat-icon>Añadir
-  </button>
-</div>
-
-<div *ngIf="listWords.length > 0; then thenBlock; else elseBlock"></div>
-<ng-template #thenBlock
-  ><app-table [tableData]="listWords"
-  [nameFormComponent]="componentForm"
-  (propagateFather)="procesaPropagar()"
-  (listDeleteElementOut)="listDelete($event)"></app-table
-></ng-template>
-<ng-template #elseBlock>
-  <div class="d-flex justify-content-center">
-    <ng-container
-      *ngIf="load; then loadBlock; else elseLoadBlock"
-    ></ng-container>
-    <ng-template #loadBlock>
-      <div class="spinner-border" role="status">
-        <span class="visually-hidden">Loading...</span>
-      </div>
-    </ng-template>
-    <ng-template #elseLoadBlock>
-      <p>No hay palabras</p>
-    </ng-template>
+<div class="px-4">
+  <div class="d-flex justify-content-between">
+    <button class="btn btn-primary mb-4 d-flex" (click)="deleteWord()">
+      <mat-icon>remove</mat-icon>Eliminar
+    </button>
+    <button class="btn btn-primary mb-4 d-flex" (click)="openForm()">
+      <mat-icon>add</mat-icon>Añadir
+    </button>
   </div>
-</ng-template>
+  
+  <div *ngIf="listWords.length > 0; then thenBlock; else elseBlock"></div>
+  <ng-template #thenBlock
+    ><app-table [tableData]="listWords"
+    [nameFormComponent]="componentForm"
+    (propagateFather)="procesaPropagar()"
+    (listDeleteElementOut)="listDelete($event)"></app-table
+  ></ng-template>
+  <ng-template #elseBlock>
+    <div class="d-flex justify-content-center">
+      <ng-container
+        *ngIf="load; then loadBlock; else elseLoadBlock"
+      ></ng-container>
+      <ng-template #loadBlock>
+        <div class="spinner-border" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </ng-template>
+      <ng-template #elseLoadBlock>
+        <p>No hay palabras</p>
+      </ng-template>
+    </div>
+  </ng-template>
+  
+</div>

@@ -1,0 +1,20 @@
+<div class="row row-cols-1 gy-4">
+  <div class="col">
+    <div>
+      <b>{{ "answer.response" | translate }}:</b> {{ data.response }}
+    </div>
+  </div>
+  <div class="col">
+    <div>
+      <b>{{ "form.furigana" | translate }}:</b> {{ data.furigana }}
+    </div>
+  </div>
+  <div class="col">
+    <div>
+      <b>{{ "answer.isCorrect" | translate }}:</b> {{ "boolean."+data.isCorrect | translate}}
+    </div>
+  </div>
+  <button class="btn btn-secondary float-start" [mat-dialog-close]="false">
+    {{ "form.close" | translate }}
+  </button>
+</div>

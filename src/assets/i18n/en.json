@@ -4,7 +4,7 @@
     "users": "Users",
     "questions": "Questions",
     "words": "Words",
-    "categories":"Categories"
+    "categories": "Categories"
   },
   "idiom": {
     "language": "Language",
@@ -21,17 +21,34 @@
     "password": "Password",
     "fullname": "Full Name",
     "rol": "Rol",
-    "image":"Image",
-    "nickname":"Nickname",
-    "birthday":"Birthday",
+    "image": "Image",
+    "nickname": "Nickname",
+    "birthday": "Birthday",
     "city": "City",
-    "japanese":"Japanese",
-    "furigana":"Furigana",
-    "save":"Save",
-    "close":"Close",
+    "japanese": "Japanese",
+    "furigana": "Furigana",
+    "save": "Save",
+    "close": "Close",
     "fieldIsRequired": "This field is required.",
     "emailIsValid": "This field must have email format 'example@mail.com'.",
     "passwordIsValid": "The password must be made up of some uppercase, some lowercase, some special character, and at least 8 characters.",
-    "maxLengthdIsValid":"Maximum of 40 characters."
+    "maxLengthdIsValid": "Maximum of 40 characters."
+  },
+  "answer": {
+    "answer": "Answer",
+    "answer1": "Answer 1",
+    "answer2": "Answer 2",
+    "answer3": "Answer 3",
+    "answer4": "Answer 4",
+    "response": "Response",
+    "isCorrect": "Is correct"
+  },
+  "boolean": {
+    "true": "True",
+    "false": "False"
+  },
+  "question":{
+    "statement":"Statement",
+    "help":"Help"
   }
 }

@@ -1,1 +1,202 @@
-<p>form-questions works!</p>
+<div *ngIf="load; then thenBlock; else elseBlock"></div>
+
+<ng-template #thenBlock>
+  <form autocomplete="off" [formGroup]="myForm" (ngSubmit)="save()">
+    <div class="mb-3 row">
+      <label class="col-sm-3 col-form-label">{{
+        "question.statement" | translate
+      }}</label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control" formControlName="statement" />
+        <span
+          *ngIf="fieldIsRequired('statement')"
+          class="form-text text-danger"
+        >
+          {{ "form.fieldIsRequired" | translate }}
+        </span>
+        <span
+          *ngIf="maxLengthdIsValid('statement')"
+          class="form-text text-danger"
+        >
+          {{ "form.maxLengthdIsValid" | translate }}
+        </span>
+      </div>
+    </div>
+
+    <div class="mb-3 row">
+      <label class="col-sm-3 col-form-label">{{
+        "question.help" | translate
+      }}</label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control" formControlName="help" />
+      </div>
+    </div>
+
+    <div class="mb-3 row" *ngIf="listCategories.length > 0">
+      <label class="col-sm-3 col-form-label">{{
+        "header.categories" | translate
+      }}</label>
+      <div class="col-sm-9">
+        <select
+          class="form-select"
+          formControlName="category"
+          [(ngModel)]="
+            this.data.categoryId !== undefined
+              ? this.data.categoryId
+              : listCategories[0].id
+          "
+        >
+          <option *ngFor="let rol of listCategories" [value]="rol.id">
+            {{ rol.unitName }} - {{ rol.categoryName }}
+          </option>
+        </select>
+        <span *ngIf="fieldIsRequired('category')" class="form-text text-danger">
+          {{ "form.fieldIsRequired" | translate }}
+        </span>
+      </div>
+    </div>
+
+    <div class="row rows-col-3 mb-4">
+      <div class="col-4 d-flex align-items-center justify-content-center">
+        {{ "answer.answer" | translate }}
+      </div>
+      <div class="col-4 d-flex align-items-center justify-content-center">
+        {{ "form.furigana" | translate }}
+      </div>
+      <div class="col-4 d-flex align-items-center justify-content-center">
+        {{ "boolean.true" | translate }}/{{ "boolean.false" | translate }}
+      </div>
+      <div class="col">
+        <input
+          type="text"
+          class="form-control"
+          formControlName="answer1"
+          [placeholder]="'answer.answer1' | translate"
+        />
+        <span *ngIf="fieldIsRequired('answer1')" class="form-text text-danger">
+          {{ "form.fieldIsRequired" | translate }}
+        </span>
+        <span
+          *ngIf="maxLengthdIsValid('answer1')"
+          class="form-text text-danger"
+        >
+          {{ "form.maxLengthdIsValid" | translate }}
+        </span>
+      </div>
+      <div class="col">
+        <input type="text" class="form-control" formControlName="furigana1" />
+      </div>
+      <div class="col mt-3 d-flex align-items-baseline justify-content-center">
+        <input type="radio" formControlName="answerCorrect" value="answer1" />
+      </div>
+    </div>
+
+    <div class="row rows-col-3 mb-4">
+      <div class="col">
+        <input
+          type="text"
+          class="form-control"
+          formControlName="answer2"
+          [placeholder]="'answer.answer2' | translate"
+        />
+        <span *ngIf="fieldIsRequired('answer2')" class="form-text text-danger">
+          {{ "form.fieldIsRequired" | translate }}
+        </span>
+        <span
+          *ngIf="maxLengthdIsValid('answer2')"
+          class="form-text text-danger"
+        >
+          {{ "form.maxLengthdIsValid" | translate }}
+        </span>
+      </div>
+      <div class="col">
+        <input type="text" class="form-control" formControlName="furigana2" />
+      </div>
+      <div class="col mt-3 d-flex align-items-baseline justify-content-center">
+        <input type="radio" value="answer2" formControlName="answerCorrect" />
+      </div>
+    </div>
+
+    <div class="row rows-col-3 mb-4">
+      <div class="col">
+        <input
+          type="text"
+          class="form-control"
+          formControlName="answer3"
+          [placeholder]="'answer.answer3' | translate"
+        />
+        <span *ngIf="fieldIsRequired('answer3')" class="form-text text-danger">
+          {{ "form.fieldIsRequired" | translate }}
+        </span>
+        <span
+          *ngIf="maxLengthdIsValid('answer3')"
+          class="form-text text-danger"
+        >
+          {{ "form.maxLengthdIsValid" | translate }}
+        </span>
+      </div>
+      <div class="col">
+        <input type="text" class="form-control" formControlName="furigana3" />
+      </div>
+      <div class="col mt-3 d-flex align-items-baseline justify-content-center">
+        <input
+          type="radio"
+          name="answerCorrect"
+          value="answer3"
+          formControlName="answerCorrect"
+        />
+      </div>
+    </div>
+
+    <div class="row rows-col-3 mb-4">
+      <div class="col">
+        <input
+          type="text"
+          class="form-control"
+          formControlName="answer4"
+          [placeholder]="'answer.answer4' | translate"
+        />
+        <span *ngIf="fieldIsRequired('answer4')" class="form-text text-danger">
+          {{ "form.fieldIsRequired" | translate }}
+        </span>
+        <span
+          *ngIf="maxLengthdIsValid('answer4')"
+          class="form-text text-danger"
+        >
+          {{ "form.maxLengthdIsValid" | translate }}
+        </span>
+      </div>
+      <div class="col">
+        <input type="text" class="form-control" formControlName="furigana4" />
+      </div>
+      <div class="col mt-3 d-flex align-items-baseline justify-content-center">
+        <input type="radio" value="answer4" formControlName="answerCorrect" />
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <button
+          class="btn btn-primary float-end"
+          [disabled]="myForm.invalid"
+          type="submit"
+        >
+          {{ "form.save" | translate }}
+        </button>
+        <button
+          class="btn btn-secondary float-start"
+          [mat-dialog-close]="false"
+        >
+          {{ "form.close" | translate }}
+        </button>
+      </div>
+    </div>
+  </form>
+</ng-template>
+<ng-template #elseBlock>
+  <div class="d-flex justify-content-center align-items-center">
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+</ng-template>

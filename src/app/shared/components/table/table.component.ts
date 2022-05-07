@@ -6,6 +6,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ComponentType } from '@angular/cdk/portal';
 import { SelectionModel } from '@angular/cdk/collections';
+import { AnswerDTO } from 'src/app/models/answerDTO';
+import { ShowAnswerComponent } from '../show-answer/show-answer.component';
 
 export interface PeriodicElement {
   name: string;
@@ -47,16 +49,17 @@ export class TableComponent implements AfterViewInit, OnInit {
         && resp != "urlImage"
         && resp != "createdAt"
         && resp != "lastPasswordChangeAt"
+        && resp != "categoryId"
     })
     this.displayedColumns.unshift("select")
     this.dataSource = new MatTableDataSource(this.tableData);
   }
 
-  searchElement($event:any){
+  searchElement($event: any) {
     const filterValue = ($event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();  
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
-  
+
 
   announceSortChange(sortState: Sort) {
     if (sortState.direction) {
@@ -67,18 +70,28 @@ export class TableComponent implements AfterViewInit, OnInit {
   }
 
   viewData(data: any) {
-    const dialogRef = this.dialog.open(this.nameFormComponent, {
-      width: '450px',
-      height: '600px',
-      data: data,
-      disableClose: true
-    });
+      const dialogRef = this.dialog.open(this.nameFormComponent, {
+        width: '550px',
+        height: '600px',
+        data: data,
+        disableClose: true,
+        panelClass: 'custom-dialog-container'
+      });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.dataSource = new MatTableDataSource(<any>[]);
-        this.onPropagate()
-      }
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.dataSource = new MatTableDataSource(<any>[]);
+          this.onPropagate()
+        }
+      });
+  }
+
+  showAnswers(answer: AnswerDTO) {
+    this.dialog.open(ShowAnswerComponent, {
+      width: '270px',
+      height: '300px',
+      data: answer,
+      panelClass: 'custom-dialog-container'
     });
   }
 
@@ -114,5 +127,9 @@ export class TableComponent implements AfterViewInit, OnInit {
       });
     }
     this.listDeleteElementOut.emit(this.listDeleteElement)
+  }
+
+  isObject(element: any) {
+    return (typeof element === 'object');
   }
 }
