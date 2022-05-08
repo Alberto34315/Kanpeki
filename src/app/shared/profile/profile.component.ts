@@ -14,7 +14,7 @@ import { ThemeService } from 'src/app/services/theme.service';
   ]
 })
 export class ProfileComponent implements OnInit {
-  public user!:ResponseUserDTO;
+  public user!: ResponseUserDTO;
   public themes = new Map<string, string>([
     ["pink", "sakuraFlower"],
     ["dark", "dark"]
@@ -23,19 +23,21 @@ export class ProfileComponent implements OnInit {
     ["english", "en"],
     ["spanish", "es"]
   ]);
-  
+
   public image: any = null;
-  constructor(private languageS: LanguageService, 
-    private themeS: ThemeService, 
-    private router: Router, 
+  constructor(private languageS: LanguageService,
+    private themeS: ThemeService,
+    private router: Router,
     private authS: AuthService,
     private sanitizer: DomSanitizer,
-    private connectionSAdmin:ConnectionService) { }
+    private connectionSAdmin: ConnectionService) { }
 
   ngOnInit(): void {
-    this.connectionSAdmin.getUserMe().subscribe(res=>{
-      this.user=res
-      this.getImage()
+    this.connectionSAdmin.getUserMe().subscribe(res => {
+      this.connectionSAdmin.getUserById(res.id).subscribe((res) => {
+        this.user = res
+        this.getImage()
+      })
     })
   }
 
@@ -47,9 +49,9 @@ export class ProfileComponent implements OnInit {
         this.image = this.sanitizer.bypassSecurityTrustUrl(objectURL);
       })
     }
-    
+
   }
-  
+
   changeLanguage(idiom: string) {
     this.languageS.changeLanguage(idiom)
   }

@@ -1,15 +1,11 @@
 <div class="d-flex justify-content-center">
-  <div class="w-75">
+  <div class="w-75 h-50">
     <div style="display: block">
       <canvas
         baseChart
-        width="400"
-        height="400"
         [data]="lineChartData"
         [options]="lineChartOptions"
         [type]="lineChartType"
-        (chartHover)="chartHovered($event)"
-        (chartClick)="chartClicked($event)"
       ></canvas>
     </div>
   </div>

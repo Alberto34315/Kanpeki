@@ -2,7 +2,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/auth/services/auth.service';
+import { RequestCategoryDTO } from 'src/app/models/request/requestCategoryDTO';
 import { RequestQuestionDTO } from 'src/app/models/request/requestQuestionDTO';
+import { ResponseResultDTO } from 'src/app/models/request/requestResultDTO';
 import { RequestUserDTO } from 'src/app/models/request/requestUserDTO';
 import { RequestWordDTO } from 'src/app/models/request/requestWordDTO';
 import { ResponseCategoryDTO } from 'src/app/models/response/responseCategoryDTO';
@@ -10,6 +12,10 @@ import { ResponseQuestionDTO } from 'src/app/models/response/responseQuestionDTO
 import { ResponseUserDTO } from 'src/app/models/response/responseUserDTO';
 import { ResponseWordDTO } from 'src/app/models/response/responseWordDTO';
 import { api } from 'src/environments/api';
+import { formatDate } from '@angular/common';
+import localeES from '@angular/common/locales/es';
+import { registerLocaleData } from '@angular/common';
+registerLocaleData(localeES, 'es');
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +28,7 @@ export class ConnectionService {
   private categories: string = api.category
   private questions: string = api.question
   private files: string = api.files
+  private results: string = api.result
   private httpOptions
   constructor(private http: HttpClient, private authS: AuthService) {
     this.httpOptions = {
@@ -53,6 +60,16 @@ export class ConnectionService {
     return this.http.get<ResponseUserDTO>(`${this.apiUrl}${this.kanpeki}${this.users}/me`, this.httpOptions)
   }
 
+  getUserById(id: number): Observable<ResponseUserDTO> {
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.authS.getToken()
+      })
+    }
+    return this.http.get<ResponseUserDTO>(`${this.apiUrl}${this.kanpeki}${this.users}/user?id=` + id, this.httpOptions)
+  }
+
   addUser(user: FormData): Observable<RequestUserDTO> {
     this.httpOptions = {
       headers: new HttpHeaders({
@@ -63,7 +80,7 @@ export class ConnectionService {
     return this.http.post<RequestUserDTO>(`${this.apiUrl}${this.kanpeki}${this.users}/user/v2`, user, this.httpOptions)
   }
 
-  updateUser(id: number, user: FormData): Observable<ResponseUserDTO> {    
+  updateUser(id: number, user: FormData): Observable<ResponseUserDTO> {
     this.httpOptions = {
       headers: new HttpHeaders({
         'Accept': 'application/json',
@@ -113,7 +130,7 @@ export class ConnectionService {
     return this.http.get<ResponseCategoryDTO[]>(`${this.apiUrl}${this.kanpeki}${this.categories}`, this.httpOptions)
   }
 
-  addCategory(category: FormData): Observable<ResponseCategoryDTO> {
+  addCategory(category: RequestCategoryDTO): Observable<ResponseCategoryDTO> {
     this.httpOptions = {
       headers: new HttpHeaders({
         'Accept': 'application/json',
@@ -123,7 +140,7 @@ export class ConnectionService {
     return this.http.post<ResponseCategoryDTO>(`${this.apiUrl}${this.kanpeki}${this.categories}/category`, category, this.httpOptions)
   }
 
-  updatCategory(id: number, category: FormData): Observable<ResponseCategoryDTO> {
+  updatCategory(id: number, category: RequestCategoryDTO): Observable<ResponseCategoryDTO> {
     this.httpOptions = {
       headers: new HttpHeaders({
         'Accept': 'application/json',
@@ -165,6 +182,25 @@ export class ConnectionService {
 
   deleteQuestions(id: number): Observable<any> {
     return this.http.delete<any>(`${this.apiUrl}${this.kanpeki}${this.questions}/question/${id}`, this.httpOptions)
+  }
+  //---------------------------------------------------------------------------------------------------------------------
+
+  //STATISTICS--------------------------------------------------------------------------------------------------------------
+  getResults(): Observable<ResponseResultDTO[]> {
+    return this.http.get<ResponseResultDTO[]>(`${this.apiUrl}${this.kanpeki}${this.results}`, this.httpOptions)
+  }
+  getResultsBetweenDates(): Observable<ResponseResultDTO[]> {
+    // let startDate = new Date();
+    // let startDateFormat = formatDate(startDate, 'YYYY-MM-dd', 'es');
+    // let endDate = new Date();
+    // endDate.setDate(new Date().getDate() + 6);
+    // let endDateFormat = formatDate(endDate, 'YYYY-MM-dd', 'es');
+    
+    // return this.http.get<ResponseResultDTO[]>(`${this.apiUrl}${this.kanpeki}${this.results}/result/search?endDate=${endDateFormat}&startDate=${startDateFormat}`, this.httpOptions)
+    return this.http.get<ResponseResultDTO[]>(`${this.apiUrl}${this.kanpeki}${this.results}/result/search?endDate=${'2022-01-17'}&startDate=${'2022-01-10'}`, this.httpOptions)
+  }
+  getResultsCustomData(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}${this.kanpeki}${this.results}/custom`, this.httpOptions)
   }
   //---------------------------------------------------------------------------------------------------------------------
 }

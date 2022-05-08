@@ -47,8 +47,39 @@
     "true": "Verdadero",
     "false": "Falso"
   },
-  "question":{
-    "statement":"Enunciado",
-    "help":"Ayuda"
+  "question": {
+    "statement": "Enunciado",
+    "help": "Ayuda"
+  },
+  "category": {
+    "unit": "Unidad",
+    "name": "Nombre",
+    "isQuestion": "¿Es una categoría de 'Preguntas'?",
+    "yes": "Sí",
+    "no": "No",
+    "true": "Sí",
+    "false": "No"
+  },
+  "tableTitles": {
+    "email": "Email",
+    "fullName": "Nombre completo",
+    "nickname": "Apodo",
+    "birthday": "Cumpleaños",
+    "city": "Ciudad",
+    "roles": "Roles",
+    "japanese": "Japonés",
+    "spanish": "Español",
+    "english": "Inglés",
+    "furigana": "Furigana",
+    "statement": "Enunciado",
+    "help": "Ayuda",
+    "answers": "Respuestas",
+    "unitName": "Unidad",
+    "categoryName": "Nombre",
+    "isQuestion": "¿Es una categoría de 'Preguntas'?"
+  },
+  "log":{
+    "login":"Iniciar sesión",
+    "logout":"Cerrar sesión"
   }
 }

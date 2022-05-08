@@ -1,6 +1,6 @@
 export interface ResponseResultDTO {
     userId: number,
-    resultDate: string,
+    resultDate: Date,
     score: number,
     categoryId: number
 }

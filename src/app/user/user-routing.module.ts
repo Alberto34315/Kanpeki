@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ProfileComponent } from '../shared/profile/profile.component';
 import { MainComponent } from './pages/main/main.component';
 import { StatisticsUserComponent } from './pages/statistics-user/statistics-user.component';
 import { StudyUserComponent } from './pages/study-user/study-user.component';
@@ -24,7 +25,7 @@ const routes: Routes = [
       },
       {
         path: 'profile',
-        component: TestsUserComponent,
+        component: ProfileComponent,
       },
       {
         path: '**',

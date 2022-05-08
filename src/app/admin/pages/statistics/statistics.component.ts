@@ -1,6 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ChartConfiguration, ChartEvent, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
+import { ConnectionService } from '../../services/connection.service';
+import { formatDate } from '@angular/common';
+import localeES from '@angular/common/locales/es';
+import { registerLocaleData } from '@angular/common';
+import { ResponseCategoryDTO } from 'src/app/models/response/responseCategoryDTO';
+registerLocaleData(localeES, 'es');
 
 @Component({
   selector: 'app-statistics',
@@ -9,28 +15,26 @@ import { BaseChartDirective } from 'ng2-charts';
   ]
 })
 export class StatisticsComponent implements OnInit {
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  public score: number[] = []
+  public date: string[] = []
+  public footerTooltip: string = ""
   public lineChartData: ChartConfiguration['data'] = {
     datasets: [
       {
-        data: [180, 480, 770, 90, 1000, 270, 400],
-        label: 'Examenes/Día',
+        data: [],
+        label: 'Media de aprobados/Día',
         fill: 'origin',
         pointBackgroundColor: '#fff',
-        pointBorderColor: '#2E6FC8',
+        pointBorderColor: '#eb6864',
         pointBorderWidth: 1,
         pointHoverRadius: 5,
-        pointHoverBackgroundColor: 'rgba(75,192,192,1)',
+        pointHoverBackgroundColor: 'rgba(235, 104, 100,1)',
         pointHoverBorderColor: 'rgba(220,220,220,1)',
         pointHoverBorderWidth: 2,
         pointRadius: 2.5,
         pointHitRadius: 10,
-        backgroundColor: 'rgba(75,192,192,0.4)',
-        borderColor: '#2EB1C8',
+        backgroundColor: 'rgba(235, 104, 100,0.4)',
+        borderColor: '#eb6864',
         borderCapStyle: 'butt',
         borderDash: [],
         borderDashOffset: 0.0,
@@ -38,7 +42,7 @@ export class StatisticsComponent implements OnInit {
         spanGaps: false
       }
     ],
-    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July']
+    labels: []
   };
 
   public lineChartOptions: ChartConfiguration['options'] = {
@@ -68,34 +72,39 @@ export class StatisticsComponent implements OnInit {
     },
 
     plugins: {
-      legend: { display: true },
+      legend: {
+        display: true,
+      },
     }
   };
 
   public lineChartType: ChartType = 'line';
 
   @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
+  public listCategories: ResponseCategoryDTO[] = []
 
-  private static generateNumber(i: number): number {
-    return Math.floor((Math.random() * (i < 2 ? 100 : 1000)) + 1);
+  constructor(private connectionS: ConnectionService) { }
+
+  ngOnInit(): void {
+    this.connectionS.getCategories()
+      .subscribe(res => {
+        this.listCategories = res
+      })
+    this.connectionS.getResultsCustomData().subscribe((res) => {
+      res.forEach((element, i) => {
+        this.lineChartData.datasets.forEach((value) => {
+          value.data.push(element.avgResults)
+        })      
+        this.lineChartData.labels?.unshift(this.returnNameCategory(element.categoryId))
+      });
+      this.chart?.chart?.update()
+    })
   }
 
-  public randomize(): void {
-    for (let i = 0; i < this.lineChartData.datasets.length; i++) {
-      for (let j = 0; j < this.lineChartData.datasets[i].data.length; j++) {
-        this.lineChartData.datasets[i].data[j] = StatisticsComponent.generateNumber(i);
-      }
-    }
-    this.chart?.update();
+  returnNameCategory(id: number) {
+    let category
+    category = this.listCategories.filter(element => element.id == id)
+    return category[0].unitName + ' - ' + category[0].categoryName;
   }
 
-  // events
-  public chartClicked({ event, active }: { event?: ChartEvent, active?: {}[] }): void {
-    console.log(event, active);
-  }
-
-  public chartHovered({ event, active }: { event?: ChartEvent, active?: {}[] }): void {
-    //  console.log(event, active);
-  }
-  
 }

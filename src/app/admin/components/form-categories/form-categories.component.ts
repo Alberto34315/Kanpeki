@@ -1,4 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { RequestCategoryDTO } from 'src/app/models/request/requestCategoryDTO';
+import { ResponseCategoryDTO } from 'src/app/models/response/responseCategoryDTO';
+import { ValidFormService } from 'src/app/services/valid-form.service';
+import { ConnectionService } from '../../services/connection.service';
 
 @Component({
   selector: 'app-form-categories',
@@ -6,10 +12,63 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./form-categories.component.sass']
 })
 export class FormCategoriesComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
+  public myForm: FormGroup = this.fb.group({
+    unitName: ['', [Validators.required, Validators.maxLength(40)]],
+    categoryName: ['', [Validators.required, Validators.maxLength(40)]],
+    isQuestion: ['true', [Validators.required]],
+  });
+  public load: boolean = true;
+  constructor(
+    public dialogRef: MatDialogRef<FormCategoriesComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: ResponseCategoryDTO | RequestCategoryDTO,
+    private fb: FormBuilder,
+    private connectionS: ConnectionService,
+    private valiFormS: ValidFormService) {
+    this.valiFormS.myForm = this.myForm
   }
 
+  ngOnInit(): void {
+    if (this.data.id) {
+      this.myForm.get('unitName')?.patchValue(this.data.unitName);
+      this.myForm.get('categoryName')?.patchValue(this.data.categoryName);
+      this.myForm.get('isQuestion')?.patchValue(this.data.isQuestion);
+    }
+  }
+
+  onClose(): void {
+    this.dialogRef.close(true)
+  }
+
+  fieldIsRequired(field: string) {
+    return this.valiFormS.fieldIsRequired(field)
+  }
+
+  maxLengthdIsValid(field: string) {
+    return this.valiFormS.maxLengthdIsValid(field)
+  }
+
+  save() {
+    this.load = false;
+    let category: RequestCategoryDTO = {
+      unitName: this.myForm.get('unitName')?.value,
+      categoryName: this.myForm.get('categoryName')?.value,
+      isQuestion: this.myForm.get("isQuestion")?.value,
+    }
+    if (this.data.id) {
+      category.id = this.data.id
+      this.connectionS.updatCategory(category.id, category).subscribe((res) => {
+        if (res) {
+          this.load = true;
+          this.onClose()
+        }
+      })
+    } else {
+      this.connectionS.addCategory(category).subscribe((res) => {
+        if (res) {
+          this.load = true;
+          this.onClose()
+        }
+      })
+    }
+  }
 }

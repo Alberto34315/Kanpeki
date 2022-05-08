@@ -131,15 +131,8 @@ export class FormQuestionsComponent implements OnInit {
 
   answerIsCorrect(answer: string): boolean {
     let value = false;
-    switch (answer) {
-      case this.myForm.get("answerCorrect")?.value: {
-        value = true
-        break;
-      }
-      default: {
-        value = false
-        break;
-      }
+    if (this.myForm.get("answerCorrect")?.value === answer) {
+      value = true
     }
     return value;
   }

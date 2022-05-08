@@ -47,8 +47,39 @@
     "true": "True",
     "false": "False"
   },
-  "question":{
-    "statement":"Statement",
-    "help":"Help"
+  "question": {
+    "statement": "Statement",
+    "help": "Help"
+  },
+  "category": {
+    "unit": "Unit",
+    "name": "Name",
+    "isQuestion": "Is this a 'Questions' category?",
+    "yes": "Yes",
+    "no": "No",
+    "true": "Yes",
+    "false": "No"
+  },
+  "tableTitles": {
+    "email": "Email",
+    "fullName": "Full Name",
+    "nickname": "Nickname",
+    "birthday": "Birthday",
+    "city": "City",
+    "roles": "Roles",
+    "japanese": "Japanese",
+    "spanish": "Spanish",
+    "english": "English",
+    "furigana": "Furigana",
+    "statement": "Statement",
+    "help": "Help",
+    "answers": "Answers",
+    "unitName": "Unit",
+    "categoryName": "Name",
+    "isQuestion": "Is this a 'Questions' category?"
+  },
+  "log":{
+    "login":"Login",
+    "logout":"Logout"
   }
 }

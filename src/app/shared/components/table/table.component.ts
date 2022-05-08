@@ -70,20 +70,20 @@ export class TableComponent implements AfterViewInit, OnInit {
   }
 
   viewData(data: any) {
-      const dialogRef = this.dialog.open(this.nameFormComponent, {
-        width: '550px',
-        height: '600px',
-        data: data,
-        disableClose: true,
-        panelClass: 'custom-dialog-container'
-      });
+    const dialogRef = this.dialog.open(this.nameFormComponent, {
+      width: '550px',
+      height: (this.nameFormComponent.name === "FormCategoriesComponent") ? '350px' : '600px',
+      data: data,
+      disableClose: true,
+      panelClass: 'custom-dialog-container'
+    });
 
-      dialogRef.afterClosed().subscribe(result => {
-        if (result) {
-          this.dataSource = new MatTableDataSource(<any>[]);
-          this.onPropagate()
-        }
-      });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.dataSource = new MatTableDataSource(<any>[]);
+        this.onPropagate()
+      }
+    });
   }
 
   showAnswers(answer: AnswerDTO) {

@@ -28,7 +28,7 @@ export class ListCategoriesComponent implements OnInit {
 openForm() {
   this.dialogRef = this.dialog.open(FormCategoriesComponent, {
     width: '550px',
-    height: '600px',
+    height: '350px',
     data: {},
     disableClose: true,
     panelClass:'custom-dialog-container'
@@ -44,7 +44,7 @@ openForm() {
 deleteCategories() {
   if (this.listDeleteElement.length > 0 && this.listCategories.length > 0) {
     this.listDeleteElement.forEach(id => {
-      this.connectionS.deleteQuestions(id).subscribe(res => {
+      this.connectionS.deleteCategories(id).subscribe(res => {
         this.procesaPropagar()
       })
     });

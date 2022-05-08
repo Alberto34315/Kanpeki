@@ -11,12 +11,15 @@ html, body
     cursor: pointer
 
 .imgProfile
-    width: 350px
-    height: 350px
+    width: 280px
+    height: 280px
 
 .imgSmall
     width: 50px
     height: 50px
+    
+.wrapText
+    overflow-wrap: break-word
 
 $custom-colors: ("magenta":rgb(225, 77, 185), "cyanCustom":#46cddf)
 // Merge the maps
@@ -26,7 +29,7 @@ $utilities-colors: map-merge($utilities-colors, $theme-colors-rgb)
 $utilities-text-colors: map-loop($utilities-colors, rgba-css-var, "$key", "text")
 $utilities-bg-colors: map-loop($utilities-colors, rgba-css-var, "$key", "bg")
 
-.gradient-custom-2 
+.gradient-custom-2
     background: #fccb90
     background: -webkit-linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593)
     background: linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593)
@@ -34,17 +37,20 @@ $utilities-bg-colors: map-loop($utilities-colors, rgba-css-var, "$key", "bg")
 .custom-dialog-container .mat-dialog-container
     padding: 50px
 
-table 
+table
     height: 1px
 
+$spacer: 1rem
+$spacers: (0: 0, 1: $spacer * .25, 2: $spacer * .5, 3: $spacer, 4: $spacer * 1.5, 5: $spacer * 3, 6: $spacer * 6, 7: $spacer * 12, 8: $spacer * 24)
 
-@media (min-width: 768px) 
-    .gradient-form 
+$negative-spacers: if($enable-negative-margins, negativify-map($spacers), null)
+
+@media (min-width: 768px)
+    .gradient-form
         height: 100vh !important
-        
-        
-@media (min-width: 769px) 
-    .gradient-custom-2 
+
+@media (min-width: 769px)
+    .gradient-custom-2
         border-top-right-radius: .3rem
         border-bottom-right-radius: .3rem
 

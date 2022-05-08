@@ -1,36 +1,36 @@
-<div class="row row-cols-2" *ngIf="user!==undefined">
+<div class="row row-cols-2" *ngIf="user !== undefined">
   <div class="col">
-    <img 
-    [src]="image!=null ? image : '../../../assets/img/profileDefault.png'"
-      class="img-thumbnail imgProfile float-end me-5"
+    <img
+      [src]="image != null ? image : '../../../assets/img/profileDefault.png'"
+      class="img-thumbnail imgProfile float-end ms-3 me-4"
     />
   </div>
   <div class="col">
-    <div class="row row-cols-2">
+    <div class="row row-cols-1 row-cols-lg-2">
       <div class="col">
-        <h4>Nickname</h4>
-        <p>{{user.nickname}}</p>
+        <h4>{{ "tableTitles.nickname" | translate }}</h4>
+        <p class="wrapText">{{ user.nickname }}</p>
       </div>
       <div class="col">
-        <h4>FullName</h4>
-        <p>{{user.fullName}}</p>
+        <h4>{{ "tableTitles.fullName" | translate }}</h4>
+        <p class="wrapText">{{ user.fullName }}</p>
       </div>
       <div class="col">
-        <h4>Email</h4>
-        <p>{{user.email}}</p>
+        <h4>{{ "tableTitles.email" | translate }}</h4>
+        <p class="wrapText">{{ user.email }}</p>
       </div>
       <div class="col">
-        <h4>Birthday</h4>
-        <p>{{user.birthday}}</p>
+        <h4>{{ "tableTitles.birthday" | translate }}</h4>
+        <p class="wrapText">{{ user.birthday }}</p>
       </div>
-      <div class="col-12">
-        <h4>City</h4>
-        <p>{{user.city}}</p>
+      <div class="col col-lg-12">
+        <h4>{{ "tableTitles.city" | translate }}</h4>
+        <p class="wrapText">{{ user.city }}</p>
       </div>
       <div class="col">
         <div class="dropdown">
           <button
-            class="btn btn-magenta bg-magenta text-light dropdown-toggle"
+            class="btn btn-magenta bg-magenta text-light dropdown-toggle mb-5 mb-lg-0"
             type="button"
             data-bs-toggle="dropdown"
             aria-expanded="false"
@@ -82,7 +82,9 @@
         </div>
       </div>
       <div class="col-12 mt-5">
-        <button class="btn btn-danger" (click)="logout()">Logout <i class="fas fa-sign-out-alt"></i></button>
+        <button class="btn btn-danger" (click)="logout()">
+          {{ "log.logout" | translate }} <i class="fas fa-sign-out-alt"></i>
+        </button>
       </div>
     </div>
   </div>

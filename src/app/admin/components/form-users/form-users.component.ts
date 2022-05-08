@@ -85,7 +85,6 @@ export class FormUsersComponent implements OnInit {
       fd.append('email', user.email)
       fd.append('fullName', user.fullName)
       fd.append('nickname', user.nickname)
-      console.log(user.password);
 
       if (user.password !== undefined) {
         fd.append('password', user.password)

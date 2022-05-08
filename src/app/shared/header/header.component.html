@@ -1,65 +1,149 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-5">
-  <div class="container-fluid">
-    <a class="navbar-brand d-flex align-items-center" href="#">
-      <img
-        src="../../../assets/img/logo.png"
-        alt=""
-        width="50"
-        height="50"
-        class="d-inline-block align-text-top"
-      />
-      Kanpeki
-    </a>
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div
-      class="collapse navbar-collapse justify-content-center"
-      id="navbarSupportedContent"
-    >
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/admin/statistics-admin" routerLinkActive="active"
-            >{{'header.statistics' | translate }}</a
-          >
-        </li>
-        <span class="border-end border-2"></span>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/admin/users" routerLinkActive="active"
-          >{{'header.users' | translate }}</a
-          >
-        </li>
-        <span class="border-end border-2"></span>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/admin/words" routerLinkActive="active"
-          >{{'header.words' | translate }}</a
-          >
-        </li>
-        <span class="border-end border-2"></span>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/admin/questions" routerLinkActive="active"
-          >{{'header.questions' | translate }}</a
-          >
-        </li>
-        <span class="border-end border-2"></span>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/admin/categories" routerLinkActive="active"
-          >{{'header.categories' | translate }}</a
-          >
-        </li>
-      </ul>
+<ng-container *ngIf="headerRol; then thenBlock; else elseBlock"></ng-container>
+<ng-template #thenBlock>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-5">
+    <div class="container-fluid">
+      <a class="navbar-brand d-flex align-items-center" href="#">
+        <img
+          src="../../../assets/img/logo.png"
+          alt=""
+          width="50"
+          height="50"
+          class="d-inline-block align-text-top"
+        />
+        Kanpeki
+      </a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="w-100 d-flex justify-content-lg-center">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                routerLink="/admin/statistics-admin"
+                routerLinkActive="active"
+                >{{ "header.statistics" | translate }}</a
+              >
+            </li>
+            <span class="border-end border-2"></span>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                routerLink="/admin/users"
+                routerLinkActive="active"
+                >{{ "header.users" | translate }}</a
+              >
+            </li>
+            <span class="border-end border-2"></span>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                routerLink="/admin/words"
+                routerLinkActive="active"
+                >{{ "header.words" | translate }}</a
+              >
+            </li>
+            <span class="border-end border-2"></span>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                routerLink="/admin/questions"
+                routerLinkActive="active"
+                >{{ "header.questions" | translate }}</a
+              >
+            </li>
+            <span class="border-end border-2"></span>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                routerLink="/admin/categories"
+                routerLinkActive="active"
+                >{{ "header.categories" | translate }}</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div
+          class="d-flex align-items-center pointer color-icon me-6"
+          (click)="goProfile()"
+        >
+          <i class="bx bx-user-circle bx-lg"></i>
+        </div>
+      </div>
     </div>
-    <div
-      class="d-flex justify-content-end pointer" (click)="goProfile()">
-      <img src="../../../assets/img/profileDefault.png" class="img-thumbnail imgSmall rounded-circle me-5" alt="...">
+  </nav>
+</ng-template>
+<ng-template #elseBlock>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-5">
+    <div class="container-fluid">
+      <a class="navbar-brand d-flex align-items-center" href="#">
+        <img
+          src="../../../assets/img/logo.png"
+          alt=""
+          width="50"
+          height="50"
+          class="d-inline-block align-text-top"
+        />
+        Kanpeki
+      </a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="w-100 d-flex justify-content-lg-center">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                routerLink="/user/statistics-user"
+                routerLinkActive="active"
+                >Resultados</a
+              >
+            </li>
+            <span class="border-end border-2"></span>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                routerLink="/user/study-user"
+                routerLinkActive="active"
+                >Estudiar</a
+              >
+            </li>
+            <span class="border-end border-2"></span>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                routerLink="/user/tests-user"
+                routerLinkActive="active"
+                >Tests</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div
+          class="d-flex align-items-center pointer color-icon me-6"
+          (click)="goProfile()"
+        >
+          <i class="bx bx-user-circle bx-lg"></i>
+        </div>
+      </div>
     </div>
-  </div>
-</nav>
+  </nav>
+</ng-template>
