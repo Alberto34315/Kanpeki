@@ -22,7 +22,7 @@ export class StatisticsComponent implements OnInit {
     datasets: [
       {
         data: [],
-        label: 'Media de aprobados/Día',
+        label: 'Media de aprobados/Categoría',
         fill: 'origin',
         pointBackgroundColor: '#fff',
         pointBorderColor: '#eb6864',
@@ -89,16 +89,16 @@ export class StatisticsComponent implements OnInit {
     this.connectionS.getCategories()
       .subscribe(res => {
         this.listCategories = res
-      })
-    this.connectionS.getResultsCustomData().subscribe((res) => {
-      res.forEach((element, i) => {
-        this.lineChartData.datasets.forEach((value) => {
-          value.data.push(element.avgResults)
-        })      
-        this.lineChartData.labels?.unshift(this.returnNameCategory(element.categoryId))
-      });
-      this.chart?.chart?.update()
-    })
+        this.connectionS.getResultsCustomData().subscribe((res) => {
+          res.forEach((element, i) => {
+            this.lineChartData.datasets.forEach((value) => {
+              value.data.push(element.avgResults)
+            })      
+            this.lineChartData.labels?.unshift(this.returnNameCategory(element.categoryId))
+          });
+          this.chart?.chart?.update()
+        })
+      })  
   }
 
   returnNameCategory(id: number) {
