@@ -1,22 +1,28 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { ChartConfiguration, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 
 @Component({
   selector: 'app-chart',
   templateUrl: './chart.component.html',
-  styles: [
-  ]
+  styles: [],
 })
-export class ChartComponent implements OnInit {
-  @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
-  @Input('data') data!:  ChartConfiguration['data'];
-  @Input('options') options!:  ChartConfiguration['options'];
-  @Input('type') type!:  ChartType;
-  constructor() { }
+export class ChartComponent implements OnInit,AfterViewInit {
+  @Input('data') data!: ChartConfiguration['data'];
+  @Input('options') options!: ChartConfiguration['options'];
+  @Input('type') type!: ChartType;
+  
+   @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
+
+  constructor() {}
 
   ngOnInit(): void {
-    this.chart?.chart?.update()
   }
 
+  ngAfterViewInit() {
+    setTimeout(() => {
+    this.chart?.chart?.update()
+    },500);
+  }
+  
 }

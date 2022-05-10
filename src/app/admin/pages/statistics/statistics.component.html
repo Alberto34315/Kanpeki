@@ -1,25 +1,22 @@
-<div class="d-flex justify-content-center row row-cols-lg-2">
-  <div class="col">
-    <!-- <canvas
-      baseChart
-      [data]="lineChartData"
-      [options]="lineChartOptions"
-      [type]="lineChartType"
-    ></canvas> -->
-    <app-chart
-      [data]="lineChartData"
-      [options]="lineChartOptions"
-      [type]="lineChartType"
-    ></app-chart>
+<div class="d-flex justify-content-center row row-cols-lg-2 ">
+  <div class="col d-flex justify-content-center mt-4">
+    <ng-container *ngIf="lineChartData"
+      ><app-chart
+      class=" w-100"
+        [data]="lineChartData"
+        [options]="lineChartOptions"
+        [type]="lineChartType"
+      ></app-chart
+    ></ng-container>
   </div>
-  <div class="col w-25">
-    <canvas
-      baseChart
-      #chartPie
+  <div class="col d-flex justify-content-center mt-4">
+    <ng-container *ngIf="pieChartData"
+    ><app-chart
+    class=" w-55"
       [data]="pieChartData"
-      [type]="pieChartType"
       [options]="pieChartOptions"
-    >
-    </canvas>
+      [type]="pieChartType"
+    ></app-chart
+  ></ng-container>
   </div>
 </div>

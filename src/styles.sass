@@ -2,6 +2,7 @@
 @import "../node_modules/bootstrap/scss/functions"
 @import "../node_modules/bootstrap/scss/variables"
 @import "../node_modules/bootstrap/scss/mixins"
+@import "../node_modules/bootstrap/scss/utilities"
 
 html, body, section
     min-height: 100vh
@@ -30,6 +31,8 @@ $utilities-colors: map-merge($utilities-colors, $theme-colors-rgb)
 $utilities-text-colors: map-loop($utilities-colors, rgba-css-var, "$key", "text")
 $utilities-bg-colors: map-loop($utilities-colors, rgba-css-var, "$key", "bg")
 
+
+
 .gradient-custom-2
     background: #fccb90
     background: -webkit-linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593)
@@ -45,6 +48,10 @@ $spacer: 1rem
 $spacers: (0: 0, 1: $spacer * .25, 2: $spacer * .5, 3: $spacer, 4: $spacer * 1.5, 5: $spacer * 3, 6: $spacer * 6, 7: $spacer * 12, 8: $spacer * 24)
 
 $negative-spacers: if($enable-negative-margins, negativify-map($spacers), null)
+
+// $sizes: () !default
+// $sizes: map-merge((25: 25%, 40: 40%, 50: 50%, 60: 60%, 70: 70%, 75: 75%, 100: 100%, auto: auto), $sizes)
+$utilities: map-merge( $utilities, ("width": map-merge(map-get($utilities, "width"), ( values: map-merge(map-get(map-get($utilities, "width"), "values"),(25: 25%, 40: 40%, 50: 50%, 55: 55%, 60: 60%, 70: 70%, 75: 75%, 100: 100%, auto: auto)) ) ) ))
 
 @media (min-width: 768px)
     .gradient-form

@@ -97,7 +97,7 @@ export class StatisticsComponent implements OnInit {
     plugins: {
       title: {
         display: true,
-        text: 'Número de resultados por categoría',
+        text: 'Número de exámenes por categoría',
         position: 'top'
       },
       legend: {
