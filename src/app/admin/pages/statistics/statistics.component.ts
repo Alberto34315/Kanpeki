@@ -1,8 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ChartConfiguration, ChartEvent, ChartType } from 'chart.js';
+import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import { ConnectionService } from '../../services/connection.service';
-import { formatDate } from '@angular/common';
 import localeES from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
 import { ResponseCategoryDTO } from 'src/app/models/response/responseCategoryDTO';
@@ -66,7 +65,8 @@ export class StatisticsComponent implements OnInit {
         ticks: {
           autoSkip: false
         },
-        stacked: true
+        stacked: true,
+        grace: '80%'
       }
 
     },
@@ -81,6 +81,35 @@ export class StatisticsComponent implements OnInit {
   public lineChartType: ChartType = 'line';
 
   @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
+
+  //--------------------------------------------------------------------------------------------
+  public pieChartData: ChartConfiguration['data'] = {
+    labels: [],
+    datasets: [{
+      data: []
+    }]
+  };
+  @ViewChild(BaseChartDirective) chartPie?: BaseChartDirective;
+
+  // Pie
+  public pieChartOptions: ChartConfiguration['options'] = {
+    responsive: true,
+    plugins: {
+      title: {
+        display: true,
+        text: 'Número de resultados por categoría',
+        position: 'top'
+      },
+      legend: {
+        display: true,
+        position: 'bottom',
+      }
+    }
+  };
+
+  public pieChartType: ChartType = 'pie';
+
+  //---------------------------------------------------------------------------
   public listCategories: ResponseCategoryDTO[] = []
 
   constructor(private connectionS: ConnectionService) { }
@@ -93,12 +122,18 @@ export class StatisticsComponent implements OnInit {
           res.forEach((element, i) => {
             this.lineChartData.datasets.forEach((value) => {
               value.data.push(element.avgResults)
-            })      
+            })
+            this.pieChartData.labels?.unshift(this.returnNameCategory(element.categoryId))
+            this.pieChartData.datasets.forEach((value) => {
+              value.data.push(element.numResults)
+            })
             this.lineChartData.labels?.unshift(this.returnNameCategory(element.categoryId))
+            this.chart?.chart?.update()
+            this.chartPie?.chart?.update()
+            
           });
-          this.chart?.chart?.update()
         })
-      })  
+      })
   }
 
   returnNameCategory(id: number) {

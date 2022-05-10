@@ -8,6 +8,7 @@ import { TableComponent } from './components/table/table.component';
 import { MaterialModule } from './material/material.module';
 import { NgChartsModule } from 'ng2-charts';
 import { ShowAnswerComponent } from './components/show-answer/show-answer.component';
+import { ChartComponent } from './components/chart/chart.component';
 
 @NgModule({
   declarations: [
@@ -15,11 +16,13 @@ import { ShowAnswerComponent } from './components/show-answer/show-answer.compon
     ProfileComponent,
     TableComponent,
     ShowAnswerComponent,
+    ChartComponent,
   ],
   exports: [HeaderComponent,
     TableComponent,
     MaterialModule,
-    NgChartsModule,],
+    NgChartsModule,
+    ChartComponent],
   imports: [
     CommonModule,
     RouterModule,

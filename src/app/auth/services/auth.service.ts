@@ -14,27 +14,29 @@ export class AuthService {
   private kanpeki: string = api.kanpeki
   private users: string = api.user
   private token: string = api.token
+  private authU: string = api.authU
+  private authP: string = api.authP
   private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + this.getToken()
     })
   }
-  
+
   private httpOptionsAuth = {
     headers: new HttpHeaders({
-      'Content-Type':  'application/json',
-      'Authorization': 'Basic ' + btoa('Kokyaku:34315')
+      'Content-Type': 'application/json',
+      'Authorization': 'Basic ' + btoa(`${this.authU}:${this.authP}`)
     })
   };
   constructor(private http: HttpClient) { }
 
-  login(email:string, pass:string):Observable<any>{
+  login(email: string, pass: string): Observable<any> {
     return this.http.post(
       `${this.apiUrl}${this.token}?grant_type=password&username=${email}&password=${pass}`,
-      {}, 
+      {},
       this.httpOptionsAuth
-      )
+    )
   }
 
   setToken(token: string) {
