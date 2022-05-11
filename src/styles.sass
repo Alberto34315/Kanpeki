@@ -47,9 +47,8 @@ $spacers: (0: 0, 1: $spacer * .25, 2: $spacer * .5, 3: $spacer, 4: $spacer * 1.5
 
 $negative-spacers: if($enable-negative-margins, negativify-map($spacers), null)
 
-// $sizes: () !default
-// $sizes: map-merge((25: 25%, 40: 40%, 50: 50%, 60: 60%, 70: 70%, 75: 75%, 100: 100%, auto: auto), $sizes)
-$utilities: map-merge( $utilities, ("width": map-merge(map-get($utilities, "width"), ( values: map-merge(map-get(map-get($utilities, "width"), "values"),(25: 25%, 40: 40%, 50: 50%, 55: 55%, 60: 60%, 70: 70%, 75: 75%, 100: 100%, auto: auto)) ) ) ))
+$utilities: ("w":(property:width,class:w,values:(25: 25%, 40: 40%, 50: 50%, 55: 55%, 60: 60%, 70: 70%, 75: 75%, 100: 100%, auto: auto)))
+    
 
 @media (min-width: 768px)
     .gradient-form

@@ -38,7 +38,9 @@ export class AuthService {
       this.httpOptionsAuth
     )
   }
-
+  register(){
+    
+  }
   setToken(token: string) {
     localStorage.setItem("jwt", token)
   }
