@@ -22,7 +22,7 @@ export class ChartComponent implements OnInit,AfterViewInit {
   ngAfterViewInit() {
     setTimeout(() => {
     this.chart?.chart?.update()
-    },500);
+    },700);
   }
   
 }

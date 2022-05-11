@@ -78,8 +78,13 @@
     "categoryName": "Nombre",
     "isQuestion": "¿Es una categoría de 'Preguntas'?"
   },
-  "log":{
-    "login":"Iniciar sesión",
-    "logout":"Cerrar sesión"
+  "log": {
+    "title": "Somos el equipo Kanpeki",
+    "login": "Iniciar sesión",
+    "logout": "Cerrar sesión",
+    "account": "¿No tiene una cuenta?",
+    "haveAccount": "¿Tienes ya una cuenta?",
+    "createNew": "Crear nueva",
+    "register":"Registrarse"
   }
 }

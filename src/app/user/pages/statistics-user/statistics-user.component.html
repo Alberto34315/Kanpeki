@@ -1,1 +1,10 @@
-<p>statistics-user works!</p>
+<div class="d-flex justify-content-center">
+  <ng-container *ngIf="barChartData"
+    ><app-chart
+      class="w-80"
+      [data]="barChartData"
+      [options]="barChartOptions"
+      [type]="barChartType"
+    ></app-chart
+  ></ng-container>
+</div>

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ConnectionService } from 'src/app/admin/services/connection.service';
+import { RequestUserDTO } from 'src/app/models/request/requestUserDTO';
 import { ValidFormService } from 'src/app/services/valid-form.service';
 import { AuthService } from '../../services/auth.service';
 
@@ -23,15 +24,25 @@ export class RegisterComponent implements OnInit {
   constructor(private authS: AuthService,
     private fb: FormBuilder,
     private router: Router,
-    private valiFormS: ValidFormService,
-    private connectionSAdmin: ConnectionService) {
+    private valiFormS: ValidFormService,) {
     this.valiFormS.myForm = this.myForm
   }
   ngOnInit(): void {
   }
-  
-  register() {
 
+  register() {
+    let user: RequestUserDTO = this.myForm.value
+    let fd = new FormData()
+    fd.append('email', user.email)
+    fd.append('password', user.password)
+    fd.append('birthday', user.birthday)
+    fd.append('city', user.city)
+    fd.append('fullName', user.fullName)
+    fd.append('nickname', user.nickname)
+    fd.append('roles[]', "PENDING_APPROVAL")
+    this.authS.register(fd).subscribe(res=>{
+      this.router.navigateByUrl('/auth');
+    })
   }
 
   fieldIsRequired(field: string) {

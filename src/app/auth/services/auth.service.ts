@@ -16,6 +16,7 @@ export class AuthService {
   private token: string = api.token
   private authU: string = api.authU
   private authP: string = api.authP
+  private registers: string = api.registers
   private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
@@ -38,9 +39,16 @@ export class AuthService {
       this.httpOptionsAuth
     )
   }
-  register(){
-    
+
+  register(user: FormData) {
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json'
+      })
+    }
+    return this.http.post<any>(`${this.apiUrl}${this.kanpeki}${this.registers}/v2`, user, this.httpOptions)
   }
+
   setToken(token: string) {
     localStorage.setItem("jwt", token)
   }

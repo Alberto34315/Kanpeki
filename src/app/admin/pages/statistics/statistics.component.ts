@@ -66,7 +66,7 @@ export class StatisticsComponent implements OnInit {
           autoSkip: false
         },
         stacked: true,
-        grace: '80%'
+        suggestedMax:10,
       }
 
     },
@@ -123,10 +123,10 @@ export class StatisticsComponent implements OnInit {
             this.lineChartData.datasets.forEach((value) => {
               value.data.push(element.avgResults)
             })
-            this.pieChartData.labels?.unshift(this.returnNameCategory(element.categoryId))
             this.pieChartData.datasets.forEach((value) => {
               value.data.push(element.numResults)
             })
+            this.pieChartData.labels?.unshift(this.returnNameCategory(element.categoryId))
             this.lineChartData.labels?.unshift(this.returnNameCategory(element.categoryId))
             this.chart?.chart?.update()
             this.chartPie?.chart?.update()

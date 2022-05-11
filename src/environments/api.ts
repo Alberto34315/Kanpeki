@@ -12,6 +12,7 @@ export const api = {
   word: 'words',
   files: 'files',
   token: 'oauth/token',
+  registers: 'registers',
   authU:'Kokyaku',
   authP:'34315'
 };

@@ -78,8 +78,13 @@
     "categoryName": "Name",
     "isQuestion": "Is this a 'Questions' category?"
   },
-  "log":{
-    "login":"Login",
-    "logout":"Logout"
+  "log": {
+    "title": "We are The Kanpeki Team",
+    "login": "Log in",
+    "logout": "Log out",
+    "account": "Don't have an account?",
+    "haveAccount": "Already have an account?",
+    "createNew": "Create new",
+    "register": "Register"
   }
 }

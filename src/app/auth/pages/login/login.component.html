@@ -12,7 +12,7 @@
                     style="width: 185px"
                     alt="logo"
                   />
-                  <h4 class="mt-1 mb-5 pb-1">We are The Kanpeki Team</h4>
+                  <h4 class="mt-1 mb-5 pb-1">{{ "log.title" | translate }}</h4>
                 </div>
 
                 <form
@@ -72,21 +72,24 @@
                       class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3"
                       type="button"
                       type="submit"
+                      [disabled]="myForm.invalid" 
                     >
-                      Log in
+                      {{ "log.login" | translate }}
                     </button>
                   </div>
 
                   <div
                     class="d-flex align-items-center justify-content-center pb-4"
                   >
-                    <p class="mb-0 me-2">Don't have an account?</p>
+                    <p class="mb-0 me-2">
+                      {{ "log.account" | translate }}
+                    </p>
                     <button
                       routerLink="/auth/register"
                       type="button"
                       class="btn btn-outline-danger"
                     >
-                      Create new
+                      {{ "log.createNew" | translate }}
                     </button>
                   </div>
                 </form>
