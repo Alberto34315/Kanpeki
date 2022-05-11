@@ -23,16 +23,6 @@ html, body, section
 .wrapText
     overflow-wrap: break-word
 
-$custom-colors: ("magenta":rgb(225, 77, 185), "cyanCustom":#46cddf)
-// Merge the maps
-$theme-colors: map-merge($theme-colors, $custom-colors)
-$theme-colors-rgb: map-loop($theme-colors, to-rgb, "$value")
-$utilities-colors: map-merge($utilities-colors, $theme-colors-rgb)
-$utilities-text-colors: map-loop($utilities-colors, rgba-css-var, "$key", "text")
-$utilities-bg-colors: map-loop($utilities-colors, rgba-css-var, "$key", "bg")
-
-
-
 .gradient-custom-2
     background: #fccb90
     background: -webkit-linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593)
@@ -43,6 +33,14 @@ $utilities-bg-colors: map-loop($utilities-colors, rgba-css-var, "$key", "bg")
 
 table
     height: 1px
+
+$custom-colors: ("magenta":rgb(225, 77, 185), "cyanCustom":#46cddf)
+// Merge the maps
+$theme-colors: map-merge($theme-colors, $custom-colors)
+$theme-colors-rgb: map-loop($theme-colors, to-rgb, "$value")
+$utilities-colors: map-merge($utilities-colors, $theme-colors-rgb)
+$utilities-text-colors: map-loop($utilities-colors, rgba-css-var, "$key", "text")
+$utilities-bg-colors: map-loop($utilities-colors, rgba-css-var, "$key", "bg")
 
 $spacer: 1rem
 $spacers: (0: 0, 1: $spacer * .25, 2: $spacer * .5, 3: $spacer, 4: $spacer * 1.5, 5: $spacer * 3, 6: $spacer * 6, 7: $spacer * 12, 8: $spacer * 24)

@@ -33,6 +33,8 @@ export class LoginComponent implements OnInit {
   login() {
     //selma.hayoun.caballero@gmail.com
     //C4c4hu3t3!!
+
+    //admin@gmail.com
     //Qwerty_343
     
     //ccccc@gmail.com
