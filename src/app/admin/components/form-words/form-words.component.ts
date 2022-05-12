@@ -66,8 +66,6 @@ export class FormWordsComponent implements OnInit {
   }
 
 
-
-
   getImage() {
     if (this.data.urlImage != "") {
       let imgArr = this.data.urlImage.split('/')

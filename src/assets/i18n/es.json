@@ -86,5 +86,8 @@
     "haveAccount": "¿Tienes ya una cuenta?",
     "createNew": "Crear nueva",
     "register":"Registrarse"
+  },
+  "study":{
+    "text":"En esta página podrás practicar tu vocabulario, por las diferentes categorías disponibles."
   }
 }

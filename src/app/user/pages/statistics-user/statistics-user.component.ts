@@ -14,6 +14,7 @@ registerLocaleData(localeES, 'es');
 })
 export class StatisticsUserComponent implements OnInit {
   //-------------------------------------------------------
+  
   public barChartData: ChartConfiguration['data'] = {
     labels: [],
     datasets: [{
@@ -27,7 +28,7 @@ export class StatisticsUserComponent implements OnInit {
     scales: {
       xAxes:
       {
-        display: false,
+        display: true,
         beginAtZero: true,
         ticks: {
           autoSkip: false
@@ -56,11 +57,28 @@ export class StatisticsUserComponent implements OnInit {
       }
     }
   };
+  
+  
+  // public annotation = {
+  //   type: 'line',
+  //   borderColor: 'black',
+  //   borderDash: [6, 6],
+  //   borderDashOffset: 0,
+  //   borderWidth: 3,
+  //   label: {
+  //     enabled: true,
+  //     content: (ctx:any) => 'Average: ' + this.average(ctx).toFixed(2),
+  //     position: 'end'
+  //   },
+  //   scaleID: 'y',
+  //   value: (ctx:any) => this.average(ctx)
+  // };
 
   public barChartType: ChartType = 'bar';
   //--------------------------------------------------
   public listCategories: ResponseCategoryDTO[] = []
-  constructor(private connectionS: ConnectionService) { }
+  constructor(private connectionS: ConnectionService) {
+   }
 
   ngOnInit(): void {
     this.connectionS.getCategories()
@@ -88,4 +106,9 @@ export class StatisticsUserComponent implements OnInit {
     category = this.listCategories.filter(element => element.id == id)
     return category[0].unitName + ' - ' + category[0].categoryName;
   }
+
+  // average(ctx:any) {
+  //   const values = ctx.chart.data.datasets[0].data;
+  //   return values.reduce((a:any, b:any) => a + b, 0) / values.length;
+  // }
 }

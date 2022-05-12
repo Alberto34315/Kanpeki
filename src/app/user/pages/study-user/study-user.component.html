@@ -1,1 +1,43 @@
-<p>study-user works!</p>
+<div
+  class="d-flex flex-column justify-content-center align-items-center fs-3 fw-bold"
+>
+  <p>
+    {{ "study.text" | translate }}
+  </p>
+  <div id="line"><hr /></div>
+  <!-- <select class="form-select">
+    <option *ngFor="let rol of listCategories" [value]="rol.id">
+      {{ rol.unitName }} - {{ rol.categoryName }}
+    </option>    
+  </select> -->
+
+  <form class="w-80 h-50 my-4">
+    <mat-form-field class="w-100" appearance="fill">
+      <mat-label>Category Name</mat-label>
+      <input
+        type="text"
+        matInput
+        [formControl]="myControl"
+        [matAutocomplete]="auto"
+        class="w-100"
+      />
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option
+          *ngFor="let option of filteredOptions | async"
+          (onSelectionChange)="getCategory(option)"
+          [value]="option.unitName + ' - ' + option.categoryName"
+        >
+          {{ option.unitName }} - {{ option.categoryName }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </form>
+  <button class="btn btn-primary" (click)="startStudy()">Iniciar</button>
+  <ng-container *ngIf="listWords.length>0">
+    <swiper [navigation]="true" class="mySwiper">
+        <ng-template swiperSlide *ngFor="let word of listWords">
+          <app-card> </app-card>
+        </ng-template>
+      </swiper>
+  </ng-container>  
+</div>

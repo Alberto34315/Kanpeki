@@ -9,7 +9,8 @@ import { MaterialModule } from './material/material.module';
 import { NgChartsModule } from 'ng2-charts';
 import { ShowAnswerComponent } from './components/show-answer/show-answer.component';
 import { ChartComponent } from './components/chart/chart.component';
-
+import { CardComponent } from './components/card/card.component';
+import { SwiperModule } from 'swiper/angular';
 @NgModule({
   declarations: [
     HeaderComponent,
@@ -17,18 +18,22 @@ import { ChartComponent } from './components/chart/chart.component';
     TableComponent,
     ShowAnswerComponent,
     ChartComponent,
+    CardComponent,
   ],
   exports: [HeaderComponent,
     TableComponent,
     MaterialModule,
     NgChartsModule,
-    ChartComponent],
+    ChartComponent,
+    CardComponent,
+    SwiperModule],
   imports: [
     CommonModule,
     RouterModule,
     TranslateModule,
     MaterialModule,
     NgChartsModule,
+    SwiperModule
   ]
 })
 export class SharedModule { }

@@ -8,6 +8,7 @@ import { StatisticsUserComponent } from './pages/statistics-user/statistics-user
 import { SharedModule } from '../shared/shared.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { MainComponent } from './pages/main/main.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,8 @@ import { MainComponent } from './pages/main/main.component';
     UserRoutingModule,
     SharedModule,   
     TranslateModule,
+    FormsModule,
+    ReactiveFormsModule, 
   ]
 })
 export class UserModule { }
