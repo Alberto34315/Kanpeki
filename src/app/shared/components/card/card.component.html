@@ -1,8 +1,29 @@
-<div class="card" (click)="cardClicked()" [@cardFlip]="data.state">
-  <div class="face back">
-    <img src="https://source.unsplash.com/bX9B9c-YasY/200x300" />
+<div class="card my-3" (click)="cardClicked()" [@cardFlip]="data.state">
+  <div class="face back mt-3">
+    <img
+      [src]="
+        word.urlImage ? image : '../../../../assets/img/profileDefault.png'
+      "
+      class="m-2"
+    />
+    <div id="line"><hr /></div>
+    <p class="fs-1 mb-5">{{ word.japanese }}</p>
   </div>
-  <div class="face front">
-    <img [src]="'https://source.unsplash.com/' + data.imageId + '/200x300'" />
+  <div class="face front mt-3">
+    <img
+      [src]="
+        word.urlImage ? image : '../../../../assets/img/profileDefault.png'
+      "
+      class="m-2"
+    />
+    <div id="line"><hr /></div>
+    <div *ngIf="idiom == 'es'; then thenBlock; else elseBlock"></div>
+    <ng-template #thenBlock
+      ><p class="fs-1 mb-5">{{ word.spanish }}</p>
+    </ng-template>
+    <ng-template #elseBlock
+      ><p class="fs-1 mb-5">{{ word.english }}</p></ng-template
+    >
   </div>
 </div>
+<button class="btn w-100 btn-primary mt-1 mb-3" (click)="speakWord(word)">Speak</button>

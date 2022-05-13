@@ -97,4 +97,15 @@ $navbar-light-active-color:         $black !default;
 $pagination-hover-color:            $white !default;
 $pagination-hover-bg:               $primary !default;
 $pagination-hover-border-color:     $primary !default;
+
+.swiper-button-prev{
+  color: red;
+} 
+
+
+.swiper-button-next{
+  color: #000;
+}
+
+
 @import '~bootstrap/scss/bootstrap';

@@ -171,5 +171,13 @@ $btn-close-hover-opacity:    1 !default;
 // Code
 
 $pre-color:                         inherit !default;
-
+.swiper-button-prev{
+    color: rgb(25, 0, 255);
+  } 
+  
+  
+  .swiper-button-next{
+    color: rgb(25, 0, 255);
+  }
+  
 @import '~bootstrap/scss/bootstrap';

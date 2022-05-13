@@ -4,7 +4,6 @@ import { ConnectionService } from '../../services/connection.service';
 import { map, Observable, of, startWith } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { ResponseWordDTO } from '../../../models/response/responseWordDTO';
-import { DomSanitizer } from '@angular/platform-browser';
 import SwiperCore, { Navigation } from "swiper";
 
 // install Swiper modules
@@ -24,8 +23,8 @@ export class StudyUserComponent implements OnInit {
   public listWords: ResponseWordDTO[] = [];
   constructor(
     private connectionS: ConnectionService,
-    private sanitizer: DomSanitizer
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.connectionS
@@ -51,15 +50,6 @@ export class StudyUserComponent implements OnInit {
       });
     }
   }
-  getImage(word: ResponseWordDTO) {
-    if (word.urlImage != '') {
-      let imgArr = word.urlImage.split('/');
-      this.connectionS.getFile(imgArr[imgArr.length - 1]).subscribe((resp) => {
-        let objectURL = URL.createObjectURL(resp);
-        this.image = this.sanitizer.bypassSecurityTrustUrl(objectURL);
-      });
-    }
-  }
   getCategory(option: ResponseCategoryDTO) {
     this.idCategory = option.id;
   }
@@ -72,6 +62,11 @@ export class StudyUserComponent implements OnInit {
         option.unitName.toLowerCase().includes(filterValue) ||
         option.categoryName.toLowerCase().includes(filterValue)
     );
+  }
+
+  exit(){
+    this.listWords=[]
+    this.myControl.setValue("")
   }
   
 }
