@@ -89,5 +89,8 @@
   },
   "study":{
     "text":"En esta página podrás practicar tu vocabulario, por las diferentes categorías disponibles."
+  },
+  "test":{
+    "text":"En esta página podrás realizar exámenes, por las diferentes categorías disponibles."
   }
 }

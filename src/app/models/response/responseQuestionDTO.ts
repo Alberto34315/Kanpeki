@@ -5,5 +5,5 @@ export interface ResponseQuestionDTO {
     statement: string,
     help: string,
     categoryId: number,
-    answers?: AnswerDTO[]
+    answers: AnswerDTO[]
 }

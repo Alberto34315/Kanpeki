@@ -7,6 +7,7 @@ import { ResponseCategoryDTO } from 'src/app/models/response/responseCategoryDTO
 import { ResponseUserDTO } from 'src/app/models/response/responseUserDTO';
 import { api } from 'src/environments/api';
 import { ResponseWordDTO } from '../../models/response/responseWordDTO';
+import { ResponseQuestionDTO } from '../../models/response/responseQuestionDTO';
 
 @Injectable({
   providedIn: 'root',
@@ -54,6 +55,14 @@ export class ConnectionService {
   getWordsByCategory(id: number): Observable<ResponseWordDTO[]> {
     return this.http.get<ResponseWordDTO[]>(
       `${this.apiUrl}${this.kanpeki}${this.words}/word/shuffle?categoryId=${id}`,
+      this.httpOptions
+    );
+  }
+  //----------------------------------------------------------------------------------------------------------------------------------------------
+  //QUESTIONS---------------------------------------------------------------------------------------------------------------------------------------
+  getQuestionsByCategory(id: number): Observable<ResponseQuestionDTO[]> {
+    return this.http.get<ResponseQuestionDTO[]>(
+      `${this.apiUrl}${this.kanpeki}${this.questions}/question/shuffle?categoryId=${id}`,
       this.httpOptions
     );
   }

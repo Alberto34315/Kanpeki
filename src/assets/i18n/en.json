@@ -89,5 +89,8 @@
   },
   "study":{
     "text":"On this page you will be able to practice your vocabulary, by the different categories available."
+  },
+  "test":{
+    "text":"On this page you will be able to take exams, by the different categories available."
   }
 }
