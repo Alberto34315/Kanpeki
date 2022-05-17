@@ -4,6 +4,8 @@ import { ConnectionService } from '../../services/connection.service';
 import { map, Observable, of, startWith } from 'rxjs';
 import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { ResponseQuestionDTO } from '../../../models/response/responseQuestionDTO';
+import { RequestResultDTO } from 'src/app/models/request/requestResultDTO';
+import { ResponseUserDTO } from 'src/app/models/response/responseUserDTO';
 
 @Component({
   selector: 'app-tests-user',
@@ -16,6 +18,10 @@ export class TestsUserComponent implements OnInit {
   public idCategory: number = 0;
   public filteredOptions: Observable<ResponseCategoryDTO[]> = of([]);
   public listQuestion: ResponseQuestionDTO[] = [];
+  public verify: string = ""
+  public score: number = -1
+  public disableButton: boolean = false;
+  public user!: ResponseUserDTO
   public myForm: FormGroup = this.fb.group({
     answerCorrect0: [''],
     answerCorrect1: [''],
@@ -31,9 +37,13 @@ export class TestsUserComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private connectionS: ConnectionService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
+    this.connectionS.getUserMe().subscribe(res => {
+      this.user = res
+    })
+    this.exit()
     this.connectionS
       .getCategories()
       .pipe(
@@ -59,6 +69,7 @@ export class TestsUserComponent implements OnInit {
         });
     }
   }
+
   getCategory(option: ResponseCategoryDTO) {
     this.idCategory = option.id;
   }
@@ -76,7 +87,63 @@ export class TestsUserComponent implements OnInit {
   exit() {
     this.listQuestion = [];
     this.myControl.setValue('');
+    this.myForm.get("answerCorrect0")?.setValue('');
+    this.myForm.get("answerCorrect1")?.setValue('');
+    this.myForm.get("answerCorrect2")?.setValue('');
+    this.myForm.get("answerCorrect3")?.setValue('');
+    this.myForm.get("answerCorrect4")?.setValue('');
+    this.myForm.get("answerCorrect5")?.setValue('');
+    this.myForm.get("answerCorrect6")?.setValue('');
+    this.myForm.get("answerCorrect7")?.setValue('');
+    this.myForm.get("answerCorrect8")?.setValue('');
+    this.myForm.get("answerCorrect9")?.setValue('');
+    this.score = -1
   }
 
-  send() {}
+  send() {
+    this.score = 0
+    this.verifyTest()
+  }
+
+  verifyTest() {
+    this.disableButton = true;
+    for (let i = 0; i < 4; i++) {
+      this.listQuestion[i].answers.filter((answ) => {
+        if (answ.response == this.myForm.get("answerCorrect" + i)?.value && answ.isCorrect) {
+          this.score += 1
+        }
+      })
+      let e1 = (<HTMLInputElement>document.getElementById("r" + i + "1"));
+      let e2 = (<HTMLInputElement>document.getElementById("r" + i + "2"));
+      let e3 = (<HTMLInputElement>document.getElementById("r" + i + "3"));
+      let e4 = (<HTMLInputElement>document.getElementById("r" + i + "4"));
+      e1.disabled = true
+      e2.disabled = true
+      e3.disabled = true
+      e4.disabled = true
+      this.valuesTest(e1, this.listQuestion[i].answers[0].isCorrect)
+      this.valuesTest(e2, this.listQuestion[i].answers[1].isCorrect)
+      this.valuesTest(e3, this.listQuestion[i].answers[2].isCorrect)
+      this.valuesTest(e4, this.listQuestion[i].answers[3].isCorrect)
+    }
+    
+    let result: RequestResultDTO = {
+      categoryId: this.idCategory,
+      score: this.score,
+      userId: this.user.id
+    }
+    this.connectionS.addResultsUser(result).subscribe(res=>{
+      console.log(res);
+      
+    })
+  }
+
+  valuesTest(element: HTMLInputElement, flag: boolean) {
+    if (flag) {
+      element?.parentElement?.classList.add(String('true'));
+    } else {
+      element?.parentElement?.classList.add(String('false'));
+    }
+  }
+
 }

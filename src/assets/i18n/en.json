@@ -32,7 +32,8 @@
     "fieldIsRequired": "This field is required.",
     "emailIsValid": "This field must have email format 'example@mail.com'.",
     "passwordIsValid": "The password must be made up of some uppercase, some lowercase, some special character, and at least 8 characters.",
-    "maxLengthdIsValid": "Maximum of 40 characters."
+    "maxLengthdIsValid": "Maximum of 40 characters.",
+    "finalize":"Finalize"
   },
   "answer": {
     "answer": "Answer",
@@ -91,6 +92,7 @@
     "text":"On this page you will be able to practice your vocabulary, by the different categories available."
   },
   "test":{
-    "text":"On this page you will be able to take exams, by the different categories available."
+    "text":"On this page you will be able to take exams, by the different categories available.",
+    "result":"Result"
   }
 }

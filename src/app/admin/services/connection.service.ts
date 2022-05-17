@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { RequestCategoryDTO } from 'src/app/models/request/requestCategoryDTO';
 import { RequestQuestionDTO } from 'src/app/models/request/requestQuestionDTO';
-import { ResponseResultDTO } from 'src/app/models/request/requestResultDTO';
 import { RequestUserDTO } from 'src/app/models/request/requestUserDTO';
 import { RequestWordDTO } from 'src/app/models/request/requestWordDTO';
 import { ResponseCategoryDTO } from 'src/app/models/response/responseCategoryDTO';
@@ -15,6 +14,7 @@ import { api } from 'src/environments/api';
 import { formatDate } from '@angular/common';
 import localeES from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
+import { ResponseResultDTO } from 'src/app/models/response/responseResultDTO';
 registerLocaleData(localeES, 'es');
 
 @Injectable({

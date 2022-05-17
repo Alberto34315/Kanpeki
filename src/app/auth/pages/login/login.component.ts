@@ -56,6 +56,7 @@ export class LoginComponent implements OnInit {
       }
     })
   }
+  
   fieldIsRequired(field: string) {
     return this.valiFormS.fieldIsRequired(field)
   }

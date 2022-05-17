@@ -32,7 +32,8 @@
     "fieldIsRequired": "Este campo es obligatorio.",
     "emailIsValid": "Este campo de tener formato email 'example@mail.com'.",
     "passwordIsValid": "La contraseña debe estar formado por alguna mayúscula, alguna minúscula, algún carácter especial, y como mínimo 8 caracteres.",
-    "maxLengthdIsValid": "Máximo de 40 caracteres."
+    "maxLengthdIsValid": "Máximo de 40 caracteres.",
+    "finalize":"Finalizar"
   },
   "answer": {
     "answer": "Respuesta",
@@ -91,6 +92,7 @@
     "text":"En esta página podrás practicar tu vocabulario, por las diferentes categorías disponibles."
   },
   "test":{
-    "text":"En esta página podrás realizar exámenes, por las diferentes categorías disponibles."
+    "text":"En esta página podrás realizar exámenes, por las diferentes categorías disponibles.",
+    "result":"Resultado"
   }
 }

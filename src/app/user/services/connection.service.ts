@@ -2,12 +2,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/auth/services/auth.service';
-import { ResponseResultDTO } from 'src/app/models/request/requestResultDTO';
+import { RequestResultDTO } from 'src/app/models/request/requestResultDTO';
 import { ResponseCategoryDTO } from 'src/app/models/response/responseCategoryDTO';
 import { ResponseUserDTO } from 'src/app/models/response/responseUserDTO';
 import { api } from 'src/environments/api';
 import { ResponseWordDTO } from '../../models/response/responseWordDTO';
 import { ResponseQuestionDTO } from '../../models/response/responseQuestionDTO';
+import { ResponseResultDTO } from 'src/app/models/response/responseResultDTO';
 
 @Injectable({
   providedIn: 'root',
@@ -35,7 +36,7 @@ export class ConnectionService {
     return this.http.get(`${this.apiUrl}${this.kanpeki}${this.files}/${nameFile}`, { responseType: 'blob', headers: { 'Authorization': 'Bearer ' + this.authS.getToken() } })
   }
   //--------------------------------------------------------------------------------------------------------------------------------------------
-  
+
   //USER----------------------------------------------------------------------------------------------------------------------
   getUserMe(): Observable<ResponseUserDTO> {
     this.httpOptions = {
@@ -80,6 +81,20 @@ export class ConnectionService {
   getResultsUser(id: number): Observable<ResponseResultDTO[]> {
     return this.http.get<ResponseResultDTO[]>(
       `${this.apiUrl}${this.kanpeki}${this.results}/result/user?id=${id}`,
+      this.httpOptions
+    );
+  }
+  addResultsUser(result: RequestResultDTO): Observable<ResponseResultDTO[]> {
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.authS.getToken()
+      })
+    }
+    return this.http.post<ResponseResultDTO[]>(
+      `${this.apiUrl}${this.kanpeki}${this.results}/result`,
+      result,
       this.httpOptions
     );
   }
