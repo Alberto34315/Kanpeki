@@ -76,11 +76,23 @@ export class ConnectionService {
       this.httpOptions
     );
   }
+  getCategoriesById(id:number): Observable<ResponseCategoryDTO> {
+    return this.http.get<ResponseCategoryDTO>(
+      `${this.apiUrl}${this.kanpeki}${this.categories}/category?id=${id}`,
+      this.httpOptions
+    );
+  }
   //---------------------------------------------------------------------------------------------------------------------------
   //STATISTICS--------------------------------------------------------------------------------------------------------------
   getResultsUser(id: number): Observable<ResponseResultDTO[]> {
     return this.http.get<ResponseResultDTO[]>(
       `${this.apiUrl}${this.kanpeki}${this.results}/result/user?id=${id}`,
+      this.httpOptions
+    );
+  }
+  getResultsUserCustom(id: number): Observable<any[]> {
+    return this.http.get<any[]>(
+      `${this.apiUrl}${this.kanpeki}${this.results}/result/user/custom?id=${id}`,
       this.httpOptions
     );
   }

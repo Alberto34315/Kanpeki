@@ -107,7 +107,7 @@ export class TestsUserComponent implements OnInit {
 
   verifyTest() {
     this.disableButton = true;
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < this.listQuestion.length; i++) {
       this.listQuestion[i].answers.filter((answ) => {
         if (answ.response == this.myForm.get("answerCorrect" + i)?.value && answ.isCorrect) {
           this.score += 1
@@ -126,7 +126,7 @@ export class TestsUserComponent implements OnInit {
       this.valuesTest(e3, this.listQuestion[i].answers[2].isCorrect)
       this.valuesTest(e4, this.listQuestion[i].answers[3].isCorrect)
     }
-    
+
     let result: RequestResultDTO = {
       categoryId: this.idCategory,
       score: this.score,

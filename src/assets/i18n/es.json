@@ -77,7 +77,10 @@
     "answers": "Respuestas",
     "unitName": "Unidad",
     "categoryName": "Nombre",
-    "isQuestion": "¿Es una categoría de 'Preguntas'?"
+    "isQuestion": "¿Es una categoría de 'Preguntas'?",
+    "score":"Nota",
+    "resultDate":"Fecha",
+    "category":"Categoría"
   },
   "log": {
     "title": "Somos el equipo Kanpeki",

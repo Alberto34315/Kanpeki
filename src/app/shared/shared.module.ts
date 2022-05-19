@@ -11,6 +11,7 @@ import { ShowAnswerComponent } from './components/show-answer/show-answer.compon
 import { ChartComponent } from './components/chart/chart.component';
 import { CardComponent } from './components/card/card.component';
 import { SwiperModule } from 'swiper/angular';
+import { StatisticsDataComponent } from './components/statistics-data/statistics-data.component';
 @NgModule({
   declarations: [
     HeaderComponent,
@@ -19,6 +20,7 @@ import { SwiperModule } from 'swiper/angular';
     ShowAnswerComponent,
     ChartComponent,
     CardComponent,
+    StatisticsDataComponent,
   ],
   exports: [HeaderComponent,
     TableComponent,
@@ -26,7 +28,8 @@ import { SwiperModule } from 'swiper/angular';
     NgChartsModule,
     ChartComponent,
     CardComponent,
-    SwiperModule],
+    SwiperModule,
+    StatisticsDataComponent,],
   imports: [
     CommonModule,
     RouterModule,

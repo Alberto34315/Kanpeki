@@ -1,0 +1,21 @@
+<div class="row row-cols-1 gy-4">
+  <div class="col">
+    <div>
+      <b>{{ "tableTitles.score" | translate }}:</b> {{ data.score }}
+    </div>
+  </div>
+  <div class="col">
+    <div>
+      <b>{{ "tableTitles.resultDate" | translate }}:</b>
+      {{ data.resultDate | date: "dd/MM/yyyy" }}
+    </div>
+  </div>
+  <div class="col">
+    <div>
+      <b>{{ "tableTitles.category" | translate }}:</b> {{ categoryName }}
+    </div>
+  </div>
+  <button class="btn btn-secondary float-start" [mat-dialog-close]="false">
+    {{ "form.close" | translate }}
+  </button>
+</div>

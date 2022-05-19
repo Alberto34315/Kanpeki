@@ -8,6 +8,7 @@ import { ComponentType } from '@angular/cdk/portal';
 import { SelectionModel } from '@angular/cdk/collections';
 import { AnswerDTO } from 'src/app/models/answerDTO';
 import { ShowAnswerComponent } from '../show-answer/show-answer.component';
+import { StatisticsDataComponent } from '../statistics-data/statistics-data.component';
 
 export interface PeriodicElement {
   name: string;
@@ -25,6 +26,7 @@ const ELEMENT_DATA: Object[] = [
 export class TableComponent implements AfterViewInit, OnInit {
   @Input() tableData!: any[];
   @Input() nameFormComponent!: ComponentType<any>;
+  @Input() statistics: boolean=false;
   @Output() propagateFather = new EventEmitter();
   @Output() listDeleteElementOut = new EventEmitter();
   displayedColumns: string[] = [];
@@ -50,8 +52,11 @@ export class TableComponent implements AfterViewInit, OnInit {
         && resp != "createdAt"
         && resp != "lastPasswordChangeAt"
         && resp != "categoryId"
+        && resp != "userId"
     })
-    this.displayedColumns.unshift("select")
+    if(!this.statistics){
+      this.displayedColumns.unshift("select")
+    }
     this.dataSource = new MatTableDataSource(this.tableData);
   }
 
@@ -70,20 +75,29 @@ export class TableComponent implements AfterViewInit, OnInit {
   }
 
   viewData(data: any) {
-    const dialogRef = this.dialog.open(this.nameFormComponent, {
-      width: '550px',
-      height: (this.nameFormComponent.name === "FormCategoriesComponent") ? '350px' : '600px',
-      data: data,
-      disableClose: true,
-      panelClass: 'custom-dialog-container'
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.dataSource = new MatTableDataSource(<any>[]);
-        this.onPropagate()
-      }
-    });
+    if(!this.statistics){
+      const dialogRef = this.dialog.open(this.nameFormComponent, {
+        width: '550px',
+        height: (this.nameFormComponent.name === "FormCategoriesComponent") ? '350px' : '600px',
+        data: data,
+        disableClose: true,
+        panelClass: 'custom-dialog-container'
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.dataSource = new MatTableDataSource(<any>[]);
+          this.onPropagate()
+        }
+      });
+    }else{
+      this.dialog.open(StatisticsDataComponent, {
+        width: '400px',
+        height: '300px',
+        data: data,
+        panelClass: 'custom-dialog-container'
+      });
+    }
   }
 
   showAnswers(answer: AnswerDTO) {

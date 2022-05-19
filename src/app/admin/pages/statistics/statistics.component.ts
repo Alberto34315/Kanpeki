@@ -121,10 +121,10 @@ export class StatisticsComponent implements OnInit {
         this.connectionS.getResultsCustomData().subscribe((res) => {
           res.forEach((element, i) => {
             this.lineChartData.datasets.forEach((value) => {
-              value.data.push(element.avgResults)
+              value.data.unshift(element.avgResults)
             })
             this.pieChartData.datasets.forEach((value) => {
-              value.data.push(element.numResults)
+              value.data.unshift(element.numResults)
             })
             this.pieChartData.labels?.unshift(this.returnNameCategory(element.categoryId))
             this.lineChartData.labels?.unshift(this.returnNameCategory(element.categoryId))

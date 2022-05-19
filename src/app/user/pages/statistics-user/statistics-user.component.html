@@ -1,10 +1,31 @@
-<div class="d-flex justify-content-center">
-  <ng-container *ngIf="barChartData"
-    ><app-chart
-      class="w-90"
-      [data]="barChartData"
-      [options]="barChartOptions"
-      [type]="barChartType"
-    ></app-chart
-  ></ng-container>
+<div class="d-flex justify-content-center row row-cols-lg-2">
+  <div class="col d-flex justify-content-center mt-4">
+    <ng-container *ngIf="barChartData"
+      ><app-chart
+        class="w-90"
+        [data]="barChartData"
+        [options]="barChartOptions"
+        [type]="barChartType"
+      ></app-chart
+    ></ng-container>
+  </div>
+  <div class="col d-flex justify-content-center mt-4">
+    <ng-container *ngIf="pieChartData"
+      ><app-chart
+        class="w-55"
+        [data]="pieChartData"
+        [options]="pieChartOptions"
+        [type]="pieChartType"
+      ></app-chart
+    ></ng-container>
+  </div>
+  <div class="col-12">
+    <div *ngIf="userStatics.length > 0; then thenBlock; else elseBlock"></div>
+    <ng-template #thenBlock>
+      <app-table [tableData]="userStatics" [statistics]="true"></app-table>
+    </ng-template>
+    <ng-template #elseBlock>
+      <p>No hay palabras</p>
+    </ng-template>
+  </div>
 </div>
