@@ -12,6 +12,7 @@ import { ChartComponent } from './components/chart/chart.component';
 import { CardComponent } from './components/card/card.component';
 import { SwiperModule } from 'swiper/angular';
 import { StatisticsDataComponent } from './components/statistics-data/statistics-data.component';
+import { LoadComponent } from './components/load/load.component';
 @NgModule({
   declarations: [
     HeaderComponent,
@@ -21,6 +22,7 @@ import { StatisticsDataComponent } from './components/statistics-data/statistics
     ChartComponent,
     CardComponent,
     StatisticsDataComponent,
+    LoadComponent,
   ],
   exports: [HeaderComponent,
     TableComponent,
@@ -29,7 +31,8 @@ import { StatisticsDataComponent } from './components/statistics-data/statistics
     ChartComponent,
     CardComponent,
     SwiperModule,
-    StatisticsDataComponent,],
+    StatisticsDataComponent,
+    LoadComponent,],
   imports: [
     CommonModule,
     RouterModule,

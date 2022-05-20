@@ -12,12 +12,16 @@ export class LanguageService {
     }
     this.translate.setDefaultLang(this.activeLang);
   }
-  public getIdiom(){
+  public getIdiom() {
     return this.activeLang
   }
   public changeLanguage(lang: string) {
     this.activeLang = lang;
     localStorage.setItem("language", this.activeLang)
     this.translate.use(this.activeLang);
+  }
+
+  getTextByKey(key: string) {
+    return this.translate.instant(key)
   }
 }

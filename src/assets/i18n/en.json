@@ -4,7 +4,10 @@
     "users": "Users",
     "questions": "Questions",
     "words": "Words",
-    "categories": "Categories"
+    "categories": "Categories",
+    "results": "Results",
+    "study": "Study",
+    "tests": "Tests"
   },
   "idiom": {
     "language": "Language",
@@ -33,7 +36,7 @@
     "emailIsValid": "This field must have email format 'example@mail.com'.",
     "passwordIsValid": "The password must be made up of some uppercase, some lowercase, some special character, and at least 8 characters.",
     "maxLengthdIsValid": "Maximum of 40 characters.",
-    "finalize":"Finalize"
+    "finalize": "Finalize"
   },
   "answer": {
     "answer": "Answer",
@@ -78,24 +81,45 @@
     "unitName": "Unit",
     "categoryName": "Name",
     "isQuestion": "Is this a 'Questions' category?",
-    "score":"Score",
-    "resultDate":"Date",
-    "category":"Category"
+    "score": "Score",
+    "resultDate": "Date",
+    "category": "Category"
   },
   "log": {
-    "title": "We are The Kanpeki Team",
+    "title": "Kanpeki",
     "login": "Log in",
     "logout": "Log out",
     "account": "Don't have an account?",
     "haveAccount": "Already have an account?",
     "createNew": "Create new",
-    "register": "Register"
+    "register": "Register",
+    "textTitle": "Kanpeki へようこそ！",
+    "textContent": "Kanpeki means being perfect, complete, or flawless. It is not only a word but also a philosophy. Let us be your partner in your learning process and help you reach your perfect Japanese."
   },
-  "study":{
-    "text":"On this page you will be able to practice your vocabulary, by the different categories available."
+  "study": {
+    "text": "On this page you will be able to practice your vocabulary, by the different categories available."
   },
-  "test":{
-    "text":"On this page you will be able to take exams, by the different categories available.",
-    "result":"Result"
+  "test": {
+    "text": "On this page you will be able to take exams, by the different categories available.",
+    "result": "Result"
+  },
+  "msg": {
+    "errorCredentials": "The username or password is not correct",
+    "noUsers": "There are no users",
+    "noWords": "There are no words",
+    "noQuestions": "There are no questions",
+    "noCategories": "There are no categories",
+    "deleteTitle": "Are you sure?",
+    "deleteText": "You won't be able to revert this!",
+    "confirmBtn": "Yes, delete",
+    "cancelBtn": "Cancel"
+  },
+  "chart": {
+    "numExamForCateg": "There are no results of the number of exams per category",
+    "avgNumPassForCateg": "There are no average pass results per category"
+  },
+  "btn": {
+    "remove": "Remove",
+    "add": "Add"
   }
 }

@@ -1,10 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import { ConnectionService } from '../../services/connection.service';
 import localeES from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
 import { ResponseCategoryDTO } from 'src/app/models/response/responseCategoryDTO';
+import { finalize, tap } from 'rxjs';
 registerLocaleData(localeES, 'es');
 
 @Component({
@@ -14,6 +15,7 @@ registerLocaleData(localeES, 'es');
   ]
 })
 export class StatisticsComponent implements OnInit {
+  public load: boolean = false;
   public score: number[] = []
   public date: string[] = []
   public footerTooltip: string = ""
@@ -66,7 +68,7 @@ export class StatisticsComponent implements OnInit {
           autoSkip: false
         },
         stacked: true,
-        suggestedMax:10,
+        suggestedMax: 10,
       }
 
     },
@@ -112,27 +114,45 @@ export class StatisticsComponent implements OnInit {
   //---------------------------------------------------------------------------
   public listCategories: ResponseCategoryDTO[] = []
 
-  constructor(private connectionS: ConnectionService) { }
+  constructor(private connectionS: ConnectionService,
+    private cdRef: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.connectionS.getCategories()
       .subscribe(res => {
         this.listCategories = res
-        this.connectionS.getResultsCustomData().subscribe((res) => {
-          res.forEach((element, i) => {
-            this.lineChartData.datasets.forEach((value) => {
-              value.data.unshift(element.avgResults)
-            })
-            this.pieChartData.datasets.forEach((value) => {
-              value.data.unshift(element.numResults)
-            })
-            this.pieChartData.labels?.unshift(this.returnNameCategory(element.categoryId))
-            this.lineChartData.labels?.unshift(this.returnNameCategory(element.categoryId))
-            this.chart?.chart?.update()
-            this.chartPie?.chart?.update()
-            
-          });
-        })
+        this.connectionS.getResultsCustomData()
+          .pipe(tap({
+            next: (res) => {
+              this.load = true
+              res.forEach((element, i) => {
+                this.lineChartData.datasets.forEach((value) => {
+                  value.data.unshift(element.avgResults)
+                })
+                this.pieChartData.datasets.forEach((value) => {
+                  value.data.unshift(element.numResults)
+                })
+                this.pieChartData.labels?.unshift(this.returnNameCategory(element.categoryId))
+                this.lineChartData.labels?.unshift(this.returnNameCategory(element.categoryId))
+                this.chart?.chart?.update()
+                this.chartPie?.chart?.update()
+              });
+
+              this.cdRef.markForCheck()
+            },
+            error: (err) => {
+              this.load = true
+              this.cdRef.markForCheck()
+            }
+          }),
+            finalize(() => {
+              setTimeout(() => {
+                this.load = false
+              }, 300)
+            }))
+          .subscribe((res) => {
+
+          })
       })
   }
 

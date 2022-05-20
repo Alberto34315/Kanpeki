@@ -1,22 +1,30 @@
-<div class="d-flex justify-content-center row row-cols-lg-2 ">
+<app-load *ngIf="load"></app-load>
+<div class="d-flex justify-content-center row row-cols-lg-2">
   <div class="col d-flex justify-content-center mt-4">
-    <ng-container *ngIf="lineChartData"
+    <ng-container *ngIf="lineChartData.datasets[0].data.length > 0; else elseLineChart"
       ><app-chart
-      class=" w-100"
+        class="w-100"
         [data]="lineChartData"
         [options]="lineChartOptions"
         [type]="lineChartType"
       ></app-chart
     ></ng-container>
+    <ng-template #elseLineChart>
+      <p class="fw-bold">{{ "chart.avgNumPassForCateg" | translate }}</p>
+    </ng-template>
   </div>
   <div class="col d-flex justify-content-center mt-4">
-    <ng-container *ngIf="pieChartData"
-    ><app-chart
-    class=" w-55"
-      [data]="pieChartData"
-      [options]="pieChartOptions"
-      [type]="pieChartType"
-    ></app-chart
-  ></ng-container>
+    <ng-container
+      *ngIf="pieChartData.datasets[0].data.length > 0; else elsePieChart"
+      ><app-chart
+        class="w-55"
+        [data]="pieChartData"
+        [options]="pieChartOptions"
+        [type]="pieChartType"
+      ></app-chart
+    ></ng-container>
+    <ng-template #elsePieChart>
+      <p class="fw-bold">{{ "chart.numExamForCateg" | translate }}</p>
+    </ng-template>
   </div>
 </div>

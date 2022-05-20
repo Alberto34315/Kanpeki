@@ -1,7 +1,9 @@
 import { ComponentType } from '@angular/cdk/portal';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { finalize, tap } from 'rxjs';
 import { ResponseQuestionDTO } from 'src/app/models/response/responseQuestionDTO';
+import { ErrorMessageService } from 'src/app/services/error-message.service';
 import { FormQuestionsComponent } from '../../components/form-questions/form-questions.component';
 import { ConnectionService } from '../../services/connection.service';
 
@@ -16,8 +18,12 @@ export class ListQuestionsComponent implements OnInit {
   public componentForm: ComponentType<FormQuestionsComponent>;
   public dialogRef!: MatDialogRef<FormQuestionsComponent, any>
   public listDeleteElement: any[] = []
-  public load: boolean = true
-  constructor(private connectionS: ConnectionService, public dialog: MatDialog) {
+  public load: boolean = false;
+  constructor(
+    private connectionS: ConnectionService,
+    public dialog: MatDialog,
+    private cdRef: ChangeDetectorRef,
+    private errorMsgS: ErrorMessageService) {
     this.componentForm = FormQuestionsComponent
   }
 
@@ -27,8 +33,23 @@ export class ListQuestionsComponent implements OnInit {
 
   getListQuetions() {
     this.connectionS.getQuestions()
+      .pipe(tap({
+        next: (res) => {
+          this.load = true
+          this.listQuestions = res
+          this.cdRef.markForCheck()
+        },
+        error: (err) => {
+          this.load = true
+          this.cdRef.markForCheck()
+        }
+      }),
+        finalize(() => {
+          setTimeout(() => {
+            this.load = false
+          }, 300)
+        }))
       .subscribe((resp) => {
-        this.listQuestions = resp
       })
   }
 
@@ -38,7 +59,7 @@ export class ListQuestionsComponent implements OnInit {
       height: '600px',
       data: {},
       disableClose: true,
-      panelClass:'custom-dialog-container'
+      panelClass: 'custom-dialog-container'
     });
     this.dialogRef.afterClosed().subscribe(result => {
       if (result) {
@@ -50,14 +71,18 @@ export class ListQuestionsComponent implements OnInit {
 
   deleteQuest() {
     if (this.listDeleteElement.length > 0 && this.listQuestions.length > 0) {
-      this.listDeleteElement.forEach(id => {
-        this.connectionS.deleteQuestions(id).subscribe(res => {
-          this.procesaPropagar()
-        })
-      });
+      this.errorMsgS.deleteElement().then((res) => {
+        if (res.isConfirmed) {
+          this.listDeleteElement.forEach(id => {
+            this.connectionS.deleteQuestions(id).subscribe(res => {
+              this.procesaPropagar()
+            })
+          });
+        }
+      })
     }
   }
-  
+
   listDelete(elements: any) {
     this.listDeleteElement = elements;
   }

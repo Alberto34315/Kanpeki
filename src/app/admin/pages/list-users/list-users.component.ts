@@ -1,7 +1,9 @@
 import { ComponentType } from '@angular/cdk/portal';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { finalize, tap } from 'rxjs';
 import { ResponseUserDTO } from 'src/app/models/response/responseUserDTO';
+import { ErrorMessageService } from 'src/app/services/error-message.service';
 import { FormUsersComponent } from '../../components/form-users/form-users.component';
 import { ConnectionService } from '../../services/connection.service';
 
@@ -16,8 +18,12 @@ export class ListUsersComponent implements OnInit {
   public componentForm: ComponentType<FormUsersComponent>;
   public dialogRef!: MatDialogRef<FormUsersComponent, any>
   public listDeleteElement: any[] = []
-  public load: boolean = true
-  constructor(private connectionS: ConnectionService, public dialog: MatDialog) {
+  public load: boolean = false;
+  constructor(
+    private connectionS: ConnectionService,
+    public dialog: MatDialog,
+    private cdRef: ChangeDetectorRef,
+    private errorMsgS: ErrorMessageService) {
     this.componentForm = FormUsersComponent
   }
 
@@ -27,11 +33,24 @@ export class ListUsersComponent implements OnInit {
 
   getListUsers() {
     this.connectionS.getUsers()
+      .pipe(tap({
+        next: (res) => {
+          this.load = true
+          this.listUsers = res
+          this.cdRef.markForCheck()
+        },
+        error: (err) => {
+          this.load = true
+          this.cdRef.markForCheck()
+        }
+      }),
+        finalize(() => {
+          setTimeout(() => {
+            this.load = false
+          }, 300)
+        }))
       .subscribe({
-        next: (v) => this.listUsers = v,
-        complete: () => this.load = false
       })
-    this.load = false
   }
 
   openForm() {
@@ -40,7 +59,7 @@ export class ListUsersComponent implements OnInit {
       height: '600px',
       data: {},
       disableClose: true,
-      panelClass:'custom-dialog-container'
+      panelClass: 'custom-dialog-container'
     });
     this.dialogRef.afterClosed().subscribe(result => {
       if (result) {
@@ -52,11 +71,17 @@ export class ListUsersComponent implements OnInit {
 
   deleteUser() {
     if (this.listDeleteElement.length > 0 && this.listUsers.length > 0) {
-      this.listDeleteElement.forEach(id => {
-        this.connectionS.deleteUser(id).subscribe(res => {
-          this.procesaPropagar()
-        })
-      });
+      this.errorMsgS.deleteElement().then((res) => {
+        if (res.isConfirmed) {
+          this.listDeleteElement.forEach(id => {
+            this.connectionS.deleteUser(id).subscribe(res => {
+              this.procesaPropagar()
+            })
+          });
+        }
+      })
+
+
     }
   }
 

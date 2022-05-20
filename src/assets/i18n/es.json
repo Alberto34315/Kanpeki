@@ -4,7 +4,10 @@
     "users": "Usuarios",
     "questions": "Preguntas",
     "words": "Palabras",
-    "categories": "Categorías"
+    "categories": "Categorías",
+    "results": "Resultados",
+    "study": "Estudiar",
+    "tests": "Examenes"
   },
   "idiom": {
     "language": "Idioma",
@@ -33,7 +36,7 @@
     "emailIsValid": "Este campo de tener formato email 'example@mail.com'.",
     "passwordIsValid": "La contraseña debe estar formado por alguna mayúscula, alguna minúscula, algún carácter especial, y como mínimo 8 caracteres.",
     "maxLengthdIsValid": "Máximo de 40 caracteres.",
-    "finalize":"Finalizar"
+    "finalize": "Finalizar"
   },
   "answer": {
     "answer": "Respuesta",
@@ -78,24 +81,45 @@
     "unitName": "Unidad",
     "categoryName": "Nombre",
     "isQuestion": "¿Es una categoría de 'Preguntas'?",
-    "score":"Nota",
-    "resultDate":"Fecha",
-    "category":"Categoría"
+    "score": "Nota",
+    "resultDate": "Fecha",
+    "category": "Categoría"
   },
   "log": {
-    "title": "Somos el equipo Kanpeki",
+    "title": "Kanpeki",
     "login": "Iniciar sesión",
     "logout": "Cerrar sesión",
     "account": "¿No tiene una cuenta?",
     "haveAccount": "¿Tienes ya una cuenta?",
     "createNew": "Crear nueva",
-    "register":"Registrarse"
+    "register": "Registrarse",
+    "textTitle": "Kanpeki へようこそ！",
+    "textContent": "Kanpeki significa ser perfecto, completo o impecable. No sólo es una palabra, sino también una filosofía. Déjanos ser tu compañero, en tu proceso de aprendizaje, y ayudarte a alcanzar tu perfecto japonés."
   },
-  "study":{
-    "text":"En esta página podrás practicar tu vocabulario, por las diferentes categorías disponibles."
+  "study": {
+    "text": "En esta página podrás practicar tu vocabulario, por las diferentes categorías disponibles."
   },
-  "test":{
-    "text":"En esta página podrás realizar exámenes, por las diferentes categorías disponibles.",
-    "result":"Resultado"
+  "test": {
+    "text": "En esta página podrás realizar exámenes, por las diferentes categorías disponibles.",
+    "result": "Resultado"
+  },
+  "msg": {
+    "errorCredentials": "El usuario o contraseña no son correctos",
+    "noUsers": "No hay usuarios",
+    "noWords": "No hay palabras",
+    "noQuestions": "No hay pregunstas",
+    "noCategories": "No hay categorías",
+    "deleteTitle": "¿Estás seguro/a?",
+    "deleteText": "¡No podrás revertir esto!",
+    "confirmBtn": "Si, borrar",
+    "cancelBtn": "Cancelar"
+  },
+  "chart": {
+    "numExamForCateg": "No hay resultado del número de exámenes por categoría",
+    "avgNumPassForCateg": "No hay resultados de la media de aprobados por categoría"
+  },
+  "btn": {
+    "remove": "Eliminar",
+    "add": "Añadir"
   }
 }

@@ -1,10 +1,15 @@
+<app-load *ngIf="load"></app-load>
 <div class="px-4">
   <div class="d-flex justify-content-between">
-    <button class="btn btn-primary mb-4 d-flex" (click)="deleteQuest()">
-      <mat-icon>remove</mat-icon>Eliminar
+    <button
+      class="btn btn-primary mb-4 d-flex"
+      [disabled]="listQuestions.length === 0"
+      (click)="deleteQuest()"
+    >
+      <mat-icon>remove</mat-icon>{{ "btn.remove" | translate }}
     </button>
     <button class="btn btn-primary mb-4 d-flex" (click)="openForm()">
-      <mat-icon>add</mat-icon>Añadir
+      <mat-icon>add</mat-icon>{{ "btn.add" | translate }}
     </button>
   </div>
 
@@ -19,17 +24,7 @@
   ></ng-template>
   <ng-template #elseBlock>
     <div class="d-flex justify-content-center">
-      <ng-container
-        *ngIf="load; then loadBlock; else elseLoadBlock"
-      ></ng-container>
-      <ng-template #loadBlock>
-        <div class="spinner-border" role="status">
-          <span class="visually-hidden">Loading...</span>
-        </div>
-      </ng-template>
-      <ng-template #elseLoadBlock>
-        <p>No hay Preguntas</p>
-      </ng-template>
+      <p class="fw-bold">{{ "msg.noQuestions" | translate }}</p>
     </div>
   </ng-template>
 </div>
