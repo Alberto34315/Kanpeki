@@ -56,7 +56,7 @@ export class LoginComponent implements OnInit {
         error: (err) => {
           this.load = true
           this.cdRef.markForCheck()
-          this.errorMsgS.showErrorMessage()
+          this.errorMsgS.showErrorCredentials()
         }
       }),
         finalize(() => {

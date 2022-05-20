@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ChartConfiguration, ChartType } from 'chart.js';
 import { ResponseCategoryDTO } from 'src/app/models/response/responseCategoryDTO';
 import { ConnectionService } from '../../services/connection.service';
@@ -6,6 +6,8 @@ import { formatDate } from '@angular/common';
 import localeES from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
 import { ResponseResultDTO } from 'src/app/models/response/responseResultDTO';
+import { ErrorMessageService } from 'src/app/services/error-message.service';
+import { finalize, tap } from 'rxjs';
 registerLocaleData(localeES, 'es');
 @Component({
   selector: 'app-statistics-user',
@@ -14,6 +16,8 @@ registerLocaleData(localeES, 'es');
   ]
 })
 export class StatisticsUserComponent implements OnInit {
+
+  public load: boolean = false;
   //-------------------------------------------------------
 
   public barChartData: ChartConfiguration['data'] = {
@@ -92,7 +96,9 @@ export class StatisticsUserComponent implements OnInit {
   //---------------------------------------------------------------------------
   public listCategories: ResponseCategoryDTO[] = []
   public userStatics: ResponseResultDTO[] = []
-  constructor(private connectionS: ConnectionService) {
+  constructor(private connectionS: ConnectionService,
+    private cdRef: ChangeDetectorRef,
+    private errorMsgS: ErrorMessageService) {
   }
 
   ngOnInit(): void {
@@ -104,25 +110,83 @@ export class StatisticsUserComponent implements OnInit {
   }
 
   loadData() {
-    this.connectionS.getUserMe().subscribe((res) => {
-      this.connectionS.getResultsUser(res.id).subscribe((res) => {
-        this.userStatics=res
-        res.forEach((element, i) => {
-          this.barChartData.datasets.forEach((value) => {
-            value.data.unshift(element.score)
+    this.connectionS.getUserMe()
+    .pipe(tap({
+      next: (res) => {
+        if (res) {
+          this.load = true;
+          this.connectionS.getResultsUser(res.id)
+          .pipe(tap({
+            next: (res) => {
+              if (res) {
+                this.load = true;
+                this.userStatics = res
+                res.forEach((element, i) => {
+                  this.barChartData.datasets.forEach((value) => {
+                    value.data.unshift(element.score)
+                  })
+                  let dateFormat = formatDate(new Date(element.resultDate), 'YYYY-MM-dd', 'es');
+                  this.barChartData.labels?.unshift(dateFormat)
+                });
+                this.cdRef.markForCheck()
+              }
+            },
+            error: (err) => {
+              this.load = true
+              this.cdRef.markForCheck()
+              this.errorMsgS.showErrorMessage(err)
+            }
+          }),
+            finalize(() => {
+              setTimeout(() => {
+                this.load = false
+              }, 300)
+            }))
+          .subscribe((res) => {
           })
-          let dateFormat = formatDate(new Date(element.resultDate), 'YYYY-MM-dd', 'es');
-          this.barChartData.labels?.unshift(dateFormat)
-        });
-      })
-      this.connectionS.getResultsUserCustom(res.id).subscribe((res) => {
-        res.forEach((element, i) => {
-          this.pieChartData.datasets.forEach((value) => {
-            value.data.unshift(element.numResults)
+  
+        this.connectionS.getResultsUserCustom(res.id)
+          .pipe(tap({
+            next: (res) => {
+              if (res) {
+                this.load = true;
+                res.forEach((element, i) => {
+                  this.pieChartData.datasets.forEach((value) => {
+                    value.data.unshift(element.numResults)
+                  })
+                  this.pieChartData.labels?.unshift(this.returnNameCategory(element.categoryId))
+                });
+                this.cdRef.markForCheck()
+              }
+            },
+            error: (err) => {
+              this.load = true
+              this.cdRef.markForCheck()
+              this.errorMsgS.showErrorMessage(err)
+            }
+          }),
+            finalize(() => {
+              setTimeout(() => {
+                this.load = false
+              }, 300)
+            }))
+          .subscribe((res) => {
           })
-          this.pieChartData.labels?.unshift(this.returnNameCategory(element.categoryId))
-        });
-      })
+          this.cdRef.markForCheck()
+        }
+      },
+      error: (err) => {
+        this.load = true
+        this.cdRef.markForCheck()
+        this.errorMsgS.showErrorMessage(err)
+      }
+    }),
+      finalize(() => {
+        setTimeout(() => {
+          this.load = false
+        }, 300)
+      }))
+    .subscribe((res) => {    
     })
   }
 

@@ -1,11 +1,12 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { map } from 'rxjs';
+import { finalize, map, tap } from 'rxjs';
 import { AnswerDTO } from 'src/app/models/answerDTO';
 import { RequestQuestionDTO } from 'src/app/models/request/requestQuestionDTO';
 import { ResponseCategoryDTO } from 'src/app/models/response/responseCategoryDTO';
 import { ResponseQuestionDTO } from 'src/app/models/response/responseQuestionDTO';
+import { ErrorMessageService } from 'src/app/services/error-message.service';
 import { ValidFormService } from 'src/app/services/valid-form.service';
 import { ConnectionService } from '../../services/connection.service';
 
@@ -31,14 +32,16 @@ export class FormQuestionsComponent implements OnInit {
     answerCorrect: ['answer1'],
   });
 
-  public load: boolean = true;
+  public load: boolean = false;
   public listCategories: ResponseCategoryDTO[] = []
   constructor(
     public dialogRef: MatDialogRef<FormQuestionsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ResponseQuestionDTO | RequestQuestionDTO,
     private fb: FormBuilder,
     private connectionS: ConnectionService,
-    private valiFormS: ValidFormService) {
+    private valiFormS: ValidFormService,
+    private cdRef: ChangeDetectorRef,
+    private errorMsgS: ErrorMessageService) {
     this.valiFormS.myForm = this.myForm
   }
 
@@ -112,20 +115,52 @@ export class FormQuestionsComponent implements OnInit {
 
     if (this.data.id) {
       question.id = this.data.id
-      this.connectionS.updatQuestion(question.id, question).subscribe((res) => {
-        if (res) {
-          this.load = true;
-          this.onClose()
-        }
-      })
+      this.connectionS.updatQuestion(question.id, question)
+        .pipe(tap({
+          next: (res) => {
+            if (res) {
+              this.load = true;
+              this.cdRef.markForCheck()
+              this.onClose()
+            }
+          },
+          error: (err) => {
+            this.load = true
+            this.cdRef.markForCheck()
+            this.errorMsgS.showErrorMessage(err)
+          }
+        }),
+          finalize(() => {
+            setTimeout(() => {
+              this.load = false
+            }, 300)
+          }))
+        .subscribe(resp => {
+        })
 
     } else {
-      this.connectionS.addQuestion(question).subscribe((res) => {
-        if (res) {
-          this.load = true;
-          this.onClose()
-        }
-      })
+      this.connectionS.addQuestion(question)
+        .pipe(tap({
+          next: (res) => {
+            if (res) {
+              this.load = true;
+              this.cdRef.markForCheck()
+              this.onClose()
+            }
+          },
+          error: (err) => {
+            this.load = true
+            this.cdRef.markForCheck()
+            this.errorMsgS.showErrorMessage(err)
+          }
+        }),
+          finalize(() => {
+            setTimeout(() => {
+              this.load = false
+            }, 300)
+          }))
+        .subscribe(resp => {
+        })
     }
   }
 

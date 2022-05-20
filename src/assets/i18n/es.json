@@ -105,6 +105,7 @@
   },
   "msg": {
     "errorCredentials": "El usuario o contraseña no son correctos",
+    "errorImage": "Error al cargar la imagen",
     "noUsers": "No hay usuarios",
     "noWords": "No hay palabras",
     "noQuestions": "No hay pregunstas",

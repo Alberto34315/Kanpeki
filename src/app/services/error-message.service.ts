@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import Swal from 'sweetalert2';
 import { LanguageService } from './language.service';
@@ -7,8 +8,27 @@ import { LanguageService } from './language.service';
 export class ErrorMessageService {
   constructor(private lgS: LanguageService) { }
 
-  showErrorMessage() {
+  showErrorCredentials() {
     Swal.fire('Error', this.lgS.getTextByKey("msg.errorCredentials"), 'error');
+  }
+  showErrorMessage(err: HttpErrorResponse) {
+    if (err.error.errors.length === 0) {
+      Swal.fire('Error', err.error.msg, 'error');
+    } else {
+      let element = ""
+      for (let i = 0; i < err.error.errors.length; i++) {
+        element += "<div class='border-bottom'>" + err.error.errors[i] + "</div><br>";
+      }
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        html: `<div>${element}</div>`
+      });
+    }
+
+  }
+  showErrorImage() {
+    Swal.fire('Error', this.lgS.getTextByKey("msg.errorImage"), 'error');
   }
 
   deleteElement() {

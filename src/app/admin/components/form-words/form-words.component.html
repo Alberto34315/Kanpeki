@@ -1,6 +1,4 @@
-<div *ngIf="load; then thenBlock; else elseBlock"></div>
-
-<ng-template #thenBlock >
+<app-load *ngIf="load"></app-load>
   <form 
     autocomplete="off"
     [formGroup]="myForm"
@@ -145,11 +143,3 @@
       </div>
     </div>
   </form>
-</ng-template>
-<ng-template #elseBlock>
-  <div class="d-flex justify-content-center align-items-center">
-    <div class="spinner-border" role="status">
-      <span class="visually-hidden">Loading...</span>
-    </div>
-  </div>
-</ng-template>

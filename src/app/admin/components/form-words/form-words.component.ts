@@ -1,11 +1,12 @@
-import { AfterViewInit, Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DomSanitizer } from '@angular/platform-browser';
-import { map } from 'rxjs';
+import { finalize, map, tap } from 'rxjs';
 import { RequestWordDTO } from 'src/app/models/request/requestWordDTO';
 import { ResponseCategoryDTO } from 'src/app/models/response/responseCategoryDTO';
 import { ResponseWordDTO } from 'src/app/models/response/responseWordDTO';
+import { ErrorMessageService } from 'src/app/services/error-message.service';
 import { ValidFormService } from 'src/app/services/valid-form.service';
 import { ConnectionService } from '../../services/connection.service';
 
@@ -35,7 +36,7 @@ export class FormWordsComponent implements OnInit {
       this.fileInput = fileInput;
     }
   }
-  public load: boolean = true;
+  public load: boolean = false;
   public listCategories: ResponseCategoryDTO[] = []
   constructor(
     public dialogRef: MatDialogRef<FormWordsComponent>,
@@ -43,18 +44,20 @@ export class FormWordsComponent implements OnInit {
     private fb: FormBuilder,
     private connectionS: ConnectionService,
     private sanitizer: DomSanitizer,
-    private valiFormS: ValidFormService
+    private valiFormS: ValidFormService,
+    private cdRef: ChangeDetectorRef,
+    private errorMsgS: ErrorMessageService
   ) {
     this.valiFormS.myForm = this.myForm
   }
 
   ngOnInit(): void {
-    this.connectionS.getCategories().pipe(map((res)=>{   
-      return res.filter(res=>res.isQuestion==false);
+    this.connectionS.getCategories().pipe(map((res) => {
+      return res.filter(res => res.isQuestion == false);
     }))
-    .subscribe(res => {
-      this.listCategories = res
-    })
+      .subscribe(res => {
+        this.listCategories = res
+      })
     if (this.data.id) {
       this.getImage()
       this.myForm.get('spanish')?.patchValue(this.data.spanish);
@@ -69,10 +72,29 @@ export class FormWordsComponent implements OnInit {
   getImage() {
     if (this.data.urlImage != "") {
       let imgArr = this.data.urlImage.split('/')
-      this.connectionS.getFile(imgArr[imgArr.length - 1]).subscribe(resp => {
-        let objectURL = URL.createObjectURL(resp);
-        this.image = this.sanitizer.bypassSecurityTrustUrl(objectURL);
-      })
+      this.connectionS.getFile(imgArr[imgArr.length - 1])
+        .pipe(tap({
+          next: (res) => {
+            if (res) {
+              this.load = true;
+              let objectURL = URL.createObjectURL(res);
+              this.image = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+              this.cdRef.markForCheck()
+            }
+          },
+          error: (err) => {
+            this.load = true
+            this.cdRef.markForCheck()
+            this.errorMsgS.showErrorImage()
+          }
+        }),
+          finalize(() => {
+            setTimeout(() => {
+              this.load = false
+            }, 300)
+          }))
+        .subscribe(resp => {
+        })
     }
   }
 
@@ -116,22 +138,54 @@ export class FormWordsComponent implements OnInit {
       } else {
         fd.append("file", new Blob(), "default.png");
       }
-      this.connectionS.addWord(fd).subscribe((res) => {
-        if (res) {
-          this.load = true;
-          this.onClose()
-        }
-      })
+      this.connectionS.addWord(fd)
+        .pipe(tap({
+          next: (res) => {
+            if (res) {
+              this.load = true;
+              this.cdRef.markForCheck()
+              this.onClose()
+            }
+          },
+          error: (err) => {
+            this.load = true
+            this.cdRef.markForCheck()
+            this.errorMsgS.showErrorMessage(err)
+          }
+        }),
+          finalize(() => {
+            setTimeout(() => {
+              this.load = false
+            }, 300)
+          }))
+        .subscribe((res) => {
+        })
     }
   }
 
   updateWord(id: number, fd: FormData) {
-    this.connectionS.updateWord(id, fd).subscribe((res) => {
-      if (res) {
-        this.load = true;
-        this.onClose()
-      }
-    })
+    this.connectionS.updateWord(id, fd)
+      .pipe(tap({
+        next: (res) => {
+          if (res) {
+            this.load = true;
+            this.cdRef.markForCheck()
+            this.onClose()
+          }
+        },
+        error: (err) => {
+          this.load = true
+          this.cdRef.markForCheck()
+          this.errorMsgS.showErrorMessage(err)
+        }
+      }),
+        finalize(() => {
+          setTimeout(() => {
+            this.load = false
+          }, 300)
+        }))
+      .subscribe((res) => {
+      })
   }
 
   deleteImage() {

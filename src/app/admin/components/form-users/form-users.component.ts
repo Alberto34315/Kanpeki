@@ -1,9 +1,11 @@
-import { Component, ElementRef, Inject, OnInit, Sanitizer, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, Inject, OnInit, Sanitizer, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { finalize, tap } from 'rxjs';
 import { RequestUserDTO } from 'src/app/models/request/requestUserDTO';
 import { ResponseUserDTO } from 'src/app/models/response/responseUserDTO';
+import { ErrorMessageService } from 'src/app/services/error-message.service';
 import { ValidFormService } from 'src/app/services/valid-form.service';
 import { ConnectionService } from '../../services/connection.service';
 @Component({
@@ -27,7 +29,7 @@ export class FormUsersComponent implements OnInit {
 
   public image: any = null;
 
-  public load: boolean = true;
+  public load: boolean = false;
 
   private fileInput!: ElementRef;
 
@@ -42,7 +44,9 @@ export class FormUsersComponent implements OnInit {
     private fb: FormBuilder,
     private connectionS: ConnectionService,
     private sanitizer: DomSanitizer,
-    private valiFormS: ValidFormService
+    private valiFormS: ValidFormService,
+    private cdRef: ChangeDetectorRef,
+    private errorMsgS: ErrorMessageService
   ) {
     this.valiFormS.myForm = this.myForm
   }
@@ -64,10 +68,29 @@ export class FormUsersComponent implements OnInit {
   getImage() {
     if (this.data.urlImage != "") {
       let imgArr = this.data.urlImage.split('/')
-      this.connectionS.getFile(imgArr[imgArr.length - 1]).subscribe(resp => {
-        let objectURL = URL.createObjectURL(resp);
-        this.image = this.sanitizer.bypassSecurityTrustUrl(objectURL);
-      })
+      this.connectionS.getFile(imgArr[imgArr.length - 1])
+        .pipe(tap({
+          next: (res) => {
+            if (res) {
+              this.load = true;
+              let objectURL = URL.createObjectURL(res);
+              this.image = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+              this.cdRef.markForCheck()
+            }
+          },
+          error: (err) => {
+            this.load = true
+            this.cdRef.markForCheck()
+            this.errorMsgS.showErrorImage()
+          }
+        }),
+          finalize(() => {
+            setTimeout(() => {
+              this.load = false
+            }, 300)
+          }))
+        .subscribe(resp => {
+        })
     }
   }
 
@@ -126,22 +149,54 @@ export class FormUsersComponent implements OnInit {
         fd.append("file", new Blob(), "default.png");
       }
 
-      this.connectionS.addUser(fd).subscribe((res) => {
-        if (res) {
-          this.load = true;
-          this.onClose()
-        }
-      })
+      this.connectionS.addUser(fd)
+        .pipe(tap({
+          next: (res) => {
+            if (res) {
+              this.load = true;
+              this.cdRef.markForCheck()
+              this.onClose()
+            }
+          },
+          error: (err) => {
+            this.load = true
+            this.cdRef.markForCheck()
+            this.errorMsgS.showErrorMessage(err)
+          }
+        }),
+          finalize(() => {
+            setTimeout(() => {
+              this.load = false
+            }, 300)
+          }))
+        .subscribe((res) => {
+        })
     }
   }
 
   updateUser(id: number, fd: FormData) {
-    this.connectionS.updateUser(id, fd).subscribe((res) => {
-      if (res) {
-        this.load = true;
-        this.onClose()
-      }
-    })
+    this.connectionS.updateUser(id, fd)
+      .pipe(tap({
+        next: (res) => {
+          if (res) {
+            this.load = true;
+            this.cdRef.markForCheck()
+            this.onClose()
+          }
+        },
+        error: (err) => {
+          this.load = true
+          this.cdRef.markForCheck()
+          this.errorMsgS.showErrorMessage(err)
+        }
+      }),
+        finalize(() => {
+          setTimeout(() => {
+            this.load = false
+          }, 300)
+        }))
+      .subscribe((res) => {
+      })
   }
 
 
@@ -168,5 +223,17 @@ export class FormUsersComponent implements OnInit {
 
   maxLengthdIsValid(field: string) {
     return this.valiFormS.maxLengthdIsValid(field)
+  }
+
+  validSubmit() {
+    let email = this.myForm.get("email")?.invalid
+    let fullName = this.myForm.get("fullName")?.invalid
+    let nickname = this.myForm.get("nickname")?.invalid
+    let birthday = this.myForm.get("birthday")?.invalid
+    let city = this.myForm.get("city")?.invalid
+    let roles = this.myForm.get("roles")?.invalid
+
+    return (email || fullName || nickname || birthday || city || roles)
+
   }
 }
