@@ -36,7 +36,9 @@
     "emailIsValid": "This field must have email format 'example@mail.com'.",
     "passwordIsValid": "The password must be made up of some uppercase, some lowercase, some special character, and at least 8 characters.",
     "maxLengthdIsValid": "Maximum of 40 characters.",
-    "finalize": "Finalize"
+    "finalize": "Finalize",
+    "start":"Start",
+    "exit":"Exit"
   },
   "answer": {
     "answer": "Answer",
@@ -83,7 +85,10 @@
     "isQuestion": "Is this a 'Questions' category?",
     "score": "Score",
     "resultDate": "Date",
-    "category": "Category"
+    "category": "Category",
+    "categoryId": "Category",
+    "avgResults": "Average exam grade by category",
+    "numResults": "Number of exams"
   },
   "log": {
     "title": "Kanpeki",
@@ -97,7 +102,8 @@
     "textContent": "Kanpeki means being perfect, complete, or flawless. It is not only a word but also a philosophy. Let us be your partner in your learning process and help you reach your perfect Japanese."
   },
   "study": {
-    "text": "On this page you will be able to practice your vocabulary, by the different categories available."
+    "text": "On this page you will be able to practice your vocabulary, by the different categories available.",
+    "category_Name": "Category name"
   },
   "test": {
     "text": "On this page you will be able to take exams, by the different categories available.",
@@ -108,6 +114,7 @@
     "errorImage": "Error loading image",
     "noUsers": "There are no users",
     "noWords": "There are no words",
+    "noStaticsUser": "No user stats",
     "noQuestions": "There are no questions",
     "noCategories": "There are no categories",
     "deleteTitle": "Are you sure?",

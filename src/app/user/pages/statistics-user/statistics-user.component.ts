@@ -96,6 +96,7 @@ export class StatisticsUserComponent implements OnInit {
   //---------------------------------------------------------------------------
   public listCategories: ResponseCategoryDTO[] = []
   public userStatics: ResponseResultDTO[] = []
+  public userStaticsAVG: any[] = []
   constructor(private connectionS: ConnectionService,
     private cdRef: ChangeDetectorRef,
     private errorMsgS: ErrorMessageService) {
@@ -103,91 +104,108 @@ export class StatisticsUserComponent implements OnInit {
 
   ngOnInit(): void {
     this.connectionS.getCategories()
+      .pipe(tap({
+        next: (res) => {
+          this.load = true
+          this.listCategories = res
+          this.loadData()
+          this.cdRef.markForCheck()
+        },
+        error: (err) => {
+          this.load = true
+          this.cdRef.markForCheck()
+          this.errorMsgS.showErrorMessage(err)
+        }
+      }),
+        finalize(() => {
+          setTimeout(() => {
+            this.load = false
+          }, 300)
+        }))
       .subscribe(res => {
-        this.listCategories = res
-        this.loadData()
       })
   }
 
   loadData() {
     this.connectionS.getUserMe()
-    .pipe(tap({
-      next: (res) => {
-        if (res) {
-          this.load = true;
-          this.connectionS.getResultsUser(res.id)
-          .pipe(tap({
-            next: (res) => {
-              if (res) {
-                this.load = true;
-                this.userStatics = res
-                res.forEach((element, i) => {
-                  this.barChartData.datasets.forEach((value) => {
-                    value.data.unshift(element.score)
-                  })
-                  let dateFormat = formatDate(new Date(element.resultDate), 'YYYY-MM-dd', 'es');
-                  this.barChartData.labels?.unshift(dateFormat)
-                });
-                this.cdRef.markForCheck()
-              }
-            },
-            error: (err) => {
-              this.load = true
-              this.cdRef.markForCheck()
-              this.errorMsgS.showErrorMessage(err)
-            }
-          }),
-            finalize(() => {
-              setTimeout(() => {
-                this.load = false
-              }, 300)
-            }))
-          .subscribe((res) => {
-          })
-  
-        this.connectionS.getResultsUserCustom(res.id)
-          .pipe(tap({
-            next: (res) => {
-              if (res) {
-                this.load = true;
-                res.forEach((element, i) => {
-                  this.pieChartData.datasets.forEach((value) => {
-                    value.data.unshift(element.numResults)
-                  })
-                  this.pieChartData.labels?.unshift(this.returnNameCategory(element.categoryId))
-                });
-                this.cdRef.markForCheck()
-              }
-            },
-            error: (err) => {
-              this.load = true
-              this.cdRef.markForCheck()
-              this.errorMsgS.showErrorMessage(err)
-            }
-          }),
-            finalize(() => {
-              setTimeout(() => {
-                this.load = false
-              }, 300)
-            }))
-          .subscribe((res) => {
-          })
+      .pipe(tap({
+        next: (res) => {
+          if (res) {
+            this.load = true;
+            this.connectionS.getResultsUser(res.id)
+              .pipe(tap({
+                next: (res) => {
+                  if (res) {
+                    this.load = true;
+                    this.userStatics = res
+                    res.forEach((element, i) => {
+                      this.barChartData.datasets.forEach((value) => {
+                        value.data.unshift(element.score)
+                      })
+                      let dateFormat = formatDate(new Date(element.resultDate), 'YYYY-MM-dd', 'es');
+                      this.barChartData.labels?.unshift(dateFormat)
+                    });
+                    this.cdRef.markForCheck()
+                  }
+                },
+                error: (err) => {
+                  this.load = true
+                  this.cdRef.markForCheck()
+                  this.errorMsgS.showErrorMessage(err)
+                }
+              }),
+                finalize(() => {
+                  setTimeout(() => {
+                    this.load = false
+                  }, 300)
+                }))
+              .subscribe((res) => {
+              })
+
+            this.connectionS.getResultsUserCustom(res.id)
+              .pipe(tap({
+                next: (res) => {
+                  if (res) {
+                    this.load = true;
+                    this.userStaticsAVG=res
+                    res.forEach((element, i) => {
+                      this.pieChartData.datasets.forEach((value) => {
+                        value.data.unshift(element.numResults)
+                      })
+                      this.pieChartData.labels?.unshift(this.returnNameCategory(element.categoryId))
+                    });
+                    this.cdRef.markForCheck()
+                  }
+                },
+                error: (err) => {
+                  this.load = true
+                  this.cdRef.markForCheck()
+                  this.errorMsgS.showErrorMessage(err)
+                }
+              }),
+                finalize(() => {
+                  setTimeout(() => {
+                    this.load = false
+                  }, 300)
+                }))
+              .subscribe((res) => {
+              })
+            this.cdRef.markForCheck()
+          }
+        },
+        error: (err) => {
+          this.load = true
           this.cdRef.markForCheck()
+          this.errorMsgS.showErrorMessage(err)
         }
-      },
-      error: (err) => {
-        this.load = true
-        this.cdRef.markForCheck()
-        this.errorMsgS.showErrorMessage(err)
-      }
-    }),
-      finalize(() => {
-        setTimeout(() => {
-          this.load = false
-        }, 300)
-      }))
-    .subscribe((res) => {    
-    })
+      }),
+        finalize(() => {
+          setTimeout(() => {
+            this.load = false
+          }, 300)
+        }))
+      .subscribe((res) => {
+      })
   }
 
   returnNameCategory(id: number) {

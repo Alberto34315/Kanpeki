@@ -23,8 +23,12 @@
         [type]="pieChartType"
       ></app-chart
     ></ng-container>
-    <ng-template #elsePieChart>
-      <p class="fw-bold">{{ "chart.numExamForCateg" | translate }}</p>
-    </ng-template>
   </div>
+  <div class="col">
+    <div *ngIf="usersStatics.length > 0" class="my-3">
+      <app-table [tableData]="usersStatics" [statistics]="true"></app-table>
+    </div>
 </div>
+<ng-template #elsePieChart>
+  <p class="fw-bold d-flex justify-content-center">{{ "chart.numExamForCateg" | translate }}</p>
+</ng-template>

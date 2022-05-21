@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ResponseCategoryDTO } from '../../../models/response/responseCategoryDTO';
 import { ConnectionService } from '../../services/connection.service';
-import { map, Observable, of, startWith } from 'rxjs';
+import { finalize, map, Observable, of, startWith, tap } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { ResponseWordDTO } from '../../../models/response/responseWordDTO';
 import SwiperCore, { Navigation } from "swiper";
+import { ErrorMessageService } from 'src/app/services/error-message.service';
 
 // install Swiper modules
 SwiperCore.use([Navigation]);
@@ -21,8 +22,11 @@ export class StudyUserComponent implements OnInit {
   public filteredOptions: Observable<ResponseCategoryDTO[]> = of([]);
   public image: any = null;
   public listWords: ResponseWordDTO[] = [];
+  public load: boolean = false;
   constructor(
     private connectionS: ConnectionService,
+    private cdRef: ChangeDetectorRef,
+    private errorMsgS: ErrorMessageService
   ) {
   }
 
@@ -32,24 +36,60 @@ export class StudyUserComponent implements OnInit {
       .pipe(
         map((res) => {
           return res.filter((res) => res.isQuestion == false);
+        }),
+        tap({
+          next: (res) => {
+            this.load = true
+            this.listCategories = res;
+            this.filteredOptions = this.myControl.valueChanges.pipe(
+              startWith(''),
+              map((value) => this._filter(value))
+            );
+            this.cdRef.markForCheck()
+          },
+          error: (err) => {
+            this.load = true
+            this.cdRef.markForCheck()
+            this.errorMsgS.showErrorMessage(err)
+          }
+        }),
+        finalize(() => {
+          setTimeout(() => {
+            this.load = false
+          }, 300)
         })
       )
       .subscribe((res) => {
-        this.listCategories = res;
-        this.filteredOptions = this.myControl.valueChanges.pipe(
-          startWith(''),
-          map((value) => this._filter(value))
-        );
       });
   }
 
   startStudy() {
     if (this.idCategory > 0) {
-      this.connectionS.getWordsByCategory(this.idCategory).subscribe((res) => {
-       this.listWords=res;
-      });
+      this.connectionS.getWordsByCategory(this.idCategory)
+        .pipe(
+          tap({
+            next: (res) => {
+              this.load = true
+              this.listWords = res;
+              this.cdRef.markForCheck()
+            },
+            error: (err) => {
+              this.load = true
+              this.cdRef.markForCheck()
+              this.errorMsgS.showErrorMessage(err)
+            }
+          }),
+          finalize(() => {
+            setTimeout(() => {
+              this.load = false
+            }, 300)
+          })
+        )
+        .subscribe((res) => {
+        });
     }
   }
+
   getCategory(option: ResponseCategoryDTO) {
     this.idCategory = option.id;
   }
@@ -64,9 +104,9 @@ export class StudyUserComponent implements OnInit {
     );
   }
 
-  exit(){
-    this.listWords=[]
+  exit() {
+    this.listWords = []
     this.myControl.setValue("")
   }
-  
+
 }

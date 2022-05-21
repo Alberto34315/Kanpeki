@@ -117,11 +117,30 @@ export class FormWordsComponent implements OnInit {
       } else {
         if (word.urlImage.replace(/\s+/g, '') !== "") {
           let imgArr = word.urlImage.split('/')
-          this.connectionS.getFile(imgArr[imgArr.length - 1]).subscribe(resp => {
-            let name = imgArr[imgArr.length - 1].split("_")
-            fd.append("file", resp, name[name.length - 1]);
-            this.updateWord(Number(word.id), fd)
-          })
+          this.connectionS.getFile(imgArr[imgArr.length - 1])
+            .pipe(tap({
+              next: (res) => {
+                if (res) {
+                  this.load = true;
+                  let name = imgArr[imgArr.length - 1].split("_")
+                  fd.append("file", res, name[name.length - 1]);
+                  this.updateWord(Number(word.id), fd)
+                  this.cdRef.markForCheck()
+                }
+              },
+              error: (err) => {
+                this.load = true
+                this.cdRef.markForCheck()
+                this.errorMsgS.showErrorImage()
+              }
+            }),
+              finalize(() => {
+                setTimeout(() => {
+                  this.load = false
+                }, 300)
+              }))
+            .subscribe(resp => {
+            })
         } else {
           fd.append("file", new Blob(), "default.png");
           this.updateWord(Number(word.id), fd)

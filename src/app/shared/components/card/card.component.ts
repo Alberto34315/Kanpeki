@@ -5,13 +5,15 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
 import { CardData } from '../../../models/cardData';
 import { ResponseWordDTO } from '../../../models/response/responseWordDTO';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ConnectionService } from 'src/app/user/services/connection.service';
 import { LanguageService } from '../../../services/language.service';
 import { SpeakService } from '../../../services/speak.service';
+import { ErrorMessageService } from 'src/app/services/error-message.service';
+import { finalize, tap } from 'rxjs';
 
 @Component({
   selector: 'app-card',
@@ -53,11 +55,14 @@ export class CardComponent implements OnInit {
   };
   public image: any = null;
   public idiom: String = '';
+  public load: boolean = false;
   constructor(
     private connectionS: ConnectionService,
     private sanitizer: DomSanitizer,
     private languageService: LanguageService,
-    private speak: SpeakService
+    private speak: SpeakService,
+    private cdRef: ChangeDetectorRef,
+    private errorMsgS: ErrorMessageService
   ) {
     this.idiom = this.languageService.getIdiom();
   }
@@ -81,10 +86,29 @@ export class CardComponent implements OnInit {
   getImage(word: ResponseWordDTO) {
     if (word.urlImage != '') {
       let imgArr = word.urlImage.split('/');
-      this.connectionS.getFile(imgArr[imgArr.length - 1]).subscribe((resp) => {
-        let objectURL = URL.createObjectURL(resp);
-        this.image = this.sanitizer.bypassSecurityTrustUrl(objectURL);
-      });
+      this.connectionS.getFile(imgArr[imgArr.length - 1])
+        .pipe(tap({
+          next: (res) => {
+            if (res) {
+              this.load = true;
+              let objectURL = URL.createObjectURL(res);
+              this.image = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+              this.cdRef.markForCheck()
+            }
+          },
+          error: (err) => {
+            this.load = true
+            this.cdRef.markForCheck()
+            this.errorMsgS.showErrorImage()
+          }
+        }),
+          finalize(() => {
+            setTimeout(() => {
+              this.load = false
+            }, 300)
+          }))
+        .subscribe((resp) => {
+        });
     }
   }
 }

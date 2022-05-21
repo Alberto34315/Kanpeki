@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ResponseCategoryDTO } from '../../../models/response/responseCategoryDTO';
 import { ConnectionService } from '../../services/connection.service';
-import { map, Observable, of, startWith } from 'rxjs';
+import { finalize, map, Observable, of, startWith, tap } from 'rxjs';
 import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { ResponseQuestionDTO } from '../../../models/response/responseQuestionDTO';
 import { RequestResultDTO } from 'src/app/models/request/requestResultDTO';
 import { ResponseUserDTO } from 'src/app/models/response/responseUserDTO';
+import { ErrorMessageService } from 'src/app/services/error-message.service';
 
 @Component({
   selector: 'app-tests-user',
@@ -22,6 +23,7 @@ export class TestsUserComponent implements OnInit {
   public score: number = -1
   public disableButton: boolean = false;
   public user!: ResponseUserDTO
+  public load: boolean = false;
   public myForm: FormGroup = this.fb.group({
     answerCorrect0: [''],
     answerCorrect1: [''],
@@ -36,7 +38,9 @@ export class TestsUserComponent implements OnInit {
   });
   constructor(
     private fb: FormBuilder,
-    private connectionS: ConnectionService
+    private connectionS: ConnectionService,
+    private cdRef: ChangeDetectorRef,
+    private errorMsgS: ErrorMessageService
   ) { }
 
   ngOnInit(): void {
@@ -44,19 +48,34 @@ export class TestsUserComponent implements OnInit {
       this.user = res
     })
     this.exit()
-    this.connectionS
-      .getCategories()
+    this.connectionS.getCategories()
       .pipe(
         map((res) => {
           return res.filter((res) => res.isQuestion == true);
+        }),
+        tap({
+          next: (res) => {
+            this.load = true
+            this.listCategories = res;
+            this.filteredOptions = this.myControl.valueChanges.pipe(
+              startWith(''),
+              map((value) => this._filter(value))
+            );
+            this.cdRef.markForCheck()
+          },
+          error: (err) => {
+            this.load = true
+            this.cdRef.markForCheck()
+            this.errorMsgS.showErrorMessage(err)
+          }
+        }),
+        finalize(() => {
+          setTimeout(() => {
+            this.load = false
+          }, 300)
         })
       )
       .subscribe((res) => {
-        this.listCategories = res;
-        this.filteredOptions = this.myControl.valueChanges.pipe(
-          startWith(''),
-          map((value) => this._filter(value))
-        );
       });
   }
 
@@ -64,8 +83,24 @@ export class TestsUserComponent implements OnInit {
     if (this.idCategory > 0) {
       this.connectionS
         .getQuestionsByCategory(this.idCategory)
+        .pipe(tap({
+          next: (res) => {
+            this.load = true
+            this.listQuestion = res;
+            this.cdRef.markForCheck()
+          },
+          error: (err) => {
+            this.load = true
+            this.cdRef.markForCheck()
+            this.errorMsgS.showErrorMessage(err)
+          }
+        }),
+          finalize(() => {
+            setTimeout(() => {
+              this.load = false
+            }, 300)
+          }))
         .subscribe((res) => {
-          this.listQuestion = res;
         });
     }
   }
@@ -132,10 +167,25 @@ export class TestsUserComponent implements OnInit {
       score: this.score,
       userId: this.user.id
     }
-    this.connectionS.addResultsUser(result).subscribe(res=>{
-      console.log(res);
-      
-    })
+    this.connectionS.addResultsUser(result)
+      .pipe(tap({
+        next: (res) => {
+          this.load = true
+          this.cdRef.markForCheck()
+        },
+        error: (err) => {
+          this.load = true
+          this.cdRef.markForCheck()
+          this.errorMsgS.showErrorMessage(err)
+        }
+      }),
+        finalize(() => {
+          setTimeout(() => {
+            this.load = false
+          }, 300)
+        }))
+      .subscribe(res => {
+      })
   }
 
   valuesTest(element: HTMLInputElement, flag: boolean) {

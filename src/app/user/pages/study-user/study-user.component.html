@@ -1,3 +1,4 @@
+<app-load *ngIf="load"></app-load>
 <div
   class="d-flex flex-column justify-content-center align-items-center fs-3 fw-bold"
 >
@@ -6,10 +7,10 @@
   </p>
   <div id="line"><hr /></div>
 
-  <ng-container  *ngIf="listWords.length==0">
+  <ng-container *ngIf="listWords.length == 0">
     <form class="w-80 h-50 my-4">
       <mat-form-field class="w-100" appearance="fill">
-        <mat-label>Category Name</mat-label>
+        <mat-label>{{ "study.category_Name" | translate }}</mat-label>
         <input
           type="text"
           matInput
@@ -28,15 +29,17 @@
         </mat-autocomplete>
       </mat-form-field>
     </form>
-    <button class="btn btn-primary my-2"  (click)="startStudy()">Iniciar</button>
+    <button class="btn btn-primary my-2 d-flex" (click)="startStudy()">
+      {{ "form.start" | translate }} <mat-icon>play_arrow</mat-icon>
+    </button>
   </ng-container>
 
-  <ng-container  *ngIf="listWords.length>0">
-    <button  class="btn btn-primary my-2" (click)="exit()">Salir</button>
+  <ng-container *ngIf="listWords.length > 0">
+    <button class="btn btn-primary my-2 d-flex" (click)="exit()"> {{ "form.exit" | translate }} <mat-icon>exit_to_app</mat-icon></button>
     <swiper [navigation]="true" class="mySwiper">
-        <ng-template swiperSlide *ngFor="let word of listWords">
-          <app-card [word]="word"> </app-card>
-        </ng-template>
-      </swiper>
-  </ng-container>  
+      <ng-template swiperSlide *ngFor="let word of listWords">
+        <app-card [word]="word"> </app-card>
+      </ng-template>
+    </swiper>
+  </ng-container>
 </div>

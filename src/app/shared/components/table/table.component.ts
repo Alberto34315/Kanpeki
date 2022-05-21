@@ -3,7 +3,7 @@ import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChil
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { ComponentType } from '@angular/cdk/portal';
 import { SelectionModel } from '@angular/cdk/collections';
 import { AnswerDTO } from 'src/app/models/answerDTO';
@@ -26,7 +26,7 @@ const ELEMENT_DATA: Object[] = [
 export class TableComponent implements AfterViewInit, OnInit {
   @Input() tableData!: any[];
   @Input() nameFormComponent!: ComponentType<any>;
-  @Input() statistics: boolean=false;
+  @Input() statistics: boolean = false;
   @Output() propagateFather = new EventEmitter();
   @Output() listDeleteElementOut = new EventEmitter();
   displayedColumns: string[] = [];
@@ -54,7 +54,7 @@ export class TableComponent implements AfterViewInit, OnInit {
         && resp != "categoryId"
         && resp != "userId"
     })
-    if(!this.statistics){
+    if (!this.statistics) {
       this.displayedColumns.unshift("select")
     }
     this.dataSource = new MatTableDataSource(this.tableData);
@@ -75,7 +75,7 @@ export class TableComponent implements AfterViewInit, OnInit {
   }
 
   viewData(data: any) {
-    if(!this.statistics){
+    if (!this.statistics) {
       const dialogRef = this.dialog.open(this.nameFormComponent, {
         width: '550px',
         height: (this.nameFormComponent.name === "FormCategoriesComponent") ? '350px' : '600px',
@@ -83,16 +83,16 @@ export class TableComponent implements AfterViewInit, OnInit {
         disableClose: true,
         panelClass: 'custom-dialog-container'
       });
-  
+
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
           this.dataSource = new MatTableDataSource(<any>[]);
           this.onPropagate()
         }
       });
-    }else{
+    } else {
       this.dialog.open(StatisticsDataComponent, {
-        width: '400px',
+        width: '500px',
         height: '300px',
         data: data,
         panelClass: 'custom-dialog-container'

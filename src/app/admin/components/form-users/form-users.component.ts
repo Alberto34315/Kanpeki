@@ -121,10 +121,29 @@ export class FormUsersComponent implements OnInit {
       } else {
         if (user.urlImage.replace(/\s+/g, '') !== "") {
           let imgArr = user.urlImage.split('/')
-          this.connectionS.getFile(imgArr[imgArr.length - 1]).subscribe(resp => {
-            let name = imgArr[imgArr.length - 1].split("_")
-            fd.append("file", resp, name[name.length - 1]);
-            this.updateUser(Number(user.id), fd)
+          this.connectionS.getFile(imgArr[imgArr.length - 1])
+          .pipe(tap({
+            next: (res) => {
+              if (res) {
+                this.load = true;
+                let name = imgArr[imgArr.length - 1].split("_")
+                fd.append("file", res, name[name.length - 1]);
+                this.updateUser(Number(user.id), fd)
+                this.cdRef.markForCheck()
+              }
+            },
+            error: (err) => {
+              this.load = true
+              this.cdRef.markForCheck()
+              this.errorMsgS.showErrorImage()
+            }
+          }),
+            finalize(() => {
+              setTimeout(() => {
+                this.load = false
+              }, 300)
+            }))
+          .subscribe(resp => {           
           })
         } else {
           fd.append("file", new Blob(), "default.png");

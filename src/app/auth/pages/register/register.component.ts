@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { finalize, tap } from 'rxjs';
 import { ConnectionService } from 'src/app/admin/services/connection.service';
 import { RequestUserDTO } from 'src/app/models/request/requestUserDTO';
+import { ErrorMessageService } from 'src/app/services/error-message.service';
 import { ValidFormService } from 'src/app/services/valid-form.service';
 import { AuthService } from '../../services/auth.service';
 
@@ -21,10 +23,13 @@ export class RegisterComponent implements OnInit {
     birthday: ['', [Validators.required]],
     city: ['', [Validators.required, Validators.maxLength(40)]],
   });
+  public load: boolean = false;
   constructor(private authS: AuthService,
     private fb: FormBuilder,
     private router: Router,
-    private valiFormS: ValidFormService,) {
+    private valiFormS: ValidFormService,
+    private cdRef: ChangeDetectorRef,
+    private errorMsgS: ErrorMessageService) {
     this.valiFormS.myForm = this.myForm
   }
   ngOnInit(): void {
@@ -40,9 +45,26 @@ export class RegisterComponent implements OnInit {
     fd.append('fullName', user.fullName)
     fd.append('nickname', user.nickname)
     fd.append('roles[]', "PENDING_APPROVAL")
-    this.authS.register(fd).subscribe(res=>{
-      this.router.navigateByUrl('/auth');
-    })
+    this.authS.register(fd)
+      .pipe(tap({
+        next: (res) => {
+          this.load = true
+          this.router.navigateByUrl('/auth');
+          this.cdRef.markForCheck()
+        },
+        error: (err) => {
+          this.load = true
+          this.cdRef.markForCheck()
+          this.errorMsgS.showErrorMessage(err)
+        }
+      }),
+        finalize(() => {
+          setTimeout(() => {
+            this.load = false
+          }, 300)
+        }))
+      .subscribe(res => {
+      })
   }
 
   fieldIsRequired(field: string) {

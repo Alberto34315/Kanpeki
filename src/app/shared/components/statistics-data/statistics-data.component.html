@@ -1,19 +1,32 @@
+<app-load *ngIf="load"></app-load>
 <div class="row row-cols-1 gy-4">
-  <div class="col">
-    <div>
-      <b>{{ "tableTitles.score" | translate }}:</b> {{ data.score }}
-    </div>
-  </div>
-  <div class="col">
-    <div>
-      <b>{{ "tableTitles.resultDate" | translate }}:</b>
-      {{ data.resultDate | date: "dd/MM/yyyy" }}
-    </div>
-  </div>
-  <div class="col">
-    <div>
-      <b>{{ "tableTitles.category" | translate }}:</b> {{ categoryName }}
-    </div>
+  <div class="col" *ngFor="let attribute of titles">
+    <container-element [ngSwitch]="attribute">
+      <ng-container *ngSwitchCase="'avgResults'">
+        <div>
+          <b>{{ "tableTitles." + attribute | translate }}:</b>
+          {{ data[attribute] | number: "1.2-2" }}
+        </div>
+      </ng-container>
+      <ng-container *ngSwitchCase="'resultDate'">
+        <div>
+          <b>{{ "tableTitles." + attribute | translate }}:</b>
+          {{ data[attribute] | date: "dd/MM/yyyy" }}
+        </div>
+      </ng-container>
+      <ng-container *ngSwitchCase="'categoryId'">
+        <div>
+          <b>{{ "tableTitles." + attribute | translate }}:</b>
+          {{ categoryName }}
+        </div>
+      </ng-container>
+      <ng-container *ngSwitchDefault>
+        <div>
+          <b>{{ "tableTitles." + attribute | translate }}:</b>
+          {{ data[attribute] }}
+        </div>
+      </ng-container>
+    </container-element>
   </div>
   <button class="btn btn-secondary float-start" [mat-dialog-close]="false">
     {{ "form.close" | translate }}

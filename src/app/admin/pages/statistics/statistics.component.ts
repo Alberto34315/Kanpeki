@@ -6,6 +6,7 @@ import localeES from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
 import { ResponseCategoryDTO } from 'src/app/models/response/responseCategoryDTO';
 import { finalize, tap } from 'rxjs';
+import { ResponseResultDTO } from 'src/app/models/response/responseResultDTO';
 registerLocaleData(localeES, 'es');
 
 @Component({
@@ -114,6 +115,7 @@ export class StatisticsComponent implements OnInit {
   //---------------------------------------------------------------------------
   public listCategories: ResponseCategoryDTO[] = []
 
+  public usersStatics: any[] = []
   constructor(private connectionS: ConnectionService,
     private cdRef: ChangeDetectorRef) { }
 
@@ -124,7 +126,8 @@ export class StatisticsComponent implements OnInit {
         this.connectionS.getResultsCustomData()
           .pipe(tap({
             next: (res) => {
-              this.load = true
+              this.load = true              
+              this.usersStatics = res
               res.forEach((element, i) => {
                 this.lineChartData.datasets.forEach((value) => {
                   value.data.unshift(element.avgResults)
