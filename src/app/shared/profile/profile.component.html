@@ -1,10 +1,27 @@
 <app-load *ngIf="load"></app-load>
 <div class="row row-cols-2" *ngIf="user !== undefined">
   <div class="col">
-    <img
-      [src]="image != null ? image : '../../../assets/img/profileDefault.png'"
-      class="img-thumbnail imgProfile float-end ms-3 me-4"
-    />
+    <form action=""></form>
+    <form autocomplete="off" [formGroup]="myForm" enctype="multipart/form-data">
+      <label for="imgProfile" class="float-end pointer">
+        <img
+          [src]="
+            image != null ? image : '../../../assets/img/profileDefault.png'
+          "
+          id="image"
+          class="img-thumbnail imgProfile ms-3 me-4"
+        />
+      </label>
+      <input
+        #fileInput
+        id="imgProfile"
+        type="file"
+        class="form-control d-none"
+        accept="image/*"
+        formControlName="urlImage"
+        (change)="imgChange($event)"
+      />
+    </form>
   </div>
   <div class="col">
     <div class="row row-cols-1 row-cols-lg-2">

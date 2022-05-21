@@ -13,6 +13,7 @@ import { CardComponent } from './components/card/card.component';
 import { SwiperModule } from 'swiper/angular';
 import { StatisticsDataComponent } from './components/statistics-data/statistics-data.component';
 import { LoadComponent } from './components/load/load.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     HeaderComponent,
@@ -39,7 +40,9 @@ import { LoadComponent } from './components/load/load.component';
     TranslateModule,
     MaterialModule,
     NgChartsModule,
-    SwiperModule
+    SwiperModule,
+    FormsModule,
+    ReactiveFormsModule, 
   ]
 })
 export class SharedModule { }

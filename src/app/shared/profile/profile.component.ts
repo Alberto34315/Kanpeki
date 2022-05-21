@@ -1,4 +1,5 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { finalize, tap } from 'rxjs';
@@ -25,9 +26,20 @@ export class ProfileComponent implements OnInit {
     ["english", "en"],
     ["spanish", "es"]
   ]);
+  public myForm: FormGroup = this.fb.group({
+    urlImage: [''],
+  });
+  private fileInput!: ElementRef;
+
+  @ViewChild('fileInput') set content(fileInput: ElementRef) {
+    if (fileInput) {
+      this.fileInput = fileInput;
+    }
+  }
 
   public image: any = null;
   public load: boolean = false;
+  public idUser: number = 0
   constructor(private languageS: LanguageService,
     private themeS: ThemeService,
     private router: Router,
@@ -35,7 +47,9 @@ export class ProfileComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private connectionSAdmin: ConnectionService,
     private cdRef: ChangeDetectorRef,
-    private errorMsgS: ErrorMessageService) { }
+    private errorMsgS: ErrorMessageService,
+    private fb: FormBuilder) { }
+
 
   ngOnInit(): void {
     this.connectionSAdmin.getUserMe()
@@ -43,6 +57,7 @@ export class ProfileComponent implements OnInit {
         next: (res) => {
           if (res) {
             this.load = true;
+            this.idUser = res.id
             this.connectionSAdmin.getUserById(res.id)
               .pipe(tap({
                 next: (res) => {
@@ -82,6 +97,18 @@ export class ProfileComponent implements OnInit {
         }))
       .subscribe(res => {
       })
+  }
+  //Falta hacer que se actualice la imagen de perfil
+  public imgChange(fileInput: any) {
+    if (fileInput.target.files && fileInput.target.files[0]) {
+      var reader = new FileReader();
+
+      reader.onload = function (e: any) {
+        (<HTMLInputElement>document.getElementById("image")).setAttribute("src", e.target.result);
+      }
+
+      reader.readAsDataURL(fileInput.target.files[0]);
+    }
   }
 
   getImage() {

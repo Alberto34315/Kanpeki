@@ -94,7 +94,6 @@ export class FormUsersComponent implements OnInit {
     }
   }
 
-
   save() {
     this.load = false;
     let user: RequestUserDTO = this.myForm.value
