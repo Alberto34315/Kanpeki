@@ -2,12 +2,14 @@
 <div
   class="d-flex flex-column justify-content-center align-items-center fs-3 fw-bold"
 >
-  <p>
-    {{ "study.text" | translate }}
-  </p>
-  <div id="line"><hr /></div>
-
   <ng-container *ngIf="listWords.length == 0">
+    <p>
+      {{ "study.text" | translate }}
+    </p>
+    <div id="line"><hr /></div>
+    <button class="btn btn-primary my-2 d-flex" (click)="removeInput()">
+      {{ "btn.remove" | translate }} <mat-icon>remove_circle_outline</mat-icon>
+    </button>
     <form class="w-80 h-50 my-4">
       <mat-form-field class="w-100" appearance="fill">
         <mat-label>{{ "study.category_Name" | translate }}</mat-label>
@@ -35,7 +37,13 @@
   </ng-container>
 
   <ng-container *ngIf="listWords.length > 0">
-    <button class="btn btn-primary my-2 d-flex" (click)="exit()"> {{ "form.exit" | translate }} <mat-icon>exit_to_app</mat-icon></button>
+    <p>
+      {{ categoryName }}
+    </p>
+    <div id="line"><hr /></div>
+    <button class="btn btn-primary my-2 d-flex" (click)="exit()">
+      {{ "form.exit" | translate }} <mat-icon>exit_to_app</mat-icon>
+    </button>
     <swiper [navigation]="true" class="mySwiper">
       <ng-template swiperSlide *ngFor="let word of listWords">
         <app-card [word]="word"> </app-card>

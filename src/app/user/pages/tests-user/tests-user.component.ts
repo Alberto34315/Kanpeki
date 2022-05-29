@@ -24,6 +24,7 @@ export class TestsUserComponent implements OnInit {
   public disableButton: boolean = false;
   public user!: ResponseUserDTO
   public load: boolean = false;
+  public categoryName: string = ""
   public myForm: FormGroup = this.fb.group({
     answerCorrect0: [''],
     answerCorrect1: [''],
@@ -80,7 +81,7 @@ export class TestsUserComponent implements OnInit {
   }
 
   startStudy() {
-    if (this.idCategory > 0) {
+    if (this.idCategory > 0 && this.myControl.value !== "") {
       this.connectionS
         .getQuestionsByCategory(this.idCategory)
         .pipe(tap({
@@ -102,16 +103,18 @@ export class TestsUserComponent implements OnInit {
           }))
         .subscribe((res) => {
         });
+    } else {
+      this.errorMsgS.showMsgWarningStudyTest()
     }
   }
 
   getCategory(option: ResponseCategoryDTO) {
     this.idCategory = option.id;
+    this.returnNameCategory(this.idCategory)
   }
 
   private _filter(value: string): ResponseCategoryDTO[] {
     const filterValue = value.toLowerCase();
-
     return this.listCategories.filter(
       (option) =>
         option.unitName.toLowerCase().includes(filterValue) ||
@@ -120,8 +123,9 @@ export class TestsUserComponent implements OnInit {
   }
 
   exit() {
+    this.idCategory = 0
     this.listQuestion = [];
-    this.myControl.setValue('');
+    this.removeInput()
     this.myForm.get("answerCorrect0")?.setValue('');
     this.myForm.get("answerCorrect1")?.setValue('');
     this.myForm.get("answerCorrect2")?.setValue('');
@@ -161,10 +165,10 @@ export class TestsUserComponent implements OnInit {
       this.valuesTest(e3, this.listQuestion[i].answers[2].isCorrect)
       this.valuesTest(e4, this.listQuestion[i].answers[3].isCorrect)
     }
-
+    let resultScore = (this.score * 10) / this.listQuestion.length
     let result: RequestResultDTO = {
       categoryId: this.idCategory,
-      score: this.score,
+      score: resultScore,
       userId: this.user.id
     }
     this.connectionS.addResultsUser(result)
@@ -172,6 +176,7 @@ export class TestsUserComponent implements OnInit {
         next: (res) => {
           this.load = true
           this.cdRef.markForCheck()
+          this.errorMsgS.showMsgSaveScore()
         },
         error: (err) => {
           this.load = true
@@ -196,4 +201,30 @@ export class TestsUserComponent implements OnInit {
     }
   }
 
+  removeInput() {
+    this.myControl.setValue("")
+  }
+
+  returnNameCategory(id: number) {
+    this.connectionS.getCategoriesById(id)
+      .pipe(tap({
+        next: (res) => {
+          this.load = true
+          this.categoryName = res.unitName + " - " + res.categoryName
+          this.cdRef.markForCheck()
+        },
+        error: (err) => {
+          this.load = true
+          this.cdRef.markForCheck()
+          this.errorMsgS.showErrorMessage(err)
+        }
+      }),
+        finalize(() => {
+          setTimeout(() => {
+            this.load = false
+          }, 300)
+        }))
+      .subscribe(res => {
+      })
+  }
 }

@@ -17,7 +17,7 @@ export class AppComponent {
     email: ['', Validators.required],
     message: ['', Validators.required],
   });
-  private formUrl = 'https://formspree.io/f/mwkywyrr';
+  private formUrl = 'https://formspree.io/f/xknyyzrk';
   private headers = new HttpHeaders({ 'content-type': 'application/json' });
   constructor(
     private themeS:ThemeService,

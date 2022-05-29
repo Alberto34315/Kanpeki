@@ -29,6 +29,9 @@ import { MainComponent } from './pages/main/main.component';
     FormWordsComponent,
     MainComponent
   ],
+  exports:[
+    FormUsersComponent
+  ],
   imports: [
     CommonModule,
     AdminRoutingModule,

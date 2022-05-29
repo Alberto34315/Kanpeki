@@ -9,6 +9,8 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { AnswerDTO } from 'src/app/models/answerDTO';
 import { ShowAnswerComponent } from '../show-answer/show-answer.component';
 import { StatisticsDataComponent } from '../statistics-data/statistics-data.component';
+import { bind } from 'wanakana';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 
 export interface PeriodicElement {
   name: string;
@@ -33,6 +35,7 @@ export class TableComponent implements AfterViewInit, OnInit {
   public dataSource!: MatTableDataSource<any>
   public selection = new SelectionModel<PeriodicElement>(true, []);
   public listDeleteElement: any[] = []
+  public checkHiragana:boolean=false;
   constructor(private _liveAnnouncer: LiveAnnouncer, public dialog: MatDialog) {
   }
 
@@ -61,6 +64,9 @@ export class TableComponent implements AfterViewInit, OnInit {
   }
 
   searchElement($event: any) {
+    if(this.checkHiragana){
+      bind($event.target)
+    }   
     const filterValue = ($event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
@@ -145,5 +151,9 @@ export class TableComponent implements AfterViewInit, OnInit {
 
   isObject(element: any) {
     return (typeof element === 'object');
+  }
+
+  hiragana($event:MatSlideToggleChange){ 
+    this.checkHiragana=$event.checked
   }
 }

@@ -1,22 +1,27 @@
 <app-load *ngIf="load"></app-load>
 <div class="card my-3" (click)="cardClicked()" [@cardFlip]="data.state">
   <div class="face back mt-3">
-    <img
+    <div class="w-50 h-55 d-flex justify-content-center">
+      <img
       [src]="
         word.urlImage ? image : '../../../../assets/img/profileDefault.png'
       "
       class="m-2"
     />
+    </div>    
     <div id="line"><hr /></div>
-    <p class="fs-1 mb-5">{{ word.japanese }}</p>
+    <ng-container *ngIf="word.furigana!==''"><p class="fs-5 m-0">{{ word.furigana }}</p></ng-container>    
+    <p class="fs-2 mb-5">{{ word.japanese }}</p>
   </div>
   <div class="face front mt-3">
+    <div class="w-50 h-55 d-flex justify-content-center">     
     <img
-      [src]="
-        word.urlImage ? image : '../../../../assets/img/profileDefault.png'
-      "
-      class="m-2"
-    />
+    [src]="
+      word.urlImage ? image : '../../../../assets/img/profileDefault.png'
+    "
+    class="m-2"
+  />
+    </div>
     <div id="line"><hr /></div>
     <div *ngIf="idiom == 'es'; then thenBlock; else elseBlock"></div>
     <ng-template #thenBlock
@@ -27,4 +32,4 @@
     >
   </div>
 </div>
-<button class="btn w-100 btn-primary mt-1 mb-3" (click)="speakWord(word)">Speak</button>
+<button class="btn w-100 btn-primary mt-1 mb-3" (click)="speakWord(word)">{{ "btn.listen" | translate }}</button>

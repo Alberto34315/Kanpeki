@@ -2,12 +2,14 @@
 <div
   class="d-flex flex-column justify-content-center align-items-center fs-3 fw-bold"
 >
-  <p>
-    {{ "test.text" | translate }}
-  </p>
-  <div id="line"><hr /></div>
-
   <ng-container *ngIf="listQuestion.length == 0">
+    <p>
+      {{ "test.text" | translate }}
+    </p>
+    <div id="line"><hr /></div>
+    <button class="btn btn-primary my-2 d-flex" (click)="removeInput()">
+      {{ "btn.remove" | translate }} <mat-icon>remove_circle_outline</mat-icon>
+    </button>
     <form class="w-80 h-50 my-4">
       <mat-form-field class="w-100" appearance="fill">
         <mat-label>{{ "study.category_Name" | translate }}</mat-label>
@@ -35,6 +37,10 @@
   </ng-container>
 
   <ng-container *ngIf="listQuestion.length > 0">
+    <p>
+      {{ categoryName }}
+    </p>
+    <div id="line"><hr /></div>
     <button class="btn btn-primary my-2 d-flex" (click)="exit()">
       {{ "form.exit" | translate }} <mat-icon>exit_to_app</mat-icon>
     </button>
@@ -118,7 +124,7 @@
       </button>
       <ng-container *ngIf="this.score > -1">
         <p class="mx-3 float-start">
-          {{ "test.result" | translate }}: {{ this.score }}/10
+          {{ "test.result" | translate }}: {{ this.score }}/{{listQuestion.length}}
         </p>
       </ng-container>
       <button

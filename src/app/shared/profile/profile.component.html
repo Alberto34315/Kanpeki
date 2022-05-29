@@ -13,7 +13,6 @@
         />
       </label>
       <input
-        #fileInput
         id="imgProfile"
         type="file"
         class="form-control d-none"
@@ -99,7 +98,12 @@
           </ul>
         </div>
       </div>
-      <div class="col-12 mt-5">
+      <div class="col-lg-6 mt-5">        
+      <button class="btn btn-primary d-flex" (click)="openForm()">
+        <mat-icon>edit</mat-icon>{{ "btn.edit" | translate }}
+      </button>
+      </div>
+      <div class="col-lg-6 mt-5">
         <button class="btn btn-danger" (click)="logout()">
           {{ "log.logout" | translate }} <i class="fas fa-sign-out-alt"></i>
         </button>

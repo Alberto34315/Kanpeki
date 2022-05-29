@@ -31,8 +31,9 @@ export class FormUsersComponent implements OnInit {
 
   public load: boolean = false;
 
-  private fileInput!: ElementRef;
+  public rol: string = "";
 
+  private fileInput!: ElementRef;
   @ViewChild('fileInput') set content(fileInput: ElementRef) {
     if (fileInput) {
       this.fileInput = fileInput;
@@ -52,6 +53,28 @@ export class FormUsersComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.connectionS.getUserMe()
+      .pipe(tap({
+        next: (res) => {
+          if (res) {
+            this.load = true;
+            this.rol = res.roles[0]
+            this.cdRef.markForCheck()
+          }
+        },
+        error: (err) => {
+          this.load = true
+          this.cdRef.markForCheck()
+          this.errorMsgS.showErrorMessage(err)
+        }
+      }),
+        finalize(() => {
+          setTimeout(() => {
+            this.load = false
+          }, 300)
+        }))
+      .subscribe(res => {
+      })
     if (this.data.id) {
       this.myForm.get('email')?.patchValue(this.data.email);
       this.myForm.get('password')?.patchValue(this.data.password);
@@ -121,29 +144,29 @@ export class FormUsersComponent implements OnInit {
         if (user.urlImage.replace(/\s+/g, '') !== "") {
           let imgArr = user.urlImage.split('/')
           this.connectionS.getFile(imgArr[imgArr.length - 1])
-          .pipe(tap({
-            next: (res) => {
-              if (res) {
-                this.load = true;
-                let name = imgArr[imgArr.length - 1].split("_")
-                fd.append("file", res, name[name.length - 1]);
-                this.updateUser(Number(user.id), fd)
+            .pipe(tap({
+              next: (res) => {
+                if (res) {
+                  this.load = true;
+                  let name = imgArr[imgArr.length - 1].split("_")
+                  fd.append("file", res, name[name.length - 1]);
+                  this.updateUser(Number(user.id), fd)
+                  this.cdRef.markForCheck()
+                }
+              },
+              error: (err) => {
+                this.load = true
                 this.cdRef.markForCheck()
+                this.errorMsgS.showErrorImage()
               }
-            },
-            error: (err) => {
-              this.load = true
-              this.cdRef.markForCheck()
-              this.errorMsgS.showErrorImage()
-            }
-          }),
-            finalize(() => {
-              setTimeout(() => {
-                this.load = false
-              }, 300)
-            }))
-          .subscribe(resp => {           
-          })
+            }),
+              finalize(() => {
+                setTimeout(() => {
+                  this.load = false
+                }, 300)
+              }))
+            .subscribe(resp => {
+            })
         } else {
           fd.append("file", new Blob(), "default.png");
           this.updateUser(Number(user.id), fd)

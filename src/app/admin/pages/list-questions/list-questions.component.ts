@@ -14,7 +14,7 @@ import { ConnectionService } from '../../services/connection.service';
   ]
 })
 export class ListQuestionsComponent implements OnInit {
-  public listQuestions: ResponseQuestionDTO[] = []
+  public listQuestions!: ResponseQuestionDTO[]
   public componentForm: ComponentType<FormQuestionsComponent>;
   public dialogRef!: MatDialogRef<FormQuestionsComponent, any>
   public listDeleteElement: any[] = []
@@ -27,7 +27,7 @@ export class ListQuestionsComponent implements OnInit {
     this.componentForm = FormQuestionsComponent
   }
 
-  ngOnInit(): void {
+  ngOnInit(): void {    
     this.getListQuetions()
   }
 
@@ -35,11 +35,13 @@ export class ListQuestionsComponent implements OnInit {
     this.connectionS.getQuestions()
       .pipe(tap({
         next: (res) => {
+          this.listQuestions=[]
           this.load = true
           this.listQuestions = res
           this.cdRef.markForCheck()
         },
         error: (err) => {
+          this.listQuestions=[]
           this.load = true
           this.cdRef.markForCheck()
         }

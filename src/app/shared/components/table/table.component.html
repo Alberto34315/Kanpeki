@@ -4,7 +4,10 @@
   (keyup)="searchElement($event)"
   placeholder="Search"
 />
-<div class="mat-elevation-z8 mt-2 mb-5">
+<mat-slide-toggle class="ms-3" [checked]="checkHiragana" (change)="hiragana($event)">
+  {{ "btn.hiragana" | translate }}
+</mat-slide-toggle>
+<div class="mat-elevation-z8 mt-3 mb-5">
   <table
     mat-table
     [dataSource]="dataSource"

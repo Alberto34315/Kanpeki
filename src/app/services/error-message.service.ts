@@ -8,8 +8,14 @@ import { LanguageService } from './language.service';
 export class ErrorMessageService {
   constructor(private lgS: LanguageService) { }
 
-  showErrorCredentials() {
-    Swal.fire('Error', this.lgS.getTextByKey("msg.errorCredentials"), 'error');
+  showErrorCredentials(err: HttpErrorResponse) {
+    if (err.status == 400) {
+      Swal.fire('Error', this.lgS.getTextByKey("msg.errorCredentials"), 'error');
+    } else if (err.status == 403) {
+      Swal.fire('Error', this.lgS.getTextByKey("msg.errorAccess"), 'error');
+    }
+
+
   }
   showErrorMessage(err: HttpErrorResponse) {
     if (err.error.errors.length === 0) {
@@ -27,8 +33,17 @@ export class ErrorMessageService {
     }
 
   }
+
   showErrorImage() {
     Swal.fire('Error', this.lgS.getTextByKey("msg.errorImage"), 'error');
+  }
+
+  showMsgWarningStudyTest() {
+    Swal.fire('Error', this.lgS.getTextByKey("msg.errorStudyTest"), 'warning');
+  }
+
+  showMsgSaveScore(){
+    Swal.fire(this.lgS.getTextByKey("msg.saveScore"), '', 'success');
   }
 
   deleteElement() {

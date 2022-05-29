@@ -39,6 +39,7 @@ export class LoginComponent implements OnInit {
     //C4c4hu3t3!!
 
     //aaaaa@gmail.com
+    //C4c4hu3t3$$
     //Qwerty_343
 
     //ccccc@gmail.com
@@ -54,15 +55,15 @@ export class LoginComponent implements OnInit {
           this.getUser()
         },
         error: (err) => {
-          this.load = true
+          // this.load = true
+          this.errorMsgS.showErrorCredentials(err)
           this.cdRef.markForCheck()
-          this.errorMsgS.showErrorCredentials()
         }
       }),
         finalize(() => {
           setTimeout(() => {
             this.load = false
-          }, 300)
+          }, 500)
         }))
       .subscribe(
         (res) => {
@@ -70,12 +71,29 @@ export class LoginComponent implements OnInit {
   }
 
   getUser() {
-    this.connectionSAdmin.getUserMe().subscribe(res => {
-      if (res.roles[0] === "ADMIN") {
-        this.router.navigateByUrl('/admin');
-      } else if (res.roles[0] === "USER") {
-        this.router.navigateByUrl('/user');
+    this.connectionSAdmin.getUserMe()
+    .pipe(tap({
+      next: (res) => {
+        this.load = true
+        if (res.roles[0] === "ADMIN") {
+          this.router.navigateByUrl('/admin');
+        } else if (res.roles[0] === "USER") {
+          this.router.navigateByUrl('/user');
+        }
+        this.cdRef.markForCheck()
+      },
+      error: (err) => {
+        this.load = true
+        this.errorMsgS.showErrorCredentials(err)
+        this.cdRef.markForCheck()
       }
+    }),
+      finalize(() => {
+        setTimeout(() => {
+          this.load = false
+        }, 300)
+      }))
+    .subscribe(res => {
     })
   }
 

@@ -95,8 +95,8 @@ export class StatisticsUserComponent implements OnInit {
 
   //---------------------------------------------------------------------------
   public listCategories: ResponseCategoryDTO[] = []
-  public userStatics: ResponseResultDTO[] = []
-  public userStaticsAVG: any[] = []
+  public userStatics!: ResponseResultDTO[]
+  public userStaticsAVG!: any[]
   constructor(private connectionS: ConnectionService,
     private cdRef: ChangeDetectorRef,
     private errorMsgS: ErrorMessageService) {
@@ -136,6 +136,7 @@ export class StatisticsUserComponent implements OnInit {
               .pipe(tap({
                 next: (res) => {
                   if (res) {
+                    this.userStatics = []
                     this.load = true;
                     this.userStatics = res
                     res.forEach((element, i) => {
@@ -149,6 +150,7 @@ export class StatisticsUserComponent implements OnInit {
                   }
                 },
                 error: (err) => {
+                  this.userStatics = []
                   this.load = true
                   this.cdRef.markForCheck()
                   this.errorMsgS.showErrorMessage(err)
@@ -166,8 +168,9 @@ export class StatisticsUserComponent implements OnInit {
               .pipe(tap({
                 next: (res) => {
                   if (res) {
+                    this.userStaticsAVG = []
                     this.load = true;
-                    this.userStaticsAVG=res
+                    this.userStaticsAVG = res
                     res.forEach((element, i) => {
                       this.pieChartData.datasets.forEach((value) => {
                         value.data.unshift(element.numResults)
@@ -178,6 +181,7 @@ export class StatisticsUserComponent implements OnInit {
                   }
                 },
                 error: (err) => {
+                  this.userStaticsAVG = []
                   this.load = true
                   this.cdRef.markForCheck()
                   this.errorMsgS.showErrorMessage(err)

@@ -14,7 +14,7 @@ import { ConnectionService } from '../../services/connection.service';
   ]
 })
 export class ListUsersComponent implements OnInit {
-  public listUsers: ResponseUserDTO[] = []
+  public listUsers!: ResponseUserDTO[] 
   public componentForm: ComponentType<FormUsersComponent>;
   public dialogRef!: MatDialogRef<FormUsersComponent, any>
   public listDeleteElement: any[] = []
@@ -35,11 +35,13 @@ export class ListUsersComponent implements OnInit {
     this.connectionS.getUsers()
       .pipe(tap({
         next: (res) => {
+          this.listUsers = []
           this.load = true
           this.listUsers = res
           this.cdRef.markForCheck()
         },
         error: (err) => {
+          this.listUsers = []
           this.load = true
           this.cdRef.markForCheck()
         }

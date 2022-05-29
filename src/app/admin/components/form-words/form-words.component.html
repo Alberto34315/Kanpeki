@@ -1,145 +1,140 @@
 <app-load *ngIf="load"></app-load>
-  <form 
-    autocomplete="off"
-    [formGroup]="myForm"
-    (ngSubmit)="save()"
-    enctype="multipart/form-data"
-  >
-    <div class="mb-3 row">
-      <label class="col-sm-3 col-form-label">{{
-        "idiom.spanish" | translate
-      }}</label>
-      <div class="col-sm-9">
-        <input type="text" class="form-control" formControlName="spanish" />
-        <span *ngIf="fieldIsRequired('spanish')" class="form-text text-danger">
-          {{ "form.fieldIsRequired" | translate }}
-        </span>
-        <span
-          *ngIf="maxLengthdIsValid('spanish')"
-          class="form-text text-danger"
-        >
-          {{ "form.maxLengthdIsValid" | translate }}
-        </span>
-      </div>
+<form
+  autocomplete="off"
+  [formGroup]="myForm"
+  (ngSubmit)="save()"
+  enctype="multipart/form-data"
+>
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">{{
+      "idiom.spanish" | translate
+    }}</label>
+    <div class="col-sm-9">
+      <input type="text" class="form-control" formControlName="spanish" />
+      <span *ngIf="fieldIsRequired('spanish')" class="form-text text-danger">
+        {{ "form.fieldIsRequired" | translate }}
+      </span>
+      <span *ngIf="maxLengthdIsValid('spanish')" class="form-text text-danger">
+        {{ "form.maxLengthdIsValid" | translate }}
+      </span>
     </div>
+  </div>
 
-    <div class="mb-3 row">
-      <label class="col-sm-3 col-form-label">{{
-        "idiom.english" | translate
-      }}</label>
-      <div class="col-sm-9">
-        <input type="text" class="form-control" formControlName="english" />
-        <span *ngIf="fieldIsRequired('english')" class="form-text text-danger">
-          {{ "form.fieldIsRequired" | translate }}
-        </span>
-        <span
-          *ngIf="maxLengthdIsValid('english')"
-          class="form-text text-danger"
-        >
-          {{ "form.maxLengthdIsValid" | translate }}
-        </span>
-      </div>
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">{{
+      "idiom.english" | translate
+    }}</label>
+    <div class="col-sm-9">
+      <input type="text" class="form-control" formControlName="english" />
+      <span *ngIf="fieldIsRequired('english')" class="form-text text-danger">
+        {{ "form.fieldIsRequired" | translate }}
+      </span>
+      <span *ngIf="maxLengthdIsValid('english')" class="form-text text-danger">
+        {{ "form.maxLengthdIsValid" | translate }}
+      </span>
     </div>
+  </div>
 
-    <div class="mb-3 row">
-      <label class="col-sm-3 col-form-label">{{
-        "form.japanese" | translate
-      }}</label>
-      <div class="col-sm-9">
-        <input type="text" class="form-control" formControlName="japanese" />
-        <span *ngIf="fieldIsRequired('japanese')" class="form-text text-danger">
-          {{ "form.fieldIsRequired" | translate }}
-        </span>
-        <span
-          *ngIf="maxLengthdIsValid('japanese')"
-          class="form-text text-danger"
-        >
-          {{ "form.maxLengthdIsValid" | translate }}
-        </span>
-      </div>
-    </div>
-
-    <div class="mb-3 row">
-      <label class="col-sm-3 col-form-label">{{
-        "form.furigana" | translate
-      }}</label>
-      <div class="col-sm-9">
-        <input type="text" class="form-control" formControlName="furigana" />
-        <span *ngIf="fieldIsRequired('furigana')" class="form-text text-danger">
-          {{ "form.fieldIsRequired" | translate }}
-        </span>
-        <span
-          *ngIf="maxLengthdIsValid('furigana')"
-          class="form-text text-danger"
-        >
-          {{ "form.maxLengthdIsValid" | translate }}
-        </span>
-      </div>
-    </div>
-    <div class="mb-3 row">
-      <label class="col-sm-5 col-form-label">{{
-        "form.image" | translate
-      }}</label>
-      <img
-        [src]="
-          data.urlImage ? image : '../../../../assets/img/profileDefault.png'
-        "
-        class="img-thumbnail w-25 col-sm-4 p-1"
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">{{
+      "form.japanese" | translate
+    }}</label>
+    <div class="col-sm-9">
+      <input
+        type="text"
+        (keyup)="textKanji($event)"
+        class="form-control"
+        formControlName="japanese"
       />
-      <div class="col-sm-2 d-flex align-items-center">
-        <a class="btn btn-primary btn-sm" (click)="deleteImage()">
-          <mat-icon>delete_forever</mat-icon>
-        </a>
-      </div>
-      <div class="col-sm-12">
-        <input
-          #fileInput
-          type="file"
-          class="form-control"
-          accept="image/*"
-          formControlName="urlImage"
-        />
-      </div>
+      <span *ngIf="fieldIsRequired('japanese')" class="form-text text-danger">
+        {{ "form.fieldIsRequired" | translate }}
+      </span>
+      <span *ngIf="maxLengthdIsValid('japanese')" class="form-text text-danger">
+        {{ "form.maxLengthdIsValid" | translate }}
+      </span>
     </div>
-    <div class="mb-3 row"   *ngIf="listCategories.length>0">
-      <label class="col-sm-3 col-form-label">{{
-        "header.categories" | translate
-      }}</label>
-      <div class="col-sm-9">
-        <select
-          class="form-select"
-          formControlName="category"
-          [(ngModel)]="
-            this.data.categoryId !== undefined
-              ? this.data.categoryId
-              : listCategories[0].id
-          "
-        >
-          <option *ngFor="let rol of listCategories" [value]="rol.id">
-            {{ rol.unitName }} - {{ rol.categoryName }}
-          </option>
-        </select>
-        <span *ngIf="fieldIsRequired('category')" class="form-text text-danger">
-          {{ "form.fieldIsRequired" | translate }}
-        </span>
-      </div>
-    </div>
+  </div>
 
-    <div class="row">
-      <div class="col-sm-12">
-        <button
-          class="btn btn-primary float-end"
-          [disabled]="myForm.invalid" 
-          type="submit"
-        >
-          {{ "form.save" | translate }}
-        </button>
-        <button
-          class="btn btn-secondary float-start"
-          [mat-dialog-close]="false"
-        >
-          {{ "form.close" | translate }}
-        </button>
-      </div>
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">{{
+      "form.furigana" | translate
+    }}</label>
+    <div class="col-sm-9">
+      <input
+        type="text"
+        (keyup)="textKanji($event)"
+        class="form-control"
+        formControlName="furigana"
+      />
+      <span *ngIf="fieldIsRequired('furigana')" class="form-text text-danger">
+        {{ "form.fieldIsRequired" | translate }}
+      </span>
+      <span *ngIf="maxLengthdIsValid('furigana')" class="form-text text-danger">
+        {{ "form.maxLengthdIsValid" | translate }}
+      </span>
     </div>
-  </form>
+  </div>
+  <div class="mb-3 row">
+    <label class="col-sm-5 col-form-label">{{
+      "form.image" | translate
+    }}</label>
+    <img
+      [src]="
+        data.urlImage ? image : '../../../../assets/img/profileDefault.png'
+      "
+      class="img-thumbnail w-25 col-sm-4 p-1"
+    />
+    <div class="col-sm-2 d-flex align-items-center">
+      <a class="btn btn-primary btn-sm" (click)="deleteImage()">
+        <mat-icon>delete_forever</mat-icon>
+      </a>
+    </div>
+    <div class="col-sm-12">
+      <input
+        #fileInput
+        type="file"
+        class="form-control"
+        accept="image/*"
+        formControlName="urlImage"
+      />
+    </div>
+  </div>
+  <div class="mb-3 row" *ngIf="listCategories.length > 0">
+    <label class="col-sm-3 col-form-label">{{
+      "header.categories" | translate
+    }}</label>
+    <div class="col-sm-9">
+      <select
+        class="form-select"
+        formControlName="category"
+        [(ngModel)]="
+          this.data.categoryId !== undefined
+            ? this.data.categoryId
+            : listCategories[0].id
+        "
+      >
+        <option *ngFor="let rol of listCategories" [value]="rol.id">
+          {{ rol.unitName }} - {{ rol.categoryName }}
+        </option>
+      </select>
+      <span *ngIf="fieldIsRequired('category')" class="form-text text-danger">
+        {{ "form.fieldIsRequired" | translate }}
+      </span>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-12">
+      <button
+        class="btn btn-primary float-end"
+        [disabled]="myForm.invalid"
+        type="submit"
+      >
+        {{ "form.save" | translate }}
+      </button>
+      <button class="btn btn-secondary float-start" [mat-dialog-close]="false">
+        {{ "form.close" | translate }}
+      </button>
+    </div>
+  </div>
+</form>

@@ -37,8 +37,8 @@
     "passwordIsValid": "The password must be made up of some uppercase, some lowercase, some special character, and at least 8 characters.",
     "maxLengthdIsValid": "Maximum of 40 characters.",
     "finalize": "Finalize",
-    "start":"Start",
-    "exit":"Exit"
+    "start": "Start",
+    "exit": "Exit"
   },
   "answer": {
     "answer": "Answer",
@@ -111,6 +111,7 @@
   },
   "msg": {
     "errorCredentials": "The username or password is not correct",
+    "errorAccess": "Access denied",
     "errorImage": "Error loading image",
     "noUsers": "There are no users",
     "noWords": "There are no words",
@@ -120,14 +121,20 @@
     "deleteTitle": "Are you sure?",
     "deleteText": "You won't be able to revert this!",
     "confirmBtn": "Yes, delete",
-    "cancelBtn": "Cancel"
+    "cancelBtn": "Cancel",
+    "errorStudyTest": "Please select a valid category",
+    "saveScore":"The test result has been saved successfully"
   },
   "chart": {
     "numExamForCateg": "There are no results of the number of exams per category",
-    "avgNumPassForCateg": "There are no average pass results per category"
+    "avgNumPassForCateg": "There are no average pass results per category",
+    "chartNoData": "No user results"
   },
   "btn": {
     "remove": "Remove",
-    "add": "Add"
+    "add": "Add",
+    "edit": "Edit",
+    "listen": "Listen",
+    "hiragana": "Hiragana"
   }
 }

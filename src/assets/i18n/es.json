@@ -111,23 +111,30 @@
   },
   "msg": {
     "errorCredentials": "El usuario o contraseña no son correctos",
+    "errorAccess": "Acceso denegado",
     "errorImage": "Error al cargar la imagen",
     "noUsers": "No hay usuarios",
     "noWords": "No hay palabras",
     "noStaticsUser": "No hay estadísticas del usuario",
-    "noQuestions": "No hay pregunstas",
+    "noQuestions": "No hay preguntas",
     "noCategories": "No hay categorías",
     "deleteTitle": "¿Estás seguro/a?",
     "deleteText": "¡No podrás revertir esto!",
     "confirmBtn": "Si, borrar",
-    "cancelBtn": "Cancelar"
+    "cancelBtn": "Cancelar",
+    "errorStudyTest":"Por favor, seleccione una categoría válida",
+    "saveScore":"Se ha guardado el resultado del exámen con exito"
   },
   "chart": {
     "numExamForCateg": "No hay resultado del número de exámenes por categoría",
-    "avgNumPassForCateg": "No hay resultados de la media de aprobados por categoría"
+    "avgNumPassForCateg": "No hay resultados de la media de aprobados por categoría",    
+    "chartNoData": "No hay resultados de usuarios"
   },
   "btn": {
     "remove": "Eliminar",
-    "add": "Añadir"
+    "add": "Añadir",
+    "edit":"Editar",
+    "listen":"Escuchar",
+    "hiragana":"Hiragana"
   }
 }

@@ -1,34 +1,38 @@
 <app-load *ngIf="load"></app-load>
-<div class="d-flex justify-content-center row row-cols-lg-2">
-  <div class="col d-flex justify-content-center mt-4">
-    <ng-container *ngIf="lineChartData.datasets[0].data.length > 0; else elseLineChart"
-      ><app-chart
-        class="w-100"
-        [data]="lineChartData"
-        [options]="lineChartOptions"
-        [type]="lineChartType"
-      ></app-chart
-    ></ng-container>
-    <ng-template #elseLineChart>
-      <p class="fw-bold">{{ "chart.avgNumPassForCateg" | translate }}</p>
+<ng-container *ngIf="usersStatics !== undefined">
+  <div class="d-flex justify-content-center row row-cols-lg-2">
+    <div class="col d-flex justify-content-center mt-4">
+      <ng-container *ngIf="lineChartData.datasets[0].data.length > 0"
+        ><app-chart
+          class="w-100"
+          [data]="lineChartData"
+          [options]="lineChartOptions"
+          [type]="lineChartType"
+        ></app-chart
+      ></ng-container>
+      <ng-template #elseLineChart> </ng-template>
+    </div>
+    <div class="col d-flex justify-content-center mt-4">
+      <ng-container *ngIf="pieChartData.datasets[0].data.length > 0"
+        ><app-chart
+          class="w-55"
+          [data]="pieChartData"
+          [options]="pieChartOptions"
+          [type]="pieChartType"
+        ></app-chart
+      ></ng-container>
+    </div>
+    <div class="col" *ngIf="usersStatics.length > 0; else noTable">
+      <div  class="my-3">
+        <app-table [tableData]="usersStatics" [statistics]="true"></app-table>
+      </div>
+    </div>
+
+    <ng-template #noTable>
+      <div class="col-12 d-flex flex-column justify-content-center align-items-center">
+        <p class="fw-bold">{{ "chart.chartNoData" | translate }}</p>
+        <img src="../../../../assets/img/upss.png" alt="" />
+      </div>
     </ng-template>
   </div>
-  <div class="col d-flex justify-content-center mt-4">
-    <ng-container
-      *ngIf="pieChartData.datasets[0].data.length > 0; else elsePieChart"
-      ><app-chart
-        class="w-55"
-        [data]="pieChartData"
-        [options]="pieChartOptions"
-        [type]="pieChartType"
-      ></app-chart
-    ></ng-container>
-  </div>
-  <div class="col">
-    <div *ngIf="usersStatics.length > 0" class="my-3">
-      <app-table [tableData]="usersStatics" [statistics]="true"></app-table>
-    </div>
-</div>
-<ng-template #elsePieChart>
-  <p class="fw-bold d-flex justify-content-center">{{ "chart.numExamForCateg" | translate }}</p>
-</ng-template>
+</ng-container>

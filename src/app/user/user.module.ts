@@ -9,6 +9,7 @@ import { SharedModule } from '../shared/shared.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { MainComponent } from './pages/main/main.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AdminModule } from '../admin/admin.module';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     UserRoutingModule,
     SharedModule,   
+    AdminModule,
     TranslateModule,
     FormsModule,
     ReactiveFormsModule, 

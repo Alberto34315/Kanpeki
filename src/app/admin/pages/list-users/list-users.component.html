@@ -1,26 +1,36 @@
 <app-load *ngIf="load"></app-load>
 <div class="px-4">
-  <div class="d-flex justify-content-between">
-    <button class="btn btn-primary mb-4 d-flex" [disabled]="listUsers.length === 0" (click)="deleteUser()">
-      <mat-icon>remove</mat-icon>{{ "btn.remove" | translate }}
-    </button>
-    <button class="btn btn-primary mb-4 d-flex" (click)="openForm()">
-      <mat-icon>add</mat-icon>{{ "btn.add" | translate }}
-    </button>
-  </div>
-
-  <div *ngIf="listUsers.length > 0; then thenBlock; else elseBlock"></div>
-  <ng-template #thenBlock>
-    <app-table
-      [tableData]="listUsers"
-      [nameFormComponent]="componentForm"
-      (propagateFather)="procesaPropagar()"
-      (listDeleteElementOut)="listDelete($event)"
-    ></app-table>
-  </ng-template>
+  <div
+    *ngIf="listUsers === undefined; then thenBlock; else elseBlock"
+  ></div>
+  <ng-template #thenBlock></ng-template>
   <ng-template #elseBlock>
-    <div class="d-flex justify-content-center">
-      <p class="fw-bold">{{ "msg.noUsers" | translate }}</p>
+    <div class="d-flex justify-content-between">
+      <button
+        class="btn btn-primary mb-4 d-flex"
+        [disabled]="listUsers.length === 0"
+        (click)="deleteUser()"
+      >
+        <mat-icon>remove</mat-icon>{{ "btn.remove" | translate }}
+      </button>
+      <button class="btn btn-primary mb-4 d-flex" (click)="openForm()">
+        <mat-icon>add</mat-icon>{{ "btn.add" | translate }}
+      </button>
     </div>
+    <div *ngIf="listUsers.length > 0; then listfill; else listempty"></div>
+    <ng-template #listfill>
+      <app-table
+        [tableData]="listUsers"
+        [nameFormComponent]="componentForm"
+        (propagateFather)="procesaPropagar()"
+        (listDeleteElementOut)="listDelete($event)"
+      ></app-table>
+    </ng-template>
+    <ng-template #listempty>
+      <div class="d-flex flex-column justify-content-center align-items-center">
+        <p class="fw-bold">{{ "msg.noUsers" | translate }}</p>
+        <img src="../../../../assets/img/upss.png" alt="" />
+      </div>
+    </ng-template>
   </ng-template>
 </div>

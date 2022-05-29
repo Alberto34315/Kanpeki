@@ -14,7 +14,7 @@ import { ConnectionService } from '../../services/connection.service';
   ]
 })
 export class ListCategoriesComponent implements OnInit {
-  public listCategories: ResponseCategoryDTO[] = []
+  public listCategories!: ResponseCategoryDTO[]
 
   public componentForm: ComponentType<FormCategoriesComponent>;
   public dialogRef!: MatDialogRef<FormCategoriesComponent, any>
@@ -35,11 +35,13 @@ export class ListCategoriesComponent implements OnInit {
     this.connectionS.getCategories()
       .pipe(tap({
         next: (res) => {
+          this.listCategories = []
           this.load = true
           this.listCategories = res
           this.cdRef.markForCheck()
         },
         error: (err) => {
+          this.listCategories = []
           this.load = true
           this.cdRef.markForCheck()
         }

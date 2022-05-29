@@ -23,6 +23,7 @@ export class StudyUserComponent implements OnInit {
   public image: any = null;
   public listWords: ResponseWordDTO[] = [];
   public load: boolean = false;
+  public categoryName: string = ""
   constructor(
     private connectionS: ConnectionService,
     private cdRef: ChangeDetectorRef,
@@ -64,7 +65,7 @@ export class StudyUserComponent implements OnInit {
   }
 
   startStudy() {
-    if (this.idCategory > 0) {
+    if (this.idCategory > 0 && this.myControl.value !== "") {
       this.connectionS.getWordsByCategory(this.idCategory)
         .pipe(
           tap({
@@ -87,16 +88,41 @@ export class StudyUserComponent implements OnInit {
         )
         .subscribe((res) => {
         });
+    }else{
+      this.errorMsgS.showMsgWarningStudyTest()
     }
   }
 
   getCategory(option: ResponseCategoryDTO) {
     this.idCategory = option.id;
+    this.returnNameCategory(this.idCategory)
+  }
+
+  returnNameCategory(id: number) {
+    this.connectionS.getCategoriesById(id)
+      .pipe(tap({
+        next: (res) => {
+          this.load = true
+          this.categoryName = res.unitName + " - " + res.categoryName
+          this.cdRef.markForCheck()
+        },
+        error: (err) => {
+          this.load = true
+          this.cdRef.markForCheck()
+          this.errorMsgS.showErrorMessage(err)
+        }
+      }),
+        finalize(() => {
+          setTimeout(() => {
+            this.load = false
+          }, 300)
+        }))
+      .subscribe(res => {
+      })
   }
 
   private _filter(value: string): ResponseCategoryDTO[] {
     const filterValue = value.toLowerCase();
-
     return this.listCategories.filter(
       (option) =>
         option.unitName.toLowerCase().includes(filterValue) ||
@@ -104,9 +130,14 @@ export class StudyUserComponent implements OnInit {
     );
   }
 
-  exit() {
-    this.listWords = []
+  removeInput() {
     this.myControl.setValue("")
+  }
+
+  exit() {
+    this.idCategory = 0
+    this.listWords = []
+    this.removeInput()
   }
 
 }

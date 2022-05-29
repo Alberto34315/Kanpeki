@@ -9,7 +9,7 @@ import { ResponseQuestionDTO } from 'src/app/models/response/responseQuestionDTO
 import { ErrorMessageService } from 'src/app/services/error-message.service';
 import { ValidFormService } from 'src/app/services/valid-form.service';
 import { ConnectionService } from '../../services/connection.service';
-
+import { bind, toHiragana } from 'wanakana';
 @Component({
   selector: 'app-form-questions',
   templateUrl: './form-questions.component.html',
@@ -18,13 +18,13 @@ import { ConnectionService } from '../../services/connection.service';
 export class FormQuestionsComponent implements OnInit {
 
   public myForm: FormGroup = this.fb.group({
-    statement: ['', [Validators.required, Validators.maxLength(40)]],
+    statement: ['', [Validators.required, Validators.maxLength(250)]],
     help: ['',],
     category: ['', [Validators.required]],
-    answer1: ['', [Validators.required, Validators.maxLength(40)]],
-    answer2: ['', [Validators.required, Validators.maxLength(40)]],
-    answer3: ['', [Validators.required, Validators.maxLength(40)]],
-    answer4: ['', [Validators.required, Validators.maxLength(40)]],
+    answer1: ['', [Validators.required, Validators.maxLength(250)]],
+    answer2: ['', [Validators.required, Validators.maxLength(250)]],
+    answer3: ['', [Validators.required, Validators.maxLength(250)]],
+    answer4: ['', [Validators.required, Validators.maxLength(250)]],
     furigana1: ['',],
     furigana2: ['',],
     furigana3: ['',],
@@ -67,6 +67,10 @@ export class FormQuestionsComponent implements OnInit {
     }
   }
 
+  textKanji(e: any) {
+    bind(e.target)
+  }
+
   onClose(): void {
     this.dialogRef.close(true)
   }
@@ -83,28 +87,28 @@ export class FormQuestionsComponent implements OnInit {
   save() {
     this.load = false;
     let question: RequestQuestionDTO = {
-      statement: this.myForm.get('statement')?.value,
-      help: this.myForm.get('help')?.value,
+      statement: toHiragana(this.myForm.get('statement')?.value),
+      help: toHiragana(this.myForm.get('help')?.value),
       categoryId: this.myForm.get("category")?.value,
     }
     let a1: AnswerDTO = {
-      response: this.myForm.get('answer1')?.value,
-      furigana: this.myForm.get('furigana1')?.value,
+      response: toHiragana(this.myForm.get('answer1')?.value),
+      furigana: toHiragana(this.myForm.get('furigana1')?.value),
       isCorrect: this.answerIsCorrect('answer1'),
     }
     let a2: AnswerDTO = {
-      response: this.myForm.get('answer2')?.value,
-      furigana: this.myForm.get('furigana2')?.value,
+      response: toHiragana(this.myForm.get('answer2')?.value),
+      furigana: toHiragana(this.myForm.get('furigana2')?.value),
       isCorrect: this.answerIsCorrect('answer2'),
     }
     let a3: AnswerDTO = {
-      response: this.myForm.get('answer3')?.value,
-      furigana: this.myForm.get('furigana3')?.value,
+      response: toHiragana(this.myForm.get('answer3')?.value),
+      furigana: toHiragana(this.myForm.get('furigana3')?.value),
       isCorrect: this.answerIsCorrect('answer3'),
     }
     let a4: AnswerDTO = {
-      response: this.myForm.get('answer4')?.value,
-      furigana: this.myForm.get('furigana4')?.value,
+      response: toHiragana(this.myForm.get('answer4')?.value),
+      furigana: toHiragana(this.myForm.get('furigana4')?.value),
       isCorrect: this.answerIsCorrect('answer4'),
     }
     question.answers = []

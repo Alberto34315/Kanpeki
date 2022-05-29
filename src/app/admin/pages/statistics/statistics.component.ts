@@ -115,7 +115,7 @@ export class StatisticsComponent implements OnInit {
   //---------------------------------------------------------------------------
   public listCategories: ResponseCategoryDTO[] = []
 
-  public usersStatics: any[] = []
+  public usersStatics!: any[]
   constructor(private connectionS: ConnectionService,
     private cdRef: ChangeDetectorRef) { }
 
@@ -126,6 +126,7 @@ export class StatisticsComponent implements OnInit {
         this.connectionS.getResultsCustomData()
           .pipe(tap({
             next: (res) => {
+              this.usersStatics=[]
               this.load = true              
               this.usersStatics = res
               res.forEach((element, i) => {
@@ -145,6 +146,7 @@ export class StatisticsComponent implements OnInit {
             },
             error: (err) => {
               this.load = true
+              this.usersStatics=[]
               this.cdRef.markForCheck()
             }
           }),

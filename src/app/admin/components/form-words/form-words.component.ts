@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
+import {ChangeDetectorRef, Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -8,6 +8,7 @@ import { ResponseCategoryDTO } from 'src/app/models/response/responseCategoryDTO
 import { ResponseWordDTO } from 'src/app/models/response/responseWordDTO';
 import { ErrorMessageService } from 'src/app/services/error-message.service';
 import { ValidFormService } from 'src/app/services/valid-form.service';
+import { bind, toHiragana } from 'wanakana';
 import { ConnectionService } from '../../services/connection.service';
 
 @Component({
@@ -68,6 +69,9 @@ export class FormWordsComponent implements OnInit {
     }
   }
 
+  textKanji(e: any) {
+    bind(e.target, { IMEMode: 'toHiragana' })
+  }
 
   getImage() {
     if (this.data.urlImage != "") {
@@ -108,8 +112,8 @@ export class FormWordsComponent implements OnInit {
       fd.append('id', String(word.id))
       fd.append('spanish', word.spanish)
       fd.append('english', word.english)
-      fd.append('japanese', word.japanese)
-      fd.append('furigana', word.furigana)
+      fd.append('japanese', toHiragana(word.japanese))
+      fd.append('furigana', toHiragana(word.furigana))
       fd.append('categoryId', String(word.category))
       if (this.fileInput !== undefined && this.fileInput.nativeElement.files[0] !== undefined) {
         fd.append("file", this.fileInput.nativeElement.files[0], this.fileInput.nativeElement.files[0].name);
@@ -149,8 +153,8 @@ export class FormWordsComponent implements OnInit {
     } else {
       fd.append('spanish', word.spanish)
       fd.append('english', word.english)
-      fd.append('japanese', word.japanese)
-      fd.append('furigana', word.furigana)
+      fd.append('japanese', toHiragana(word.japanese))
+      fd.append('furigana', toHiragana(word.furigana))
       fd.append('categoryId', String(word.category))
       if (this.fileInput !== undefined && this.fileInput.nativeElement.files[0] !== undefined) {
         fd.append("file", this.fileInput.nativeElement.files[0], this.fileInput.nativeElement.files[0].name);

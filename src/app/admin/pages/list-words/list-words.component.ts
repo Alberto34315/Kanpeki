@@ -14,7 +14,7 @@ import { ConnectionService } from '../../services/connection.service';
   ]
 })
 export class ListWordsComponent implements OnInit {
-  public listWords: ResponseWordDTO[] = []
+  public listWords!: ResponseWordDTO[]
   public listDeleteElement: any[] = []
   public load: boolean = false;
   public componentForm: ComponentType<FormWordsComponent>;
@@ -35,11 +35,13 @@ export class ListWordsComponent implements OnInit {
     this.connectionS.getWords()
       .pipe(tap({
         next: (res) => {
+          this.listWords =[]
           this.load = true
           this.listWords = res
           this.cdRef.markForCheck()
         },
         error: (err) => {
+          this.listWords =[]
           this.load = true
           this.cdRef.markForCheck()
         }

@@ -1,45 +1,50 @@
 <app-load *ngIf="load"></app-load>
-<div
-  class="d-flex justify-content-center row row-cols-lg-2"
-  *ngIf="
-    barChartData.datasets[0].data.length > 0 &&
-      pieChartData.datasets[0].data.length > 0;
-    else elseChart
-  "
->
-  <div class="col d-flex justify-content-center mt-4">
-    <ng-container *ngIf="barChartData.datasets[0].data.length > 0"
-      ><app-chart
-        class="w-90"
-        [data]="barChartData"
-        [options]="barChartOptions"
-        [type]="barChartType"
-      ></app-chart
-    ></ng-container>
-  </div>
-  <div class="col d-flex justify-content-center mt-4">
-    <ng-container *ngIf="pieChartData.datasets[0].data.length > 0"
-      ><app-chart
-        class="w-55"
-        [data]="pieChartData"
-        [options]="pieChartOptions"
-        [type]="pieChartType"
-      ></app-chart
-    ></ng-container>
-  </div>
-  <div class="col">
-    <div *ngIf="userStatics.length > 0" class="my-3">
-      <app-table [tableData]="userStatics" [statistics]="true"></app-table>
+<div *ngIf="userStatics !== undefined && userStaticsAVG !== undefined">
+  <div
+    class="d-flex justify-content-center row row-cols-lg-2"
+    *ngIf="
+      barChartData.datasets[0].data.length > 0 &&
+        pieChartData.datasets[0].data.length > 0;
+      else elseChart
+    "
+  >
+    <div class="col d-flex justify-content-center mt-4">
+      <ng-container *ngIf="barChartData.datasets[0].data.length > 0"
+        ><app-chart
+          class="w-90"
+          [data]="barChartData"
+          [options]="barChartOptions"
+          [type]="barChartType"
+        ></app-chart
+      ></ng-container>
+    </div>
+    <div class="col d-flex justify-content-center mt-4">
+      <ng-container *ngIf="pieChartData.datasets[0].data.length > 0"
+        ><app-chart
+          class="w-55"
+          [data]="pieChartData"
+          [options]="pieChartOptions"
+          [type]="pieChartType"
+        ></app-chart
+      ></ng-container>
+    </div>
+    <div class="col">
+      <div *ngIf="userStatics.length > 0" class="my-3">
+        <app-table [tableData]="userStatics" [statistics]="true"></app-table>
+      </div>
+    </div>
+    <div class="col">
+      <div *ngIf="userStaticsAVG.length > 0" class="my-3">
+        <app-table [tableData]="userStaticsAVG" [statistics]="true"></app-table>
+      </div>
     </div>
   </div>
-  <div class="col">
-    <div *ngIf="userStaticsAVG.length > 0" class="my-3">
-      <app-table [tableData]="userStaticsAVG" [statistics]="true"></app-table>
+  <ng-template #elseChart>
+    <div class="d-flex flex-column justify-content-center align-items-center">
+      <p class="fw-bold">
+        {{ "msg.noStaticsUser" | translate }}
+      </p>
+      <img src="../../../../assets/img/upss.png" alt="" />
     </div>
-  </div>
+  </ng-template>
 </div>
-<ng-template #elseChart>
-  <p class="fw-bold d-flex justify-content-center">
-    {{ "msg.noStaticsUser" | translate }}
-  </p>
-</ng-template>

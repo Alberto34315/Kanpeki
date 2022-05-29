@@ -120,7 +120,7 @@
     </div>
   </div>
 
-  <div class="mb-3 row">
+  <div class="mb-3 row" *ngIf="this.rol=='ADMIN'">
     <label class="col-sm-3 col-form-label">{{ "form.rol" | translate }}</label>
     <div class="col-sm-9">
       <select
