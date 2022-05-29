@@ -14,6 +14,7 @@ import { SwiperModule } from 'swiper/angular';
 import { StatisticsDataComponent } from './components/statistics-data/statistics-data.component';
 import { LoadComponent } from './components/load/load.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AboutUsComponent } from './about-us/about-us.component';
 @NgModule({
   declarations: [
     HeaderComponent,
@@ -24,6 +25,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     CardComponent,
     StatisticsDataComponent,
     LoadComponent,
+    AboutUsComponent,
   ],
   exports: [HeaderComponent,
     TableComponent,

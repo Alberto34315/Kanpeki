@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AboutUsComponent } from '../shared/about-us/about-us.component';
 import { ProfileComponent } from '../shared/profile/profile.component';
 import { ListCategoriesComponent } from './pages/list-categories/list-categories.component';
 import { ListQuestionsComponent } from './pages/list-questions/list-questions.component';
@@ -11,7 +12,7 @@ import { StatisticsComponent } from './pages/statistics/statistics.component';
 const routes: Routes = [
   {
     path: '',
-    component:MainComponent,
+    component: MainComponent,
     children: [
       {
         path: 'statistics-admin',
@@ -32,10 +33,14 @@ const routes: Routes = [
       {
         path: 'users',
         component: ListUsersComponent,
-      },      
+      },
       {
         path: 'profile',
         component: ProfileComponent,
+      },
+      {
+        path: 'aboutUs',
+        component: AboutUsComponent,
       },
       {
         path: '**',

@@ -135,6 +135,14 @@
     "add": "Add",
     "edit": "Edit",
     "listen": "Listen",
-    "hiragana": "Hiragana"
+    "hiragana": "Hiragana",
+    "profile":"Profile",
+    "aboutUs":"About us"
+  },
+  "about":{
+    "title":"We are the Kanpeki team",
+    "content1": "Alberto is a techie lover, who specialized in Angular and design passionate. Selma loves learning, both Japanese and new technologies, and looking to differentiate herself as a Spring boot developer.",
+    "content2": "Here you have Kanpeki, a project that aims to help students with the hardship of learning Japanese. Project for the professional courses of Development of Web Applications and Development of Multiplatform Applications of the year 2022.",
+    "content3": "It would not have been possible without our tutors from IES Trassierra:"
   }
 }

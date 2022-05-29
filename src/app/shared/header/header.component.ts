@@ -54,5 +54,12 @@ export class HeaderComponent implements OnInit {
     } else {
       this.router.navigate(["./user/profile"])
     }
+  } 
+  goAboutUs() {
+    if (this.rol === "ADMIN") {
+      this.router.navigate(["./admin/aboutUs"])
+    } else {
+      this.router.navigate(["./user/aboutUs"])
+    }
   }
 }

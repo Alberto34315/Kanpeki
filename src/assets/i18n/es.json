@@ -37,8 +37,8 @@
     "passwordIsValid": "La contraseña debe estar formado por alguna mayúscula, alguna minúscula, algún carácter especial, y como mínimo 8 caracteres.",
     "maxLengthdIsValid": "Máximo de 40 caracteres.",
     "finalize": "Finalizar",
-    "start":"Iniciar",
-    "exit":"Salir"
+    "start": "Iniciar",
+    "exit": "Salir"
   },
   "answer": {
     "answer": "Respuesta",
@@ -87,8 +87,8 @@
     "resultDate": "Fecha",
     "category": "Categoría",
     "categoryId": "Categoría",
-    "avgResults":"Nota media de exámenes por categoria",
-    "numResults":"Número de examenes"
+    "avgResults": "Nota media de exámenes por categoria",
+    "numResults": "Número de examenes"
   },
   "log": {
     "title": "Kanpeki",
@@ -122,19 +122,27 @@
     "deleteText": "¡No podrás revertir esto!",
     "confirmBtn": "Si, borrar",
     "cancelBtn": "Cancelar",
-    "errorStudyTest":"Por favor, seleccione una categoría válida",
-    "saveScore":"Se ha guardado el resultado del exámen con exito"
+    "errorStudyTest": "Por favor, seleccione una categoría válida",
+    "saveScore": "Se ha guardado el resultado del exámen con exito"
   },
   "chart": {
     "numExamForCateg": "No hay resultado del número de exámenes por categoría",
-    "avgNumPassForCateg": "No hay resultados de la media de aprobados por categoría",    
+    "avgNumPassForCateg": "No hay resultados de la media de aprobados por categoría",
     "chartNoData": "No hay resultados de usuarios"
   },
   "btn": {
     "remove": "Eliminar",
     "add": "Añadir",
-    "edit":"Editar",
-    "listen":"Escuchar",
-    "hiragana":"Hiragana"
+    "edit": "Editar",
+    "listen": "Escuchar",
+    "hiragana": "Hiragana",
+    "profile": "Perfil",
+    "aboutUs": "Sobre nosotros"
+  },
+  "about": {
+    "title": "Somos el equipo Kanpeki",
+    "content1": "Alberto es un amante de la tecnología, especializado en Angular y apasionado del diseño. A Selma le encanta aprender, tanto japonés como nuevas tecnologías, y busca diferenciarse como desarrolladora en Spring Boot.",
+    "content2": "Y aquí Kanpeki, un proyecto que tiene como objetivo ayudar a los estudiantes con las dificultades de aprender japonés. Proyecto para los ciclos de Desarrollo de Aplicaciones Web y Desarrollo de Aplicaciones Multiplataforma del año 2022.",
+    "content3": "El cual no hubiera sido posible sin nuestros tutores del IES Trassierra:"
   }
 }
