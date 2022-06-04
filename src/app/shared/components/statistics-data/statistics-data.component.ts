@@ -2,7 +2,6 @@ import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { finalize, tap } from 'rxjs';
 import { ResponseCategoryDTO } from 'src/app/models/response/responseCategoryDTO';
-import { ResponseResultDTO } from 'src/app/models/response/responseResultDTO';
 import { ErrorMessageService } from 'src/app/services/error-message.service';
 import { ConnectionService } from 'src/app/user/services/connection.service';
 

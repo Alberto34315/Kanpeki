@@ -14,5 +14,6 @@ export const api = {
   token: 'oauth/token',
   registers: 'registers',
   authU:'Kokyaku',
-  authP:'34315'
+  authP:'34315',
+  formspree:"https://formspree.io/f/xknyyzrk"
 };

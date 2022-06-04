@@ -1,7 +1,6 @@
-
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
-@use '@angular/material' as mat;
+@use '@angular/material'as mat;
 // Plus imports for other components in your app.
 
 // Include the common styles for Angular Material. We include this here so that you only
@@ -20,13 +19,10 @@ $kanpeki-warn: mat.define-palette(mat.$red-palette);
 
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
-$kanpeki-theme: mat.define-light-theme((
-  color: (
-    primary: $kanpeki-primary,
-    accent: $kanpeki-accent,
-    warn: $kanpeki-warn,
-  )
-));
+$kanpeki-theme: mat.define-light-theme((color: (primary: $kanpeki-primary,
+      accent: $kanpeki-accent,
+      warn: $kanpeki-warn,
+    )));
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
@@ -42,7 +38,7 @@ $theme: "pink" !default;
 // Color system
 //
 
-$white:    #fff !default;
+$white: #fff !default;
 $gray-100: #f8f9fa !default;
 $gray-200: #eee !default;
 $gray-300: #dee2e6 !default;
@@ -52,60 +48,73 @@ $gray-600: #777 !default;
 $gray-700: #495057 !default;
 $gray-800: #333 !default;
 $gray-900: #222 !default;
-$black:    #000 !default;
+$black: #000 !default;
 
-$blue:    #eb6864 !default;
-$indigo:  #6610f2 !default;
-$purple:  #6f42c1 !default;
-$pink:    #e83e8c !default;
-$red:     #f57a00 !default;
-$orange:  #fd7e14 !default;
-$yellow:  #f5e625 !default;
-$green:   #22b24c !default;
-$teal:    #20c997 !default;
-$cyan:    #369 !default;
+$blue: #eb6864 !default;
+$indigo: #6610f2 !default;
+$purple: #6f42c1 !default;
+$pink: #e83e8c !default;
+$red: #f57a00 !default;
+$orange: #fd7e14 !default;
+$yellow: #f5e625 !default;
+$green: #22b24c !default;
+$teal: #20c997 !default;
+$cyan: #369 !default;
 
-$primary:       $blue !default;
-$secondary:     $gray-500 !default;
-$success:       $green !default;
-$info:          $cyan !default;
-$warning:       $yellow !default;
-$danger:        $red !default;
-$light:         $gray-100 !default;
-$dark:          $gray-900 !default;
+$primary: $blue !default;
+$secondary: $gray-500 !default;
+$success: $green !default;
+$info: $cyan !default;
+$warning: $yellow !default;
+$danger: $red !default;
+$light: $gray-100 !default;
+$dark: $gray-900 !default;
 
-$min-contrast-ratio:   1.28 !default;
+$min-contrast-ratio: 1.28 !default;
 
 // Fonts
 
-$headings-font-family:   "News Cycle", "Arial Narrow Bold", sans-serif !default;
-$headings-font-weight:    700 !default;
-$headings-line-height:    1.1 !default;
+$headings-font-family: "News Cycle",
+"Arial Narrow Bold",
+sans-serif !default;
+$headings-font-weight: 700 !default;
+$headings-line-height: 1.1 !default;
 
 // Buttons
 
-$input-btn-padding-x:         1rem !default;
+$input-btn-padding-x: 1rem !default;
 
 // Navbar
 
-$navbar-light-color:                rgba($black, .7) !default;
-$navbar-light-hover-color:          $black !default;
-$navbar-light-active-color:         $black !default;
+$navbar-light-color: rgba($black, .7) !default;
+$navbar-light-hover-color: $black !default;
+$navbar-light-active-color: $black !default;
 
 // Pagination
 
-$pagination-hover-color:            $white !default;
-$pagination-hover-bg:               $primary !default;
-$pagination-hover-border-color:     $primary !default;
+$pagination-hover-color: $white !default;
+$pagination-hover-bg: $primary !default;
+$pagination-hover-border-color: $primary !default;
 
-.swiper-button-prev{
-  color: red;
-} 
-
-
-.swiper-button-next{
+.text-theme {
   color: #000;
 }
 
+.swiper-button-prev {
+  color: $blue
+}
+
+
+.swiper-button-next {
+  color: $blue;
+}
+
+.bg-card {
+  background-color: rgb(255, 255, 255)
+}
+
+.title-about{
+  color: #64113f;
+}
 
 @import '~bootstrap/scss/bootstrap';

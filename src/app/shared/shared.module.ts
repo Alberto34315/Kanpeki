@@ -15,6 +15,8 @@ import { StatisticsDataComponent } from './components/statistics-data/statistics
 import { LoadComponent } from './components/load/load.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AboutUsComponent } from './about-us/about-us.component';
+import { ChartUserModalComponent } from './components/chart-user-modal/chart-user-modal.component';
+import { HelpComponent } from './help/help.component';
 @NgModule({
   declarations: [
     HeaderComponent,
@@ -26,6 +28,8 @@ import { AboutUsComponent } from './about-us/about-us.component';
     StatisticsDataComponent,
     LoadComponent,
     AboutUsComponent,
+    ChartUserModalComponent,
+    HelpComponent,
   ],
   exports: [HeaderComponent,
     TableComponent,

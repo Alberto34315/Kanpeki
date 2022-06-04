@@ -22,6 +22,7 @@
   "form": {
     "email": "Email",
     "password": "Contraseña",
+    "password2": "Repita la contraseña",
     "fullname": "Nombre completo",
     "rol": "Rol",
     "image": "Imagen",
@@ -34,8 +35,10 @@
     "close": "Cerrar",
     "fieldIsRequired": "Este campo es obligatorio.",
     "emailIsValid": "Este campo de tener formato email 'example@mail.com'.",
-    "passwordIsValid": "La contraseña debe estar formado por alguna mayúscula, alguna minúscula, algún carácter especial, y como mínimo 8 caracteres.",
+    "passwordIsValid": "La contraseña debe estar formado por alguna mayúscula, alguna minúscula, algún carácter especial, algún número, y como mínimo 8 caracteres.",
+    "repeatPassword": "Las contraseñas deben ser iguales",
     "maxLengthdIsValid": "Máximo de 40 caracteres.",
+    "maxLengthQuestdIsValid": "Máximo de 250 caracteres.",
     "finalize": "Finalizar",
     "start": "Iniciar",
     "exit": "Salir"
@@ -111,7 +114,7 @@
   },
   "msg": {
     "errorCredentials": "El usuario o contraseña no son correctos",
-    "errorAccess": "Acceso denegado",
+    "errorAccess": "Acceso denegado, el usuario esta pendiente de validación",
     "errorImage": "Error al cargar la imagen",
     "noUsers": "No hay usuarios",
     "noWords": "No hay palabras",
@@ -144,5 +147,19 @@
     "content1": "Alberto es un amante de la tecnología, especializado en Angular y apasionado del diseño. A Selma le encanta aprender, tanto japonés como nuevas tecnologías, y busca diferenciarse como desarrolladora en Spring Boot.",
     "content2": "Y aquí Kanpeki, un proyecto que tiene como objetivo ayudar a los estudiantes con las dificultades de aprender japonés. Proyecto para los ciclos de Desarrollo de Aplicaciones Web y Desarrollo de Aplicaciones Multiplataforma del año 2022.",
     "content3": "El cual no hubiera sido posible sin nuestros tutores del IES Trassierra:"
+  },
+  "help": {
+    "statisticsAdmin": "Los datos que visualiza el usuario administrador, en la página 'Estadísticas', son la media de aprobados por categoría, y el número de examenes realizados por categorías.",
+    "pages": "Páginas",
+    "pagesAdmin1": "El funcionamiento de estas páginas es muy similar, ya que constan de una tabla la cual, tiene integrada una paginación, una barra de búsqueda, la cual hace una búsqueda total sobre la tabla, un slide toggle, para alternar entre las letras del alfabeto a las que estamos acostumbrados o transliterar lo que se escribe en el buscador convirtiéndolo en kanji, y con la posibilidad de ordenar por columnas.",
+    "pagesAdmin2": "Tienen dos botones, los cuales son los de 'Eliminar' y 'Añadir'. El funcionamiento de estos es muy sencillo, el de 'Añadir' abrirá una ventana modal la cuál será un formulario para rellenar los campos requeridos,",
+    "pagesAdmin3": "y el botón 'Eliminar' solo funcionará si se ha seleccionado antes una fila de la tabla.",
+    "pagesAdmin4": "Otra característica de las tablas es que si pulsamos sobre una fila, se nos abrirá el formulario modal al que corresponda el objeto, haciendo que nos dé la posibilidad de editar el objeto.",
+    "pageNoteAdmin": "**Nota: El formulario de usuario consta con un boton para ver las estadísticas del usuario una vez haya realizado examenes.**",
+    "profile1": "En la página de 'Perfil', se mostrarán los datos del usuario que ha iniciado sesión, y cuatro botones los cuales son: 'Idioma', para alternar entre español o inglés, 'Tema', para alternar entre un tema oscuro o un tema claro, 'Editar', para editar los datos del usuario, y 'Cerrar sesión', para cerrar la sesión del usuario. (El usuario puede cambiar la foto de perfil directamente haciendo click en la foto que aparece a la izquierda de sus datos).",
+    "resultsUser": "La página de 'Resultados', muestra la nota, la fecha, la categoría, de los exames realizados por el usuario, y el número de examenes realizados por categoría.",
+    "studyUser1": "En la página 'Estudiar', el usuario podrá seleccionar la categoría que desee, y se generarán unas tarjetas con la palabra en japonés y la ayuda, y haciendo click en la tarjeta se mostrará la palabra traducida, dependiendo de si la aplicación está en inglés o en español.",
+    "studyUser2": "También constarán estas tarjetas de un botón que al pulsarlo pronunciará la palabra en japonés.",
+    "testUser": "En la página 'Examenes', el usuario podrá seleccionar la categoría que desee, y se generarán un máximo de 10 preguntas aleatorias, de tipo test. Una vez se quiera finalizar el examen, abajo del todo estará el botón 'Finalizar'. Una vez se pulse, se mostrará el resultado del examen, las preguntas correctas e incorrectas, y un mensaje al usuario, de que su resultado ha sido guardado."
   }
 }

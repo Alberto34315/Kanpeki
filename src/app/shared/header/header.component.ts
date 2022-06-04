@@ -62,4 +62,12 @@ export class HeaderComponent implements OnInit {
       this.router.navigate(["./user/aboutUs"])
     }
   }
+  
+  goHelp() {
+    if (this.rol === "ADMIN") {
+      this.router.navigate(["./admin/help"])
+    } else {
+      this.router.navigate(["./user/help"])
+    }
+  }
 }

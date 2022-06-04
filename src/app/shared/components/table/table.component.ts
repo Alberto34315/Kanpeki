@@ -11,6 +11,9 @@ import { ShowAnswerComponent } from '../show-answer/show-answer.component';
 import { StatisticsDataComponent } from '../statistics-data/statistics-data.component';
 import { bind } from 'wanakana';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
+import { ConnectionService } from 'src/app/user/services/connection.service';
+import { tap } from 'rxjs';
+import { ResponseCategoryDTO } from 'src/app/models/response/responseCategoryDTO';
 
 export interface PeriodicElement {
   name: string;
@@ -35,8 +38,12 @@ export class TableComponent implements AfterViewInit, OnInit {
   public dataSource!: MatTableDataSource<any>
   public selection = new SelectionModel<PeriodicElement>(true, []);
   public listDeleteElement: any[] = []
-  public checkHiragana:boolean=false;
-  constructor(private _liveAnnouncer: LiveAnnouncer, public dialog: MatDialog) {
+  public checkHiragana: boolean = false;
+  public categoryName: string = ""
+  public listCategories!: ResponseCategoryDTO[]
+  constructor(private _liveAnnouncer: LiveAnnouncer,
+    public dialog: MatDialog,
+    private connectionS: ConnectionService) {
   }
 
   @ViewChild(MatSort) sort!: MatSort;
@@ -49,12 +56,13 @@ export class TableComponent implements AfterViewInit, OnInit {
   }
 
   ngOnInit(): void {
+    this.getListCategories()
     this.displayedColumns = Object.keys(this.tableData[0]).filter(resp => {
       return resp != "id"
         && resp != "urlImage"
         && resp != "createdAt"
         && resp != "lastPasswordChangeAt"
-        && resp != "categoryId"
+        // && resp != "categoryId"
         && resp != "userId"
     })
     if (!this.statistics) {
@@ -63,10 +71,34 @@ export class TableComponent implements AfterViewInit, OnInit {
     this.dataSource = new MatTableDataSource(this.tableData);
   }
 
+  getListCategories() {
+    this.connectionS.getCategories()
+      .pipe(tap({
+        next: (res) => {
+          this.listCategories = []
+          this.listCategories = res          
+        },
+        error: (err) => {
+          this.listCategories = []
+        }
+      }))
+      .subscribe((resp) => {
+      })
+  }
+
+  returnNameCategory(id: number) {
+    if (this.listCategories !== undefined) {
+      let category=this.listCategories.filter(res =>  res.id === id)[0]
+      return category.unitName + " - " + category.categoryName   
+    }else{
+      return []
+    }
+  }
+
   searchElement($event: any) {
-    if(this.checkHiragana){
+    if (this.checkHiragana) {
       bind($event.target)
-    }   
+    }
     const filterValue = ($event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
@@ -153,7 +185,7 @@ export class TableComponent implements AfterViewInit, OnInit {
     return (typeof element === 'object');
   }
 
-  hiragana($event:MatSlideToggleChange){ 
-    this.checkHiragana=$event.checked
+  hiragana($event: MatSlideToggleChange) {
+    this.checkHiragana = $event.checked
   }
 }

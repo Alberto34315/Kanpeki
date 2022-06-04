@@ -189,16 +189,6 @@ export class ConnectionService {
   getResults(): Observable<ResponseResultDTO[]> {
     return this.http.get<ResponseResultDTO[]>(`${this.apiUrl}${this.kanpeki}${this.results}`, this.httpOptions)
   }
-  getResultsBetweenDates(): Observable<ResponseResultDTO[]> {
-    // let startDate = new Date();
-    // let startDateFormat = formatDate(startDate, 'YYYY-MM-dd', 'es');
-    // let endDate = new Date();
-    // endDate.setDate(new Date().getDate() + 6);
-    // let endDateFormat = formatDate(endDate, 'YYYY-MM-dd', 'es');
-    
-    // return this.http.get<ResponseResultDTO[]>(`${this.apiUrl}${this.kanpeki}${this.results}/result/search?endDate=${endDateFormat}&startDate=${startDateFormat}`, this.httpOptions)
-    return this.http.get<ResponseResultDTO[]>(`${this.apiUrl}${this.kanpeki}${this.results}/result/search?endDate=${'2022-01-17'}&startDate=${'2022-01-10'}`, this.httpOptions)
-  }
   getResultsCustomData(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}${this.kanpeki}${this.results}/custom`, this.httpOptions)
   }

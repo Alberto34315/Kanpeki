@@ -13,7 +13,7 @@
                     style="width: 185px"
                     alt="logo"
                   />
-                  <h4 class="mt-1 mb-5 pb-1">{{ "log.title" | translate }}</h4>
+                  <h4 class="mt-1 mb-5 pb-1  text-theme">{{ "log.title" | translate }}</h4>
                 </div>
 
                 <form
@@ -23,7 +23,7 @@
                 >
                   <div class="row row-cols-2">
                     <div class="col-12 form-outline mb-4">
-                      <label class="form-label">{{
+                      <label class="form-label text-theme">{{
                         "form.email" | translate
                       }}</label>
                       <input
@@ -47,7 +47,7 @@
                     </div>
 
                     <div class="col-12 form-outline mb-4">
-                      <label class="form-label">{{
+                      <label class="form-label text-theme">{{
                         "form.password" | translate
                       }}</label>
                       <input
@@ -68,9 +68,36 @@
                         {{ "form.passwordIsValid" | translate }}
                       </span>
                     </div>
-
+                    <div class="col-12 form-outline mb-4">
+                      <label class="form-label text-theme">{{
+                        "form.password2" | translate
+                      }}</label>
+                      <input
+                        type="password"
+                        class="form-control"
+                        formControlName="password2"
+                      />
+                      <span
+                        *ngIf="fieldIsRequired('password2')"
+                        class="form-text text-danger"
+                      >
+                        {{ "form.fieldIsRequired" | translate }}
+                      </span>
+                      <span
+                        *ngIf="passwordIsValid('password2')"
+                        class="form-text text-danger"
+                      >
+                        {{ "form.passwordIsValid" | translate }}
+                      </span>
+                      <span
+                        *ngIf="samePass()"
+                        class="form-text text-danger"
+                      >
+                        {{ "form.repeatPassword" | translate }}
+                      </span>
+                    </div>
                     <div class="col form-outline mb-4">
-                      <label class="form-label">
+                      <label class="form-label text-theme">
                         {{ "form.fullname" | translate }}</label
                       >
                       <input
@@ -93,7 +120,7 @@
                     </div>
 
                     <div class="col form-outline mb-4">
-                      <label class="form-label">{{
+                      <label class="form-label text-theme">{{
                         "form.nickname" | translate
                       }}</label>
                       <input
@@ -115,7 +142,7 @@
                       </span>
                     </div>
                     <div class="col form-outline mb-4">
-                      <label class="form-label">
+                      <label class="form-label text-theme">
                         {{ "form.birthday" | translate }}</label
                       >
                       <input
@@ -132,7 +159,7 @@
                     </div>
 
                     <div class="col form-outline mb-4">
-                      <label class="form-label">{{
+                      <label class="form-label text-theme">{{
                         "form.city" | translate
                       }}</label>
                       <input
@@ -169,7 +196,7 @@
                   <div
                     class="d-flex align-items-center justify-content-center pb-4"
                   >
-                    <p class="mb-0 me-2">
+                    <p class="mb-0 me-2 text-theme">
                       {{ "log.haveAccount" | translate }}
                     </p>
                     <button

@@ -22,6 +22,7 @@
   "form": {
     "email": "Email",
     "password": "Password",
+    "password2": "Repeat password",
     "fullname": "Full Name",
     "rol": "Rol",
     "image": "Image",
@@ -34,8 +35,10 @@
     "close": "Close",
     "fieldIsRequired": "This field is required.",
     "emailIsValid": "This field must have email format 'example@mail.com'.",
-    "passwordIsValid": "The password must be made up of some uppercase, some lowercase, some special character, and at least 8 characters.",
+    "passwordIsValid": "The password must be made up of some uppercase, some lowercase, some special character, some number, and at least 8 characters.",
+    "repeatPassword": "Passwords must be the same",
     "maxLengthdIsValid": "Maximum of 40 characters.",
+    "maxLengthQuestdIsValid": "Maximum of 250 characters.",
     "finalize": "Finalize",
     "start": "Start",
     "exit": "Exit"
@@ -111,7 +114,7 @@
   },
   "msg": {
     "errorCredentials": "The username or password is not correct",
-    "errorAccess": "Access denied",
+    "errorAccess": "Access denied, the user is pending validation",
     "errorImage": "Error loading image",
     "noUsers": "There are no users",
     "noWords": "There are no words",
@@ -123,7 +126,7 @@
     "confirmBtn": "Yes, delete",
     "cancelBtn": "Cancel",
     "errorStudyTest": "Please select a valid category",
-    "saveScore":"The test result has been saved successfully"
+    "saveScore": "The test result has been saved successfully"
   },
   "chart": {
     "numExamForCateg": "There are no results of the number of exams per category",
@@ -136,13 +139,27 @@
     "edit": "Edit",
     "listen": "Listen",
     "hiragana": "Hiragana",
-    "profile":"Profile",
-    "aboutUs":"About us"
+    "profile": "Profile",
+    "aboutUs": "About us"
   },
-  "about":{
-    "title":"We are the Kanpeki team",
+  "about": {
+    "title": "We are the Kanpeki team",
     "content1": "Alberto is a techie lover, who specialized in Angular and design passionate. Selma loves learning, both Japanese and new technologies, and looking to differentiate herself as a Spring boot developer.",
     "content2": "Here you have Kanpeki, a project that aims to help students with the hardship of learning Japanese. Project for the professional courses of Development of Web Applications and Development of Multiplatform Applications of the year 2022.",
     "content3": "It would not have been possible without our tutors from IES Trassierra:"
+  },
+  "help": {
+    "statisticsAdmin": "The data displayed by the administrator user, on the 'Statistics' page, are the average number of passes per category, and the number of exams taken per category.",
+    "pages": "Pages",
+    "pagesAdmin1": "The operation of these pages is very similar, since they consist of a table which has an integrated pagination, a search bar, which makes a total search on the table, a slide toggle, to alternate between the letters of the alphabet to the ones we are used to or transliterate what is written in the search engine, converting it into kanji, and with the possibility of sorting by columns.",
+    "pagesAdmin2": "They have two buttons, which are 'Remove' and 'Add'. The operation of these is very simple, the 'Add' will open a modal window which will be a form to fill in the required fields,",
+    "pagesAdmin3": "and the 'Remove' button will only work if a row of the table has been selected before.",
+    "pagesAdmin4": "Another characteristic of tables is that if we click on a row, the modal form to which the object corresponds will open, giving us the possibility of editing the object.",
+    "pageNoteAdmin": "**Note: The user form has a button to view the user's statistics once they have taken tests.**",
+    "profile1": "On the 'Profile' page, the data of the user who has logged in will be displayed, and four buttons which are: 'Language', to switch between Spanish or English, 'Theme', to switch between a dark theme or a dark theme. Of course, 'Edit', to edit the user's data, and 'Close session', to close the user's session. (The user can change the profile photo directly by clicking on the photo that appears to the left of their data).",
+    "resultsUser": "The 'Results' page shows the note, the date, the category, of the tests taken by the user, and the number of tests taken by category.",
+    "studyUser1": "On the 'Study' page, the user can select the category they want, and some cards will be generated with the word in Japanese and the help, and clicking on the card will show the translated word, depending on whether the application is in English or in Spanish.",
+    "studyUser2": "These cards will also contain a button that, when pressed, will pronounce the word in Japanese.",
+    "testUser": "On the 'Exams' page, the user can select the category they want, and a maximum of 10 random test-type questions will be generated. Once you want to finish the exam, at the bottom will be the 'Finish' button. Once pressed, the exam result will be displayed, the correct and incorrect questions, and a message to the user that their result has been saved."
   }
 }

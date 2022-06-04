@@ -7,30 +7,33 @@
       {{ "test.text" | translate }}
     </p>
     <div id="line"><hr /></div>
-    <button class="btn btn-primary my-2 d-flex" (click)="removeInput()">
-      {{ "btn.remove" | translate }} <mat-icon>remove_circle_outline</mat-icon>
-    </button>
-    <form class="w-80 h-50 my-4">
-      <mat-form-field class="w-100" appearance="fill">
-        <mat-label>{{ "study.category_Name" | translate }}</mat-label>
-        <input
-          type="text"
-          matInput
-          [formControl]="myControl"
-          [matAutocomplete]="auto"
-          class="w-100"
-        />
-        <mat-autocomplete #auto="matAutocomplete">
-          <mat-option
-            *ngFor="let option of filteredOptions | async"
-            (onSelectionChange)="getCategory(option)"
-            [value]="option.unitName + ' - ' + option.categoryName"
-          >
-            {{ option.unitName }} - {{ option.categoryName }}
-          </mat-option>
-        </mat-autocomplete>
-      </mat-form-field>
-    </form>
+    <div class="w-100 d-flex align-items-center justify-content-center">
+      <form class="w-80 h-50 my-4">
+        <mat-form-field class="w-100" appearance="fill">
+          <mat-label class="text-theme">{{ "study.category_Name" | translate }}</mat-label>
+          <input
+            type="text"
+            matInput
+            [formControl]="myControl"
+            [matAutocomplete]="auto"
+            class="w-100"
+          />
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option
+              *ngFor="let option of filteredOptions | async"
+              (onSelectionChange)="getCategory(option)"
+              [value]="option.unitName + ' - ' + option.categoryName"
+            >
+              {{ option.unitName }} - {{ option.categoryName }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </form>
+      <button class="btn btn-primary mb-4 ms-2 d-flex" (click)="removeInput()">
+        {{ "btn.remove" | translate }}
+        <mat-icon>remove_circle_outline</mat-icon>
+      </button>
+    </div>
     <button class="btn btn-primary my-2 d-flex" (click)="startStudy()">
       {{ "form.start" | translate }} <mat-icon>play_arrow</mat-icon>
     </button>
@@ -124,7 +127,9 @@
       </button>
       <ng-container *ngIf="this.score > -1">
         <p class="mx-3 float-start">
-          {{ "test.result" | translate }}: {{ this.score }}/{{listQuestion.length}}
+          {{ "test.result" | translate }}: {{ this.score }}/{{
+            listQuestion.length
+          }}
         </p>
       </ng-container>
       <button

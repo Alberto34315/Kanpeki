@@ -9,7 +9,7 @@ export class ErrorMessageService {
   constructor(private lgS: LanguageService) { }
 
   showErrorCredentials(err: HttpErrorResponse) {
-    if (err.status == 400) {
+    if (err.status == 400 || err.status == 401) {
       Swal.fire('Error', this.lgS.getTextByKey("msg.errorCredentials"), 'error');
     } else if (err.status == 403) {
       Swal.fire('Error', this.lgS.getTextByKey("msg.errorAccess"), 'error');
@@ -38,11 +38,15 @@ export class ErrorMessageService {
     Swal.fire('Error', this.lgS.getTextByKey("msg.errorImage"), 'error');
   }
 
+  showErrorRepeatPass() {
+    Swal.fire('Error', this.lgS.getTextByKey("form.repeatPassword"), 'error');
+  }
+
   showMsgWarningStudyTest() {
     Swal.fire('Error', this.lgS.getTextByKey("msg.errorStudyTest"), 'warning');
   }
 
-  showMsgSaveScore(){
+  showMsgSaveScore() {
     Swal.fire(this.lgS.getTextByKey("msg.saveScore"), '', 'success');
   }
 

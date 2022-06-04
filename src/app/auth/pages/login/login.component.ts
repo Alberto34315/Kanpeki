@@ -15,7 +15,7 @@ import { AuthService } from '../../services/auth.service';
 })
 export class LoginComponent implements OnInit {
   public myForm: FormGroup = this.fb.group({
-    email: ['', [Validators.required, Validators.email]],
+    email: ['', [Validators.required, Validators.pattern(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/i)]],
     password: ['', [Validators.required, Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/i)]],
   });
   public load: boolean = false;
@@ -35,15 +35,6 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    //selma.hayoun.caballero@gmail.com
-    //C4c4hu3t3!!
-
-    //aaaaa@gmail.com
-    //C4c4hu3t3$$
-    //Qwerty_343
-
-    //ccccc@gmail.com
-    //C4c4hu3t3**
     let email = this.myForm.value.email
     let pass = this.myForm.value.password
     this.authS.login(email, pass)
@@ -55,7 +46,6 @@ export class LoginComponent implements OnInit {
           this.getUser()
         },
         error: (err) => {
-          // this.load = true
           this.errorMsgS.showErrorCredentials(err)
           this.cdRef.markForCheck()
         }

@@ -120,7 +120,7 @@
     </div>
   </div>
 
-  <div class="mb-3 row" *ngIf="this.rol=='ADMIN'">
+  <div class="mb-3 row" *ngIf="this.rol == 'ADMIN'">
     <label class="col-sm-3 col-form-label">{{ "form.rol" | translate }}</label>
     <div class="col-sm-9">
       <select
@@ -134,10 +134,24 @@
       </select>
     </div>
   </div>
-
+  <div class="row">
+    <div class="col-sm-12 d-flex justify-content-center">
+      <div
+        class="btn btn-primary btn-sm my-3 d-flex float-start"
+        (click)="showStaticsUser()"
+      >
+        <span>{{ "header.statistics" | translate }}</span>
+        <mat-icon> bar_chart</mat-icon>
+      </div>
+    </div>
+  </div>
   <div class="row">
     <div class="col-sm-12">
-      <button class="btn btn-primary float-end" [disabled]="validSubmit()" type="submit">
+      <button
+        class="btn btn-primary float-end"
+        [disabled]="validSubmit()"
+        type="submit"
+      >
         {{ "form.save" | translate }}
       </button>
       <button class="btn btn-secondary float-start" [mat-dialog-close]="false">

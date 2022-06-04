@@ -1,14 +1,20 @@
 :host
     perspective: 1000px
+    -webkit-perspective: 1000px
+    -moz-perspective: 1000px
 
 .card
     box-shadow: 10px 10px 43px -18px rgba(0, 0, 0, 0.75)
     border-radius: 5px
+    -webkit-border-radius: 5px
+    -moz-border-radius: 5px
     height: 700px
     width: 800px
     cursor: pointer
     position: relative
     transform-style: preserve-3d
+    -webkit-transform-style: preserve-3d
+    -moz-backface-transform-style: preserve-3d
 
 .face
     display: flex
@@ -16,13 +22,31 @@
     justify-content: center
     align-items: center
     position: absolute
+    -webkit-position: absolute
+    -moz-position: absolute
     width: 100%
     height: 100%
     border-radius: inherit
+    -webkit-border-radius: inherit
+    -moz-border-radius: inherit
     backface-visibility: hidden
+    -webkit-backface-visibility: hidden
+    -moz-backface-visibility: hidden
     > img
         object-fit: cover
+        -webkit-object-fit: cover
+        -moz-object-fit: cover
         border-radius: inherit
+        -webkit-border-radius: inherit
+        -moz-border-radius: inherit
 
 .front
     transform: rotateY(180deg)
+    -webkit-transform: rotateY(180deg)
+    -moz-transform: rotateY(180deg)
+    
+.back
+    transform: rotateY(0deg)
+    -webkit-transform: rotateY(0deg)
+    -moz-transform: rotateY(0deg)
+    

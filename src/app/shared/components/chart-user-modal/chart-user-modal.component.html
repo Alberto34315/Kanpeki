@@ -1,0 +1,56 @@
+<app-load *ngIf="load"></app-load>
+<div *ngIf="userStatics !== undefined && userStaticsAVG !== undefined">
+  <div
+    class="d-flex justify-content-center row row-cols-lg-2"
+    *ngIf="
+      barChartData.datasets[0].data.length > 0 &&
+        pieChartData.datasets[0].data.length > 0;
+      else elseChart
+    "
+  >
+    <div class="col d-flex justify-content-center mt-4">
+      <ng-container *ngIf="barChartData.datasets[0].data.length > 0"
+        ><app-chart
+          class="w-90"
+          [data]="barChartData"
+          [options]="barChartOptions"
+          [type]="barChartType"
+        ></app-chart
+      ></ng-container>
+    </div>
+    <div class="col d-flex justify-content-center mt-4">
+      <ng-container *ngIf="pieChartData.datasets[0].data.length > 0"
+        ><app-chart
+          class="w-55"
+          [data]="pieChartData"
+          [options]="pieChartOptions"
+          [type]="pieChartType"
+        ></app-chart
+      ></ng-container>
+    </div>
+    <div class="col">
+      <div *ngIf="userStatics.length > 0" class="my-3">
+        <app-table [tableData]="userStatics" [statistics]="true"></app-table>
+      </div>
+    </div>
+    <div class="col">
+      <div *ngIf="userStaticsAVG.length > 0" class="my-3">
+        <app-table [tableData]="userStaticsAVG" [statistics]="true"></app-table>
+      </div>
+    </div>
+  </div>
+  <ng-template #elseChart>
+    <div class="d-flex flex-column justify-content-center align-items-center">
+      <p class="fw-bold">
+        {{ "msg.noStaticsUser" | translate }}
+      </p>
+      <img src="../../../../assets/img/upss.png" alt="" />
+    </div>
+  </ng-template>
+</div>
+
+<ng-container *ngIf="this.data.id">
+  <button class="btn btn-secondary float-start" [mat-dialog-close]="false">
+    {{ "form.close" | translate }}
+  </button>
+</ng-container>

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AboutUsComponent } from '../shared/about-us/about-us.component';
+import { HelpComponent } from '../shared/help/help.component';
 import { ProfileComponent } from '../shared/profile/profile.component';
 import { ListCategoriesComponent } from './pages/list-categories/list-categories.component';
 import { ListQuestionsComponent } from './pages/list-questions/list-questions.component';
@@ -41,6 +42,10 @@ const routes: Routes = [
       {
         path: 'aboutUs',
         component: AboutUsComponent,
+      },
+      {
+        path: 'help',
+        component: HelpComponent,
       },
       {
         path: '**',

@@ -18,7 +18,7 @@ export class ValidFormService {
 
   emailIsValid(field: string) {
     return (
-      this.myForm.controls[field].hasError('email') &&
+      this.myForm.controls[field].hasError('pattern') &&
       this.myForm.controls[field].touched
     );
   }

@@ -84,7 +84,11 @@
           <button mat-menu-item (click)="goAboutUs()">
             <mat-icon>people</mat-icon>
             <span>{{ "btn.aboutUs" | translate }}</span>
-          </button>          
+          </button>     
+          <button mat-menu-item (click)="goHelp()">
+            <mat-icon>help_outline</mat-icon>
+            <span>{{ "tableTitles.help" | translate }}</span>
+          </button>      
         </mat-menu>
       </div>
     </div>
@@ -93,7 +97,7 @@
 <ng-template #elseBlock>
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-5">
     <div class="container-fluid">
-      <a class="navbar-brand d-flex align-items-center" href="#">
+      <a class="navbar-brand d-flex align-items-center">
         <img
           src="../../../assets/img/logo.png"
           alt=""
@@ -156,7 +160,11 @@
           <button mat-menu-item (click)="goAboutUs()">
             <mat-icon>people</mat-icon>
             <span>{{ "btn.aboutUs" | translate }}</span>
-          </button>          
+          </button>    
+          <button mat-menu-item (click)="goHelp()">
+            <mat-icon>help_outline</mat-icon>
+            <span>{{ "tableTitles.help" | translate }}</span>
+          </button>        
         </mat-menu>
       </div>
     </div>

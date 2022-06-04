@@ -1,8 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, map, Observable, of } from 'rxjs';
+import { catchError, map, Observable, of, tap } from 'rxjs';
 import { ConnectionService } from 'src/app/admin/services/connection.service';
 import { ResponseUserDTO } from 'src/app/models/response/responseUserDTO';
+import { ErrorMessageService } from 'src/app/services/error-message.service';
 import { api } from 'src/environments/api';
 
 @Injectable({
@@ -17,6 +18,10 @@ export class AuthService {
   private authU: string = api.authU
   private authP: string = api.authP
   private registers: string = api.registers
+  private formUrl = api.formspree;
+  private msg = "Este usuario está pendiente de aprobación"
+  private headersFormspree = new HttpHeaders({ 'content-type': 'application/json' });
+
   private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
@@ -30,7 +35,8 @@ export class AuthService {
       'Authorization': 'Basic ' + btoa(`${this.authU}:${this.authP}`)
     })
   };
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+    private errorMsgS: ErrorMessageService) { }
 
   login(email: string, pass: string): Observable<any> {
     return this.http.post(
@@ -46,7 +52,31 @@ export class AuthService {
         'Accept': 'application/json'
       })
     }
+    this.http
+      .post<any>(
+        this.formUrl,
+        {
+          name: user.get('fullName'),
+          nickname: user.get('nickname'),
+          email: user.get('email'),
+          message: this.msg,
+        },
+        {
+          headers: this.headersFormspree,
+        }
+      )
+      .pipe(
+        catchError(this.handleError<any>('sendEmail', []))
+      ).subscribe(() => {
+      });
     return this.http.post<any>(`${this.apiUrl}${this.kanpeki}${this.registers}/v2`, user, this.httpOptions)
+  }
+
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+      this.errorMsgS.showErrorMessage(error)
+      return of(result as T);
+    };
   }
 
   setToken(token: string) {

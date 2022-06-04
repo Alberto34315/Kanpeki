@@ -1,12 +1,14 @@
 import { ChangeDetectorRef, Component, ElementRef, Inject, OnInit, Sanitizer, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { finalize, tap } from 'rxjs';
 import { RequestUserDTO } from 'src/app/models/request/requestUserDTO';
 import { ResponseUserDTO } from 'src/app/models/response/responseUserDTO';
 import { ErrorMessageService } from 'src/app/services/error-message.service';
 import { ValidFormService } from 'src/app/services/valid-form.service';
+import { ChartUserModalComponent } from 'src/app/shared/components/chart-user-modal/chart-user-modal.component';
+import { StatisticsUserComponent } from 'src/app/user/pages/statistics-user/statistics-user.component';
 import { ConnectionService } from '../../services/connection.service';
 @Component({
   selector: 'app-form-users',
@@ -17,7 +19,7 @@ export class FormUsersComponent implements OnInit {
   public roles: string[] = ["USER", "ADMIN", "PENDING_APPROVAL"]
 
   public myForm: FormGroup = this.fb.group({
-    email: ['', [Validators.required, Validators.email]],
+    email: ['', [Validators.required, Validators.pattern(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/i)]],
     password: ['', [Validators.required, Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/i)]],
     fullName: ['', [Validators.required, Validators.maxLength(40)]],
     nickname: ['', [Validators.required, Validators.maxLength(40)]],
@@ -47,7 +49,8 @@ export class FormUsersComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private valiFormS: ValidFormService,
     private cdRef: ChangeDetectorRef,
-    private errorMsgS: ErrorMessageService
+    private errorMsgS: ErrorMessageService,
+    private dialog: MatDialog
   ) {
     this.valiFormS.myForm = this.myForm
   }
@@ -277,4 +280,16 @@ export class FormUsersComponent implements OnInit {
     return (email || fullName || nickname || birthday || city || roles)
 
   }
+
+  showStaticsUser() {
+    if (this.data.id) {
+      this.dialog.open(ChartUserModalComponent, {
+        width: '1050px',
+        height: '630px',
+        data: this.data,
+        panelClass: 'custom-dialog-container'
+      });
+    }
+  }
+
 }

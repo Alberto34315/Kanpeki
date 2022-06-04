@@ -1,0 +1,125 @@
+<div class="d-flex flex-column align-items-center justify-content-center">
+  <ng-container *ngIf="admin; else user">
+    <p class="fs-3 fw-bold title-about">
+      {{ "header.statistics" | translate }}
+    </p>
+    <p class="fs-5 w-50">{{ "help.statisticsAdmin" | translate }}</p>
+    <img
+      src="../../../assets/img/help/admin/statisticsAdmin.PNG"
+      class="img-fluid w-75 mb-5"
+    />
+    <p class="fs-3 fw-bold title-about">
+      {{ "help.pages" | translate }}: {{ "header.users" | translate }},
+      {{ "header.words" | translate }}, {{ "header.questions" | translate }},
+      {{ "header.categories" | translate }}
+    </p>
+    <p class="fs-5 w-50">{{ "help.pagesAdmin1" | translate }}</p>
+    <img
+      src="../../../assets/img/help/admin/pagesAdmin1.PNG"
+      class="img-fluid w-75 mb-3"
+    />
+    <p class="fs-5 w-50">{{ "help.pagesAdmin2" | translate }}</p>
+    <img
+      src="../../../assets/img/help/admin/pagesAdmin2.PNG"
+      class="img-fluid w-40 mb-3"
+    />
+    <p class="fs-5 w-50">{{ "help.pagesAdmin3" | translate }}</p>
+    <img
+      src="../../../assets/img/help/admin/pagesAdmin3_1.PNG"
+      class="img-fluid w-40 mb-3"
+    />
+    <img
+      src="../../../assets/img/help/admin/pagesAdmin3_2.PNG"
+      class="img-fluid w-40 mb-3"
+    />
+    <p class="fs-5 w-50">{{ "help.pagesAdmin4" | translate }}</p>
+    <img
+      src="../../../assets/img/help/admin/pagesAdmin4_1.PNG"
+      class="img-fluid w-75 mb-3"
+    />
+    <img
+      src="../../../assets/img/help/admin/pagesAdmin4_2.PNG"
+      class="img-fluid w-40 mb-3"
+    />
+    <p class="fs-5 w-50 text-danger">{{ "help.pageNoteAdmin" | translate }}</p>
+    <img
+      src="../../../assets/img/help/admin/pageNoteAdmin1.PNG"
+      class="img-fluid w-40 mb-3"
+    />
+    <img
+      src="../../../assets/img/help/admin/pageNoteAdmin2.PNG"
+      class="img-fluid w-50 mb-5"
+    />
+    <p class="fs-3 fw-bold title-about">
+      {{ "btn.profile" | translate }}
+    </p>
+    <p class="fs-5 w-50">{{ "help.profile1" | translate }}</p>
+    <img
+      src="../../../assets/img/help/admin/profile1.PNG"
+      class="img-fluid w-50 mb-5"
+    />
+  </ng-container>
+</div>
+<ng-template #user>
+  <p class="fs-3 fw-bold title-about">
+    {{ "header.results" | translate }}    
+  </p>
+  <p class="fs-5 w-50">{{ "help.resultsUser" | translate }}</p>
+  <img
+    src="../../../assets/img/help/user/resultsUser.PNG"
+    class="img-fluid w-75 mb-5"
+  />
+  <p class="fs-3 fw-bold title-about">
+    {{ "header.study" | translate }}    
+  </p>
+  <p class="fs-5 w-50">{{ "help.studyUser1" | translate }}</p>
+  <img
+    src="../../../assets/img/help/user/studyUser1.PNG"
+    class="img-fluid w-75 mb-5"
+  />
+  <img
+    src="../../../assets/img/help/user/studyUser2.PNG"
+    class="img-fluid w-75 mb-5"
+  />
+  <img
+    src="../../../assets/img/help/user/studyUser3.PNG"
+    class="img-fluid w-75 mb-5"
+  />  
+  <p class="fs-5 w-50">{{ "help.studyUser2" | translate }}</p>
+  <img
+    src="../../../assets/img/help/user/studyUser4.PNG"
+    class="img-fluid w-40 mb-5"
+  />
+  <p class="fs-3 fw-bold title-about">
+    {{ "header.tests" | translate }}    
+  </p>
+  <p class="fs-5 w-50">{{ "help.testUser" | translate }}</p>
+  <img
+    src="../../../assets/img/help/user/testUser1.PNG"
+    class="img-fluid w-75 mb-5"
+  />
+  <img
+    src="../../../assets/img/help/user/testUser2.PNG"
+    class="img-fluid w-50 mb-5"
+  />
+  <img
+    src="../../../assets/img/help/user/testUser3.PNG"
+    class="img-fluid w-50 mb-5"
+  />
+  <img
+    src="../../../assets/img/help/user/testUser4.PNG"
+    class="img-fluid w-50 mb-5"
+  />
+  <img
+    src="../../../assets/img/help/user/testUser5.PNG"
+    class="img-fluid w-50 mb-5"
+  />
+  <p class="fs-3 fw-bold title-about">
+    {{ "btn.profile" | translate }}
+  </p>
+  <p class="fs-5 w-50">{{ "help.profile1" | translate }}</p>
+  <img
+    src="../../../assets/img/help/admin/profile1.PNG"
+    class="img-fluid w-50 mb-5"
+  />
+</ng-template>

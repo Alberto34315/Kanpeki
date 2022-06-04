@@ -97,7 +97,8 @@ export class StatisticsUserComponent implements OnInit {
   public listCategories: ResponseCategoryDTO[] = []
   public userStatics!: ResponseResultDTO[]
   public userStaticsAVG!: any[]
-  constructor(private connectionS: ConnectionService,
+  constructor(
+    private connectionS: ConnectionService,
     private cdRef: ChangeDetectorRef,
     private errorMsgS: ErrorMessageService) {
   }
@@ -153,7 +154,6 @@ export class StatisticsUserComponent implements OnInit {
                   this.userStatics = []
                   this.load = true
                   this.cdRef.markForCheck()
-                  this.errorMsgS.showErrorMessage(err)
                 }
               }),
                 finalize(() => {
@@ -184,7 +184,6 @@ export class StatisticsUserComponent implements OnInit {
                   this.userStaticsAVG = []
                   this.load = true
                   this.cdRef.markForCheck()
-                  this.errorMsgS.showErrorMessage(err)
                 }
               }),
                 finalize(() => {

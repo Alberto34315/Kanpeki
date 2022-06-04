@@ -5,12 +5,13 @@
       "question.statement" | translate
     }}</label>
     <div class="col-sm-9">
-      <input
-        type="text"
-        class="form-control"
-        (keyup)="textKanji($event)"
+      <textarea
         formControlName="statement"
-      />
+        class="form-control"
+        cols="30"
+        rows="3"
+        (keyup)="textKanji($event)"
+      ></textarea>
       <span *ngIf="fieldIsRequired('statement')" class="form-text text-danger">
         {{ "form.fieldIsRequired" | translate }}
       </span>
@@ -18,7 +19,7 @@
         *ngIf="maxLengthdIsValid('statement')"
         class="form-text text-danger"
       >
-        {{ "form.maxLengthdIsValid" | translate }}
+        {{ "form.maxLengthQuestdIsValid" | translate }}
       </span>
     </div>
   </div>
@@ -28,12 +29,13 @@
       "question.help" | translate
     }}</label>
     <div class="col-sm-9">
-      <input
-        type="text"
-        (keyup)="textKanji($event)"
-        class="form-control"
+      <textarea
         formControlName="help"
-      />
+        class="form-control"
+        cols="30"
+        rows="3"
+        (keyup)="textKanji($event)"
+      ></textarea>
     </div>
   </div>
 
@@ -83,7 +85,7 @@
         {{ "form.fieldIsRequired" | translate }}
       </span>
       <span *ngIf="maxLengthdIsValid('answer1')" class="form-text text-danger">
-        {{ "form.maxLengthdIsValid" | translate }}
+        {{ "form.maxLengthQuestdIsValid" | translate }}
       </span>
     </div>
     <div class="col">
@@ -112,7 +114,7 @@
         {{ "form.fieldIsRequired" | translate }}
       </span>
       <span *ngIf="maxLengthdIsValid('answer2')" class="form-text text-danger">
-        {{ "form.maxLengthdIsValid" | translate }}
+        {{ "form.maxLengthQuestdIsValid" | translate }}
       </span>
     </div>
     <div class="col">
@@ -141,7 +143,7 @@
         {{ "form.fieldIsRequired" | translate }}
       </span>
       <span *ngIf="maxLengthdIsValid('answer3')" class="form-text text-danger">
-        {{ "form.maxLengthdIsValid" | translate }}
+        {{ "form.maxLengthQuestdIsValid" | translate }}
       </span>
     </div>
     <div class="col">
@@ -175,7 +177,7 @@
         {{ "form.fieldIsRequired" | translate }}
       </span>
       <span *ngIf="maxLengthdIsValid('answer4')" class="form-text text-danger">
-        {{ "form.maxLengthdIsValid" | translate }}
+        {{ "form.maxLengthQuestdIsValid" | translate }}
       </span>
     </div>
     <div class="col">
