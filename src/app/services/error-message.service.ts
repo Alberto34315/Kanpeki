@@ -14,9 +14,8 @@ export class ErrorMessageService {
     } else if (err.status == 403) {
       Swal.fire('Error', this.lgS.getTextByKey("msg.errorAccess"), 'error');
     }
-
-
   }
+
   showErrorMessage(err: HttpErrorResponse) {
     if (err.error.errors.length === 0) {
       Swal.fire('Error', err.error.msg, 'error');
@@ -31,7 +30,10 @@ export class ErrorMessageService {
         html: `<div>${element}</div>`
       });
     }
+  }
 
+  showCreateUser() {
+   return Swal.fire(this.lgS.getTextByKey("msg.createUser"), '', 'success');
   }
 
   showErrorImage() {
@@ -46,8 +48,17 @@ export class ErrorMessageService {
     Swal.fire('Error', this.lgS.getTextByKey("msg.errorStudyTest"), 'warning');
   }
 
-  showMsgSaveScore() {
-    Swal.fire(this.lgS.getTextByKey("msg.saveScore"), '', 'success');
+  showMsgScore1() {
+    Swal.fire(this.lgS.getTextByKey("msg.score1"), '', 'error');
+  }
+  showMsgScore2() {
+    Swal.fire(this.lgS.getTextByKey("msg.score2"), '', 'warning');
+  }
+  showMsgScore3() {
+    Swal.fire(this.lgS.getTextByKey("msg.score3"), '', 'success');
+  }
+  showMsgScore4() {
+    Swal.fire(this.lgS.getTextByKey("msg.score4"), '', 'success');
   }
 
   deleteElement() {

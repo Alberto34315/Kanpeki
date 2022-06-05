@@ -126,7 +126,12 @@
     "confirmBtn": "Si, borrar",
     "cancelBtn": "Cancelar",
     "errorStudyTest": "Por favor, seleccione una categoría válida",
-    "saveScore": "Se ha guardado el resultado del exámen con exito"
+    "saveScore": "Se ha guardado el resultado del exámen con exito",
+    "createUser": "Su usuario ha sido creado y está pendiente de validación",
+    "score1": "Has suspendido, repasa y vuelve a intentarlo",
+    "score2": "Poco a poco irás mejorando, vuelve a intentarlo",
+    "score3": "Enhorabuena, ya dominas la materia",
+    "score4": "カンペキ！！"
   },
   "chart": {
     "numExamForCateg": "No hay resultado del número de exámenes por categoría",

@@ -54,7 +54,11 @@ export class RegisterComponent implements OnInit {
           next: (res) => {
             this.load = true
             this.cdRef.markForCheck()
-            this.router.navigateByUrl('/auth');
+            this.errorMsgS.showCreateUser().then(res => {
+              if (res.isDismissed || res.isConfirmed) {
+                this.router.navigateByUrl('/auth');
+              }
+            })
           },
           error: (err) => {
             this.load = true

@@ -177,7 +177,15 @@ export class TestsUserComponent implements OnInit {
         next: (res) => {
           this.load = true
           this.cdRef.markForCheck()
-          this.errorMsgS.showMsgSaveScore()
+          if (resultScore < 5) {
+            this.errorMsgS.showMsgScore1()
+          } else if (resultScore >= 5 && resultScore <= 6) {
+            this.errorMsgS.showMsgScore2()
+          } else if (resultScore >= 7 && resultScore <= 8) {
+            this.errorMsgS.showMsgScore3()
+          } else if (resultScore > 8) {
+            this.errorMsgS.showMsgScore4()
+          }
         },
         error: (err) => {
           this.load = true
