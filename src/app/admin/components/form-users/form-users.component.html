@@ -38,7 +38,20 @@
       </span>
     </div>
   </div>
-
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">{{
+      "form.password2" | translate
+    }}</label>
+    <div class="col-sm-9 d-flex align-items-center">
+      <input type="password" class="form-control" formControlName="password2" />
+      <span *ngIf="passwordIsValid('password2')" class="form-text text-danger">
+        {{ "form.passwordIsValid" | translate }}
+      </span>
+      <span *ngIf="differentPass()" class="form-text text-danger">
+        {{ "form.repeatPassword" | translate }}
+      </span>
+    </div>
+  </div>
   <div class="mb-3 row">
     <label class="col-sm-3 col-form-label">
       {{ "form.fullname" | translate }}</label

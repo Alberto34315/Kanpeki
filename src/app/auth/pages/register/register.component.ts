@@ -36,7 +36,7 @@ export class RegisterComponent implements OnInit {
   }
 
   register() {
-    if (this.samePass()) {
+    if (this.differentPass()) {
       this.errorMsgS.showErrorRepeatPass()
     } else {
       let user: RequestUserDTO = this.myForm.value
@@ -87,7 +87,7 @@ export class RegisterComponent implements OnInit {
     return this.valiFormS.maxLengthdIsValid(field)
   }
 
-  samePass() {
+  differentPass() {
     return (this.myForm.get("password")?.value !== this.myForm.get("password2")?.value)
   }
 }

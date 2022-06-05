@@ -90,7 +90,7 @@
                         {{ "form.passwordIsValid" | translate }}
                       </span>
                       <span
-                        *ngIf="samePass()"
+                        *ngIf="differentPass()"
                         class="form-text text-danger"
                       >
                         {{ "form.repeatPassword" | translate }}

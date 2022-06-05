@@ -125,6 +125,7 @@ export class TestsUserComponent implements OnInit {
   exit() {
     this.idCategory = 0
     this.listQuestion = [];
+    this.disableButton = false;
     this.removeInput()
     this.myForm.get("answerCorrect0")?.setValue('');
     this.myForm.get("answerCorrect1")?.setValue('');

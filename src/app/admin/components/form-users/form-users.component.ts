@@ -21,6 +21,7 @@ export class FormUsersComponent implements OnInit {
   public myForm: FormGroup = this.fb.group({
     email: ['', [Validators.required, Validators.pattern(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/i)]],
     password: ['', [Validators.required, Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/i)]],
+    password2: ['', [Validators.required, Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/i)]],
     fullName: ['', [Validators.required, Validators.maxLength(40)]],
     nickname: ['', [Validators.required, Validators.maxLength(40)]],
     urlImage: [''],
@@ -80,7 +81,6 @@ export class FormUsersComponent implements OnInit {
       })
     if (this.data.id) {
       this.myForm.get('email')?.patchValue(this.data.email);
-      this.myForm.get('password')?.patchValue(this.data.password);
       this.myForm.get('fullName')?.patchValue(this.data.fullName);
       this.myForm.get('nickname')?.patchValue(this.data.nickname);
       this.myForm.get('birthday')?.patchValue(this.data.birthday);
@@ -121,100 +121,104 @@ export class FormUsersComponent implements OnInit {
   }
 
   save() {
-    this.load = false;
-    let user: RequestUserDTO = this.myForm.value
-    let fd = new FormData()
-    if (this.data.id) {
-      user.id = this.data.id
-      user.urlImage = this.data.urlImage
-      fd.append('id', String(user.id))
-      fd.append('birthday', user.birthday)
-      fd.append('city', user.city)
-      fd.append('email', user.email)
-      fd.append('fullName', user.fullName)
-      fd.append('nickname', user.nickname)
+    if (this.differentPass()) {
+      this.errorMsgS.showErrorRepeatPass()
+    } else {
+      this.load = false;
+      let user: RequestUserDTO = this.myForm.value
+      let fd = new FormData()
+      if (this.data.id) {
+        user.id = this.data.id
+        user.urlImage = this.data.urlImage
+        fd.append('id', String(user.id))
+        fd.append('birthday', user.birthday)
+        fd.append('city', user.city)
+        fd.append('email', user.email)
+        fd.append('fullName', user.fullName)
+        fd.append('nickname', user.nickname)
 
-      if (user.password !== undefined) {
-        fd.append('password', user.password)
-      } else {
-        fd.append('password', '')
-      }
-      fd.append('roles[]', String(user.roles))
-      if (this.fileInput !== undefined && this.fileInput.nativeElement.files[0] !== undefined) {
-        fd.append("file", this.fileInput.nativeElement.files[0], this.fileInput.nativeElement.files[0].name);
-        this.updateUser(Number(user.id), fd)
-      } else {
-        if (user.urlImage.replace(/\s+/g, '') !== "") {
-          let imgArr = user.urlImage.split('/')
-          this.connectionS.getFile(imgArr[imgArr.length - 1])
-            .pipe(tap({
-              next: (res) => {
-                if (res) {
-                  this.load = true;
-                  let name = imgArr[imgArr.length - 1].split("_")
-                  fd.append("file", res, name[name.length - 1]);
-                  this.updateUser(Number(user.id), fd)
+        if (user.password !== undefined) {
+          fd.append('password', user.password)
+        } else {
+          fd.append('password', '')
+        }
+        fd.append('roles[]', String(user.roles))
+        if (this.fileInput !== undefined && this.fileInput.nativeElement.files[0] !== undefined) {
+          fd.append("file", this.fileInput.nativeElement.files[0], this.fileInput.nativeElement.files[0].name);
+          this.updateUser(Number(user.id), fd)
+        } else {
+          if (user.urlImage.replace(/\s+/g, '') !== "") {
+            let imgArr = user.urlImage.split('/')
+            this.connectionS.getFile(imgArr[imgArr.length - 1])
+              .pipe(tap({
+                next: (res) => {
+                  if (res) {
+                    this.load = true;
+                    let name = imgArr[imgArr.length - 1].split("_")
+                    fd.append("file", res, name[name.length - 1]);
+                    this.updateUser(Number(user.id), fd)
+                    this.cdRef.markForCheck()
+                  }
+                },
+                error: (err) => {
+                  this.load = true
                   this.cdRef.markForCheck()
+                  this.errorMsgS.showErrorImage()
                 }
-              },
-              error: (err) => {
-                this.load = true
-                this.cdRef.markForCheck()
-                this.errorMsgS.showErrorImage()
-              }
-            }),
-              finalize(() => {
-                setTimeout(() => {
-                  this.load = false
-                }, 300)
-              }))
-            .subscribe(resp => {
-            })
+              }),
+                finalize(() => {
+                  setTimeout(() => {
+                    this.load = false
+                  }, 300)
+                }))
+              .subscribe(resp => {
+              })
+          } else {
+            fd.append("file", new Blob(), "default.png");
+            this.updateUser(Number(user.id), fd)
+          }
+        }
+      } else {
+        fd.append('birthday', user.birthday)
+        fd.append('city', user.city)
+        fd.append('email', user.email)
+        fd.append('fullName', user.fullName)
+        fd.append('nickname', user.nickname)
+        if (user.password !== undefined) {
+          fd.append('password', user.password)
+        } else {
+          fd.append('password', '')
+        }
+        fd.append('roles[]', String(user.roles))
+        if (this.fileInput !== undefined && this.fileInput.nativeElement.files[0] !== undefined) {
+          fd.append("file", this.fileInput.nativeElement.files[0], this.fileInput.nativeElement.files[0].name);
         } else {
           fd.append("file", new Blob(), "default.png");
-          this.updateUser(Number(user.id), fd)
         }
-      }
-    } else {
-      fd.append('birthday', user.birthday)
-      fd.append('city', user.city)
-      fd.append('email', user.email)
-      fd.append('fullName', user.fullName)
-      fd.append('nickname', user.nickname)
-      if (user.password !== undefined) {
-        fd.append('password', user.password)
-      } else {
-        fd.append('password', '')
-      }
-      fd.append('roles[]', String(user.roles))
-      if (this.fileInput !== undefined && this.fileInput.nativeElement.files[0] !== undefined) {
-        fd.append("file", this.fileInput.nativeElement.files[0], this.fileInput.nativeElement.files[0].name);
-      } else {
-        fd.append("file", new Blob(), "default.png");
-      }
 
-      this.connectionS.addUser(fd)
-        .pipe(tap({
-          next: (res) => {
-            if (res) {
-              this.load = true;
+        this.connectionS.addUser(fd)
+          .pipe(tap({
+            next: (res) => {
+              if (res) {
+                this.load = true;
+                this.cdRef.markForCheck()
+                this.onClose()
+              }
+            },
+            error: (err) => {
+              this.load = true
               this.cdRef.markForCheck()
-              this.onClose()
+              this.errorMsgS.showErrorMessage(err)
             }
-          },
-          error: (err) => {
-            this.load = true
-            this.cdRef.markForCheck()
-            this.errorMsgS.showErrorMessage(err)
-          }
-        }),
-          finalize(() => {
-            setTimeout(() => {
-              this.load = false
-            }, 300)
-          }))
-        .subscribe((res) => {
-        })
+          }),
+            finalize(() => {
+              setTimeout(() => {
+                this.load = false
+              }, 300)
+            }))
+          .subscribe((res) => {
+          })
+      }
     }
   }
 
@@ -292,4 +296,7 @@ export class FormUsersComponent implements OnInit {
     }
   }
 
+  differentPass() {    
+    return (this.myForm.get("password")?.value !== this.myForm.get("password2")?.value)
+  }
 }
