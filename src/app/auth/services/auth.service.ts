@@ -1,9 +1,10 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, map, Observable, of, tap } from 'rxjs';
-import { ConnectionService } from 'src/app/admin/services/connection.service';
+import { catchError, map, Observable, of } from 'rxjs';
 import { ResponseUserDTO } from 'src/app/models/response/responseUserDTO';
 import { ErrorMessageService } from 'src/app/services/error-message.service';
+import { LanguageService } from 'src/app/services/language.service';
+import { ThemeService } from 'src/app/services/theme.service';
 import { api } from 'src/environments/api';
 
 @Injectable({
@@ -36,7 +37,9 @@ export class AuthService {
     })
   };
   constructor(private http: HttpClient,
-    private errorMsgS: ErrorMessageService) { }
+    private errorMsgS: ErrorMessageService,
+    private languageS: LanguageService,
+    private themeS: ThemeService) { }
 
   login(email: string, pass: string): Observable<any> {
     return this.http.post(
@@ -104,6 +107,8 @@ export class AuthService {
   }
 
   logout() {
-    localStorage.removeItem("jwt")
+    this.languageS.changeLanguage('es')
+    this.themeS.current = 'pink';
+    localStorage.clear()
   }
 }

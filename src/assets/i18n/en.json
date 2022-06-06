@@ -131,7 +131,10 @@
     "score1": "You failed, review and try again",
     "score2": "Little by little you will improve, try again",
     "score3": "Congratulations, you have mastered the subject.",
-    "score4": "カンペキ！！"
+    "score4": "カンペキ！！",
+    "avgByCat": "Average Passes/Category",
+    "numTestByCat": "Number of exams per category",
+    "examNote": "Exam notes"
   },
   "chart": {
     "numExamForCateg": "There are no results of the number of exams per category",

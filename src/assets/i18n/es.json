@@ -131,7 +131,10 @@
     "score1": "Has suspendido, repasa y vuelve a intentarlo",
     "score2": "Poco a poco irás mejorando, vuelve a intentarlo",
     "score3": "Enhorabuena, ya dominas la materia",
-    "score4": "カンペキ！！"
+    "score4": "カンペキ！！",
+    "avgByCat": "Media de aprobados/Categoría",
+    "numTestByCat": "Número de exámenes por categoría",
+    "examNote": "Notas de los exámenes"
   },
   "chart": {
     "numExamForCateg": "No hay resultado del número de exámenes por categoría",

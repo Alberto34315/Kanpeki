@@ -8,6 +8,7 @@ import { registerLocaleData } from '@angular/common';
 import { ResponseResultDTO } from 'src/app/models/response/responseResultDTO';
 import { ErrorMessageService } from 'src/app/services/error-message.service';
 import { finalize, tap } from 'rxjs';
+import { LanguageService } from 'src/app/services/language.service';
 registerLocaleData(localeES, 'es');
 @Component({
   selector: 'app-statistics-user',
@@ -54,7 +55,7 @@ export class StatisticsUserComponent implements OnInit {
     plugins: {
       title: {
         display: true,
-        text: 'Notas de los examenes',
+        text: this.lgS.getTextByKey("msg.examNote"),
         position: 'top'
       },
 
@@ -81,7 +82,7 @@ export class StatisticsUserComponent implements OnInit {
     plugins: {
       title: {
         display: true,
-        text: 'Número de exámenes por categoría',
+        text: this.lgS.getTextByKey("msg.numTestByCat"),
         position: 'top'
       },
       legend: {
@@ -100,7 +101,8 @@ export class StatisticsUserComponent implements OnInit {
   constructor(
     private connectionS: ConnectionService,
     private cdRef: ChangeDetectorRef,
-    private errorMsgS: ErrorMessageService) {
+    private errorMsgS: ErrorMessageService,
+    private lgS: LanguageService) {
   }
 
   ngOnInit(): void {

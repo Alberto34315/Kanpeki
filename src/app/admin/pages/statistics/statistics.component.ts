@@ -6,7 +6,7 @@ import localeES from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
 import { ResponseCategoryDTO } from 'src/app/models/response/responseCategoryDTO';
 import { finalize, tap } from 'rxjs';
-import { ResponseResultDTO } from 'src/app/models/response/responseResultDTO';
+import { LanguageService } from 'src/app/services/language.service';
 registerLocaleData(localeES, 'es');
 
 @Component({
@@ -24,7 +24,7 @@ export class StatisticsComponent implements OnInit {
     datasets: [
       {
         data: [],
-        label: 'Media de aprobados/Categoría',
+        label: this.lgS.getTextByKey("msg.avgByCat"),
         fill: 'origin',
         pointBackgroundColor: '#fff',
         pointBorderColor: '#eb6864',
@@ -100,7 +100,7 @@ export class StatisticsComponent implements OnInit {
     plugins: {
       title: {
         display: true,
-        text: 'Número de exámenes por categoría',
+        text: this.lgS.getTextByKey("msg.numTestByCat"),
         position: 'top'
       },
       legend: {
@@ -117,7 +117,8 @@ export class StatisticsComponent implements OnInit {
 
   public usersStatics!: any[]
   constructor(private connectionS: ConnectionService,
-    private cdRef: ChangeDetectorRef) { }
+    private cdRef: ChangeDetectorRef,
+    private lgS: LanguageService) { }
 
   ngOnInit(): void {
     this.connectionS.getCategories()
