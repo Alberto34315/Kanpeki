@@ -79,9 +79,17 @@ export class ListCategoriesComponent implements OnInit {
       this.errorMsgS.deleteElement().then((res) => {
         if (res.isConfirmed) {
           this.listDeleteElement.forEach(id => {
-            this.connectionS.deleteCategories(id).subscribe(res => {
-              this.procesaPropagar()
-            })
+            this.connectionS.deleteCategories(id)
+              .pipe(tap({
+                next: (res) => {
+                  this.procesaPropagar()
+                },
+                error: (err) => {
+                  this.errorMsgS.showErrorMessage(err)
+                }
+              }))
+              .subscribe(res => {
+              })
           });
         }
       })

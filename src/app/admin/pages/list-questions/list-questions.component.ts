@@ -27,7 +27,7 @@ export class ListQuestionsComponent implements OnInit {
     this.componentForm = FormQuestionsComponent
   }
 
-  ngOnInit(): void {    
+  ngOnInit(): void {
     this.getListQuetions()
   }
 
@@ -35,13 +35,13 @@ export class ListQuestionsComponent implements OnInit {
     this.connectionS.getQuestions()
       .pipe(tap({
         next: (res) => {
-          this.listQuestions=[]
+          this.listQuestions = []
           this.load = true
           this.listQuestions = res
           this.cdRef.markForCheck()
         },
         error: (err) => {
-          this.listQuestions=[]
+          this.listQuestions = []
           this.load = true
           this.cdRef.markForCheck()
         }
@@ -76,9 +76,17 @@ export class ListQuestionsComponent implements OnInit {
       this.errorMsgS.deleteElement().then((res) => {
         if (res.isConfirmed) {
           this.listDeleteElement.forEach(id => {
-            this.connectionS.deleteQuestions(id).subscribe(res => {
-              this.procesaPropagar()
-            })
+            this.connectionS.deleteQuestions(id)
+              .pipe(tap({
+                next: (res) => {
+                  this.procesaPropagar()
+                },
+                error: (err) => {
+                  this.errorMsgS.showErrorMessage(err)
+                }
+              }))
+              .subscribe(res => {
+              })
           });
         }
       })

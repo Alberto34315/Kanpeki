@@ -164,6 +164,7 @@
     "pagesAdmin3": "y el botón 'Eliminar' solo funcionará si se ha seleccionado antes una fila de la tabla.",
     "pagesAdmin4": "Otra característica de las tablas es que si pulsamos sobre una fila, se nos abrirá el formulario modal al que corresponda el objeto, haciendo que nos dé la posibilidad de editar el objeto.",
     "pageNoteAdmin": "**Nota: El formulario de usuario consta con un boton para ver las estadísticas del usuario una vez haya realizado examenes.**",
+    "pageNoteAdmin2": "**Nota: Se recomienda imagenes de 700 px de alto y 500 px de ancho para las imagenes de las palabras.**",
     "profile1": "En la página de 'Perfil', se mostrarán los datos del usuario que ha iniciado sesión, y cuatro botones los cuales son: 'Idioma', para alternar entre español o inglés, 'Tema', para alternar entre un tema oscuro o un tema claro, 'Editar', para editar los datos del usuario, y 'Cerrar sesión', para cerrar la sesión del usuario. (El usuario puede cambiar la foto de perfil directamente haciendo click en la foto que aparece a la izquierda de sus datos).",
     "resultsUser": "La página de 'Resultados', muestra la nota, la fecha, la categoría, de los exames realizados por el usuario, y el número de examenes realizados por categoría.",
     "studyUser1": "En la página 'Estudiar', el usuario podrá seleccionar la categoría que desee, y se generarán unas tarjetas con la palabra en japonés y la ayuda, y haciendo click en la tarjeta se mostrará la palabra traducida, dependiendo de si la aplicación está en inglés o en español.",

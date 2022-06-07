@@ -35,13 +35,13 @@ export class ListWordsComponent implements OnInit {
     this.connectionS.getWords()
       .pipe(tap({
         next: (res) => {
-          this.listWords =[]
+          this.listWords = []
           this.load = true
           this.listWords = res
           this.cdRef.markForCheck()
         },
         error: (err) => {
-          this.listWords =[]
+          this.listWords = []
           this.load = true
           this.cdRef.markForCheck()
         }
@@ -76,9 +76,17 @@ export class ListWordsComponent implements OnInit {
       this.errorMsgS.deleteElement().then((res) => {
         if (res.isConfirmed) {
           this.listDeleteElement.forEach(id => {
-            this.connectionS.deleteWords(id).subscribe(res => {
-              this.procesaPropagar()
-            })
+            this.connectionS.deleteWords(id)
+              .pipe(tap({
+                next: (res) => {
+                  this.procesaPropagar()
+                },
+                error: (err) => {
+                  this.errorMsgS.showErrorMessage(err)
+                }
+              }))
+              .subscribe(res => {
+              })
           });
         }
       })

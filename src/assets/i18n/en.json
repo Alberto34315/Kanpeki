@@ -164,6 +164,7 @@
     "pagesAdmin3": "and the 'Remove' button will only work if a row of the table has been selected before.",
     "pagesAdmin4": "Another characteristic of tables is that if we click on a row, the modal form to which the object corresponds will open, giving us the possibility of editing the object.",
     "pageNoteAdmin": "**Note: The user form has a button to view the user's statistics once they have taken tests.**",
+    "pageNoteAdmin2": "**Nota: Images of 700 px high and 500 px wide are recommended for the images of the words.**",
     "profile1": "On the 'Profile' page, the data of the user who has logged in will be displayed, and four buttons which are: 'Language', to switch between Spanish or English, 'Theme', to switch between a dark theme or a dark theme. Of course, 'Edit', to edit the user's data, and 'Close session', to close the user's session. (The user can change the profile photo directly by clicking on the photo that appears to the left of their data).",
     "resultsUser": "The 'Results' page shows the note, the date, the category, of the tests taken by the user, and the number of tests taken by category.",
     "studyUser1": "On the 'Study' page, the user can select the category they want, and some cards will be generated with the word in Japanese and the help, and clicking on the card will show the translated word, depending on whether the application is in English or in Spanish.",

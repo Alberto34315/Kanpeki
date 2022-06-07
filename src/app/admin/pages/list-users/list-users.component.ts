@@ -14,7 +14,7 @@ import { ConnectionService } from '../../services/connection.service';
   ]
 })
 export class ListUsersComponent implements OnInit {
-  public listUsers!: ResponseUserDTO[] 
+  public listUsers!: ResponseUserDTO[]
   public componentForm: ComponentType<FormUsersComponent>;
   public dialogRef!: MatDialogRef<FormUsersComponent, any>
   public listDeleteElement: any[] = []
@@ -76,9 +76,17 @@ export class ListUsersComponent implements OnInit {
       this.errorMsgS.deleteElement().then((res) => {
         if (res.isConfirmed) {
           this.listDeleteElement.forEach(id => {
-            this.connectionS.deleteUser(id).subscribe(res => {
-              this.procesaPropagar()
-            })
+            this.connectionS.deleteUser(id)
+              .pipe(tap({
+                next: (res) => {
+                  this.procesaPropagar()
+                },
+                error: (err) => {
+                  this.errorMsgS.showErrorMessage(err)
+                }
+              }))
+              .subscribe(res => {
+              })
           });
         }
       })
