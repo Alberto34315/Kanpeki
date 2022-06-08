@@ -9,7 +9,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { AnswerDTO } from 'src/app/models/answerDTO';
 import { ShowAnswerComponent } from '../show-answer/show-answer.component';
 import { StatisticsDataComponent } from '../statistics-data/statistics-data.component';
-import { bind } from 'wanakana';
+import { bind, unbind } from 'wanakana';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { ConnectionService } from 'src/app/user/services/connection.service';
 import { tap } from 'rxjs';
@@ -41,6 +41,7 @@ export class TableComponent implements AfterViewInit, OnInit {
   public checkHiragana: boolean = false;
   public categoryName: string = ""
   public listCategories!: ResponseCategoryDTO[]
+  public search!: HTMLInputElement;
   constructor(private _liveAnnouncer: LiveAnnouncer,
     public dialog: MatDialog,
     private connectionS: ConnectionService) {
@@ -53,6 +54,7 @@ export class TableComponent implements AfterViewInit, OnInit {
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator
+    this.search = (<HTMLInputElement>document.getElementById("search-input"));
   }
 
   ngOnInit(): void {
@@ -62,7 +64,6 @@ export class TableComponent implements AfterViewInit, OnInit {
         && resp != "urlImage"
         && resp != "createdAt"
         && resp != "lastPasswordChangeAt"
-        // && resp != "categoryId"
         && resp != "userId"
     })
     if (!this.statistics) {
@@ -76,7 +77,7 @@ export class TableComponent implements AfterViewInit, OnInit {
       .pipe(tap({
         next: (res) => {
           this.listCategories = []
-          this.listCategories = res          
+          this.listCategories = res
         },
         error: (err) => {
           this.listCategories = []
@@ -88,18 +89,15 @@ export class TableComponent implements AfterViewInit, OnInit {
 
   returnNameCategory(id: number) {
     if (this.listCategories !== undefined) {
-      let category=this.listCategories.filter(res =>  res.id === id)[0]
-      return category.unitName + " - " + category.categoryName   
-    }else{
+      let category = this.listCategories.filter(res => res.id === id)[0]
+      return category.unitName + " - " + category.categoryName
+    } else {
       return []
     }
   }
 
   searchElement($event: any) {
-    if (this.checkHiragana) {
-      bind($event.target)
-    }
-    const filterValue = ($event.target as HTMLInputElement).value;
+    const filterValue = $event.target.value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
@@ -187,5 +185,10 @@ export class TableComponent implements AfterViewInit, OnInit {
 
   hiragana($event: MatSlideToggleChange) {
     this.checkHiragana = $event.checked
+    if (this.checkHiragana) {
+      bind(this.search)
+    } else {
+      unbind(this.search)
+    }
   }
 }

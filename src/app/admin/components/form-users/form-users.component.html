@@ -42,7 +42,7 @@
     <label class="col-sm-3 col-form-label">{{
       "form.password2" | translate
     }}</label>
-    <div class="col-sm-9 d-flex align-items-center">
+    <div class="col-sm-9">
       <input type="password" class="form-control" formControlName="password2" />
       <span *ngIf="passwordIsValid('password2')" class="form-text text-danger">
         {{ "form.passwordIsValid" | translate }}
